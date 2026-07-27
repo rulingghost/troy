@@ -1,0 +1,119 @@
+.about-preview-section {
+  padding: 100px 0;
+  background-color: #ffffff;
+}
+
+.about-preview-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about-preview-image {
+  position: relative;
+}
+
+.image-container {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(29, 35, 90, 0.1);
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  transition: transform 0.5s ease;
+}
+
+.image-container:hover img {
+  transform: scale(1.05);
+}
+
+.image-decoration {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(238, 125, 0, 0.1);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Corner ornament */
+.image-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  background-color: var(--secondary);
+  border-top-left-radius: 100%;
+  z-index: 2;
+}
+
+.about-preview-content {
+  padding-right: 40px;
+}
+
+.about-subtitle {
+  color: var(--secondary);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: rgba(238, 125, 0, 0.1);
+  border-radius: 20px;
+}
+
+.about-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.about-desc {
+  font-size: 1.05rem;
+  color: #64748b;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.about-btn {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.about-btn:hover {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+@media (max-width: 991px) {
+  .about-preview-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .about-preview-content {
+    padding-right: 0;
+  }
+  
+  .about-title {
+    font-size: 2rem;
+  }
+}

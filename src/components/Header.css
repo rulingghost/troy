@@ -1,0 +1,271 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.4s ease;
+  padding: 20px 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.header.scrolled {
+  padding: 12px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-image {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.desktop-nav {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktop-nav {
+    display: block;
+  }
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-item > a {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.3s;
+}
+
+.nav-item > a:hover {
+  color: var(--secondary);
+}
+
+.dropdown-icon {
+  transition: transform 0.3s;
+}
+
+.nav-item:hover .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+/* Mega Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  width: max-content;
+  min-width: 400px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  padding-top: 24px;
+  pointer-events: none;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-inner {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  padding: 32px;
+  border: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+}
+
+/* Up Arrow for dropdown */
+.dropdown-inner::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-left: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.dropdown-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.dropdown-column-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 6px;
+  display: inline-block;
+}
+
+.dropdown-sublist li {
+  margin-bottom: 8px;
+}
+
+.dropdown-sublist a {
+  font-size: 14px;
+  color: #64748b;
+  transition: all 0.2s;
+  display: block;
+}
+
+.dropdown-sublist a:hover {
+  color: var(--secondary);
+  transform: translateX(4px);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary);
+}
+
+.lang-icon {
+  color: var(--secondary);
+  margin-right: 4px;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s;
+}
+
+.lang-btn:hover {
+  color: var(--primary);
+}
+
+.lang-btn.active {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.lang-divider {
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+
+.mobile-menu-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 999;
+  padding: 100px 24px 40px;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mobile-nav-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.mobile-sub-list {
+  padding-left: 16px;
+  border-left: 2px solid #f1f5f9;
+}
+
+.mobile-sub-list > li {
+  margin-bottom: 16px;
+}
+
+.mobile-sub-list > li > span {
+  font-weight: 600;
+  color: var(--primary-light);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.mobile-child-list {
+  padding-left: 12px;
+}
+
+.mobile-child-list a {
+  color: #64748b;
+  font-size: 14px;
+  display: block;
+  padding: 4px 0;
+}
+
+.mobile-contact-link {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--secondary);
+}
