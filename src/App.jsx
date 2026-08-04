@@ -11,9 +11,10 @@ function AppContent() {
   const [showBanner, setShowBanner] = useState(true);
   const location = useLocation();
 
-  // Reset banner visibility on route change and page reload
+  // Reset banner visibility and scroll to top on route change and page reload
   useEffect(() => {
     setShowBanner(true);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname]);
 
   return (

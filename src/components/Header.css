@@ -12,16 +12,12 @@
 }
 
 .header.with-banner {
-  top: 36px;
+  top: 38px;
 }
 
 .header.scrolled {
   padding: 10px 0;
   box-shadow: var(--shadow-sm);
-}
-
-.header.scrolled.with-banner {
-  top: 0;
 }
 
 .header-container {
