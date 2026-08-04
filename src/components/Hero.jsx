@@ -88,9 +88,6 @@ const Hero = () => {
                     {slide.icon}
                     <span>{slide.badge}</span>
                   </div>
-                  <div className="slogan-pill">
-                    &ldquo;{slide.slogan}&rdquo;
-                  </div>
                 </div>
 
                 <h1 className="hero-title">{slide.title}</h1>
