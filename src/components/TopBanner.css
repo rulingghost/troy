@@ -1,9 +1,6 @@
 .top-banner {
-  background: linear-gradient(90deg, #0b131f 0%, #1e293b 35%, #ee7d00 50%, #1e293b 65%, #0b131f 100%);
-  background-size: 200% 100%;
-  animation: bannerGradient 8s ease infinite, slideDownBanner 0.4s ease-out;
+  background: linear-gradient(90deg, #1d235a 0%, #283448 50%, #1d235a 100%);
   color: #ffffff;
-  padding: 6px 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -11,49 +8,10 @@
   height: 38px;
   box-sizing: border-box;
   z-index: 1002;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  border-bottom: 1px solid rgba(238, 125, 0, 0.3);
-}
-
-@keyframes bannerGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes slideDownBanner {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.top-banner-shimmer {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.15),
-    transparent
-  );
-  transform: skewX(-25deg);
-  animation: shimmerLight 4s infinite;
-  pointer-events: none;
-}
-
-@keyframes shimmerLight {
-  0% { left: -100%; }
-  40% { left: 200%; }
-  100% { left: 200%; }
+  border-bottom: 2px solid var(--secondary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
 }
 
 .top-banner-container {
@@ -61,54 +19,41 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  width: 100%;
 }
 
-.top-banner-pill {
+.top-banner-content {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, rgba(238, 125, 0, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 4px 22px;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.top-banner-pill:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 18px rgba(238, 125, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  gap: 12px;
+  padding: 4px 16px;
 }
 
 .top-banner-sparkle {
-  color: #ffc107;
-  filter: drop-shadow(0 0 4px rgba(255, 193, 7, 0.8));
-  animation: sparkleTwinkle 2s infinite ease-in-out alternate;
+  color: var(--secondary);
+  filter: drop-shadow(0 0 6px rgba(238, 125, 0, 0.6));
+  animation: sparklePulse 2.5s infinite ease-in-out alternate;
 }
 
-@keyframes sparkleTwinkle {
+@keyframes sparklePulse {
   0% { transform: scale(0.9); opacity: 0.7; }
-  100% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1.15); opacity: 1; }
 }
 
 .slogan-text {
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  background: linear-gradient(90deg, #ffffff 0%, #ffe3c2 50%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 8px rgba(238, 125, 0, 0.5);
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .top-banner-close-btn {
   position: absolute;
   right: 24px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
   cursor: pointer;
@@ -125,16 +70,13 @@
   background: var(--secondary);
   border-color: var(--secondary);
   transform: rotate(90deg) scale(1.1);
-  box-shadow: 0 0 10px rgba(238, 125, 0, 0.6);
+  box-shadow: 0 0 10px rgba(238, 125, 0, 0.5);
 }
 
 @media (max-width: 640px) {
   .slogan-text {
-    font-size: 12px;
-    letter-spacing: 1px;
-  }
-  .top-banner-pill {
-    padding: 3px 14px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
   }
   .top-banner-close-btn {
     right: 12px;

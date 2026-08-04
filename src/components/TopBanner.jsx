@@ -5,12 +5,11 @@ import './TopBanner.css';
 const TopBanner = ({ onClose }) => {
   return (
     <div className="top-banner">
-      <div className="top-banner-shimmer"></div>
       <div className="container top-banner-container">
-        <div className="top-banner-pill">
-          <Sparkles className="top-banner-sparkle" size={15} />
+        <div className="top-banner-content">
+          <Sparkles className="top-banner-sparkle" size={14} />
           <span className="slogan-text">Enjoy your journey</span>
-          <Sparkles className="top-banner-sparkle" size={15} />
+          <Sparkles className="top-banner-sparkle" size={14} />
         </div>
         <button 
           className="top-banner-close-btn" 
@@ -18,7 +17,7 @@ const TopBanner = ({ onClose }) => {
           aria-label="Kapat"
           title="Kapat"
         >
-          <X size={15} />
+          <X size={14} />
         </button>
       </div>
     </div>
