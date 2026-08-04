@@ -124,7 +124,7 @@ const SubPage = () => {
               <div className="sidebar-card contact-card">
                 <h3>Sorularınız mı var?</h3>
                 <p>Ekibimiz {pageTitle} konusuyla ilgili tüm sorularınızı yanıtlamaktan mutluluk duyacaktır.</p>
-                <Link to="/#contact" className="btn btn-primary sidebar-btn">Bize Ulaşın</Link>
+                <Link to="/iletisim" className="btn btn-primary sidebar-btn">Bize Ulaşın</Link>
               </div>
 
               <div className="sidebar-card features-card">

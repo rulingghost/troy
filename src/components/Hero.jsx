@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Sparkles, Cpu, Globe, Play, Pause } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './Hero.css';
 
 const slides = [
@@ -99,9 +100,9 @@ const Hero = () => {
                   <a href="#services" className="btn btn-primary hero-btn-main">
                     {slide.primaryCta} <ArrowRight size={20} style={{ marginLeft: '8px' }} />
                   </a>
-                  <a href="#contact" className="btn btn-outline hero-btn-sub">
+                  <Link to="/iletisim" className="btn btn-outline hero-btn-sub">
                     {slide.secondaryCta}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

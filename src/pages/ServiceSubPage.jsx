@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './ServiceSubPage.css';
 
 const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
@@ -53,10 +54,10 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             <p className="service-hero-desc">
               {categoryTitle} delivers comprehensive business solutions and services, leveraging Information Technology in a collaborative partnership approach tailored for {pageTitle}.
             </p>
-            <a href="#contact" className="service-hero-link">
+            <Link to="/iletisim" className="service-hero-link">
               ZİYARET ET
               <ArrowUpRight size={28} />
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -93,9 +94,9 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           </div>
           
           <div className="service-cta-wrapper">
-            <a href="#contact" className="btn btn-primary service-cta-btn">
+            <Link to="/iletisim" className="btn btn-primary service-cta-btn">
               {categoryTitle} İle İletişime Geçin <ArrowRight size={20} className="cta-arrow" />
-            </a>
+            </Link>
           </div>
         </section>
       </div>

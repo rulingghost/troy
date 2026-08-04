@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
@@ -7,7 +8,7 @@ const Footer = () => {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <a href="/" className="footer-logo">Alexander Troy<span>.</span></a>
+            <Link to="/" className="footer-logo">Alexander Troy<span>.</span></Link>
             <p className="footer-slogan">&ldquo;Enjoy your journey&rdquo;</p>
             <p className="footer-desc">
               Geleceğin yapay zeka destekli kurumsal iletişim, MICE etkinlik ve medikal teknoloji çözümleriyle yanınızdayız.
@@ -29,7 +30,7 @@ const Footer = () => {
             <ul className="footer-links">
               <li><a href="/#about-preview">Hakkımızda</a></li>
               <li><a href="/#journey">Hizmet Süreci</a></li>
-              <li><a href="/#contact">Bize Ulaşın</a></li>
+              <li><Link to="/iletisim">Bize Ulaşın</Link></li>
               <li><a href="https://wa.me/905550123456" target="_blank" rel="noopener noreferrer">WhatsApp Destek</a></li>
             </ul>
           </div>

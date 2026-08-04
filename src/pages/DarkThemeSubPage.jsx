@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './DarkThemeSubPage.css';
 
 const DarkThemeSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
@@ -53,10 +54,10 @@ const DarkThemeSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             <p className="dark-hero-desc">
               {categoryTitle} delivers comprehensive business solutions and services, leveraging Information Technology in a collaborative partnership approach tailored for {pageTitle}.
             </p>
-            <a href="#contact" className="dark-hero-link">
+            <Link to="/iletisim" className="dark-hero-link">
               VISIT WEBSITE
               <ArrowUpRight size={28} />
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -93,9 +94,9 @@ const DarkThemeSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           </div>
           
           <div className="dark-cta-wrapper">
-            <a href="#contact" className="dark-cta-btn">
+            <Link to="/iletisim" className="dark-cta-btn">
               Visit {categoryTitle}'s Website <ArrowRight size={20} className="cta-arrow" />
-            </a>
+            </Link>
           </div>
         </section>
       </div>

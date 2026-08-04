@@ -33,7 +33,34 @@
   color: #64748b;
   font-size: 1.1rem;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 18px;
+}
+
+.contact-header-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.dedicated-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 25px;
+  border-color: var(--secondary, #ee7d00);
+  color: var(--secondary, #ee7d00);
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.dedicated-contact-btn:hover {
+  background: var(--secondary, #ee7d00);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(238, 125, 0, 0.4);
+  transform: translateY(-2px);
 }
 
 .contact-wrapper {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Send, MessageSquare, Globe, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, MessageSquare, Globe, ExternalLink, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './Contact.css';
 
 const Contact = () => {
@@ -12,6 +13,11 @@ const Contact = () => {
           <p className="contact-header-desc">
             Etkinlik, kongre, medikal çeviri ve yapay zeka dijital çözümlerimiz için bize dilediğiniz kanaldan ulaşabilirsiniz.
           </p>
+          <div className="contact-header-actions">
+            <Link to="/iletisim" className="btn btn-outline dedicated-contact-btn">
+              Detaylı İletişim & Harita Sayfası <ArrowRight size={16} style={{ marginLeft: '6px' }} />
+            </Link>
+          </div>
         </div>
 
         <div className="contact-wrapper glass-panel">

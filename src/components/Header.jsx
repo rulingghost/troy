@@ -159,6 +159,9 @@ const Header = ({ hasBanner = true }) => {
                 </div>
               </li>
             ))}
+            <li className="nav-item">
+              <Link to="/iletisim">İletişim</Link>
+            </li>
           </ul>
         </nav>
 
@@ -169,7 +172,7 @@ const Header = ({ hasBanner = true }) => {
             <span className="lang-divider">/</span>
             <button className={`lang-btn ${lang === 'EN' ? 'active' : ''}`} onClick={() => setLang('EN')}>EN</button>
           </div>
-          <a href="/#contact" className="btn btn-primary contact-btn">Bize Ulaşın</a>
+          <Link to="/iletisim" className="btn btn-primary contact-btn">Bize Ulaşın</Link>
           <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -200,7 +203,7 @@ const Header = ({ hasBanner = true }) => {
             </li>
           ))}
           <li className="mobile-nav-item">
-             <a href="/#contact" onClick={() => setMobileMenuOpen(false)} className="mobile-contact-link">Bize Ulaşın</a>
+             <Link to="/iletisim" onClick={() => setMobileMenuOpen(false)} className="mobile-contact-link">Bize Ulaşın</Link>
           </li>
         </ul>
       </div>
