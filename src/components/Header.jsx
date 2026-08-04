@@ -8,19 +8,11 @@ const menuData = [
     title: 'Kurumsal',
     submenus: [
       {
-        name: 'Hakkımızda',
+        name: 'Kurumsal',
         children: [
           { name: 'Hakkımızda', path: '/kurumsal/hakkimizda' },
           { name: 'Vizyon', path: '/kurumsal/vizyon' },
           { name: 'Misyon', path: '/kurumsal/misyon' }
-        ]
-      },
-      {
-        name: 'Bilgi Merkezi',
-        children: [
-          { name: 'Belgeler', path: '/kurumsal/belgeler' },
-          { name: 'Katalog', path: '/kurumsal/katalog' },
-          { name: 'Kalite Politikamız', path: '/kurumsal/kalite-politikamiz' }
         ]
       }
     ]
@@ -29,60 +21,67 @@ const menuData = [
     title: 'Alx MICE',
     submenus: [
       {
-        name: 'Toplantı',
+        name: 'Kongre & Toplantı',
         children: [
-          { name: 'Lokal', path: '/alx-mice/toplanti-lokal' },
-          { name: 'Global', path: '/alx-mice/toplanti-global' }
+          { name: 'Yurtiçi Kongre', path: '/alx-mice/yurtici-kongre' },
+          { name: 'Yurtdışı Kongre', path: '/alx-mice/yurtdisi-kongre' },
+          { name: 'Toplantı', path: '/alx-mice/toplanti' }
         ]
       },
-      { name: 'Incentive', children: [{ name: 'Genel', path: '/alx-mice/incentive' }] },
       {
-        name: 'Kongre',
+        name: 'Sempozyum',
         children: [
-          { name: 'Lokal', path: '/alx-mice/kongre-lokal' },
-          { name: 'Global', path: '/alx-mice/kongre-global' }
+          { name: 'Yurtiçi Sempozyum', path: '/alx-mice/yurtici-sempozyum' },
+          { name: 'Yurtdışı Sempozyum', path: '/alx-mice/yurtdisi-sempozyum' }
         ]
-      },
-      { name: 'Event', children: [{ name: 'Genel', path: '/alx-mice/event' }] }
+      }
     ]
   },
   {
     title: 'Alx 4 You',
     submenus: [
       {
-        name: 'Own event',
+        name: 'Own Event',
         children: [
-          { name: 'Lokal', path: '/alx-4-you/own-event-lokal' },
-          { name: 'Global', path: '/alx-4-you/own-event-global' }
+          { name: 'Own Event - Yurtiçi', path: '/alx-4-you/own-event-yurtici' },
+          { name: 'Own Event - Yurtdışı', path: '/alx-4-you/own-event-yurtdisi' }
         ]
       },
       {
         name: 'Preceptorship',
         children: [
-          { name: 'Lokal', path: '/alx-4-you/preceptorship-lokal' },
-          { name: 'Global', path: '/alx-4-you/preceptorship-global' }
+          { name: 'Yurtiçi Preceptorship', path: '/alx-4-you/preceptorship-yurtici' },
+          { name: 'Yurtdışı Preceptorship', path: '/alx-4-you/preceptorship-yurtdisi' }
         ]
       },
       {
         name: 'Kurs & Eğitim',
         children: [
-          { name: 'Uygulamalı', path: '/alx-4-you/kurs-uygulamali' },
-          { name: 'AI destekli', path: '/alx-4-you/kurs-ai-destekli' }
+          { name: 'Uygulamalı Kurslar', path: '/alx-4-you/uygulamali-kurslar' },
+          { name: 'AI Destekli Kurslar', path: '/alx-4-you/ai-destekli-kurslar' },
+          { name: 'VR Destekli Öğrenme', path: '/alx-4-you/vr-destekli-ogrenme' }
         ]
       },
-      { name: 'Organizasyon', children: [{ name: 'Genel', path: '/alx-4-you/organizasyon' }] }
+      {
+        name: 'Incentive',
+        children: [
+          { name: 'Motivasyonel Faaliyetler', path: '/alx-4-you/motivasyonel-faaliyetler' },
+          { name: 'Lansman Toplantıları', path: '/alx-4-you/lansman-toplantilari' },
+          { name: 'Şirket Piknikleri', path: '/alx-4-you/sirket-piknikleri' }
+        ]
+      }
     ]
   },
   {
     title: 'Alx Digi',
     submenus: [
-      { name: 'Giyilebilir Teknoloji', children: [{ name: 'Genel', path: '/alx-digi/giyilebilir-teknoloji' }] },
-      { name: 'Tele Sağlık', children: [{ name: 'Genel', path: '/alx-digi/tele-saglik' }] },
       {
-        name: 'AI & VR',
+        name: 'Dijital Çözümler',
         children: [
-          { name: 'Deneyimsel Öğrenme', path: '/alx-digi/ai-deneyimsel-ogrenme' },
-          { name: 'Aplikasyon', path: '/alx-digi/ai-aplikasyon' }
+          { name: 'Online Sağlık Danışmanlık', path: '/alx-digi/online-saglik-danismanlik' },
+          { name: 'Online Sağlık Asistan', path: '/alx-digi/online-saglik-asistan' },
+          { name: 'AI Sağlık Hizmetleri', path: '/alx-digi/ai-saglik-hizmetleri' },
+          { name: 'Giyilebilir Teknoloji ile Online Canlı Yayın', path: '/alx-digi/giyilebilir-teknoloji-online-canli-yayin' }
         ]
       }
     ]
@@ -90,10 +89,14 @@ const menuData = [
   {
     title: 'Alx Need',
     submenus: [
-      { name: 'İstatistik & Çeviri', children: [{ name: 'Genel', path: '/alx-need/istatistik-ceviri' }] },
-      { name: 'Medikal & Bilimsel', children: [{ name: 'Genel', path: '/alx-need/medikal-bilimsel' }] },
-      { name: 'Online Canlı Yayın', children: [{ name: 'Genel', path: '/alx-need/online-canli-yayin' }] },
-      { name: 'Omnichannel Yönetimi', children: [{ name: 'Genel', path: '/alx-need/omnichannel' }] }
+      {
+        name: 'Stratejik Çözümler',
+        children: [
+          { name: 'Medikal & Bilimsel', path: '/alx-need/medikal-bilimsel' },
+          { name: 'İstatistik & Çeviri', path: '/alx-need/istatistik-ceviri' },
+          { name: 'Omnichannel', path: '/alx-need/omnichannel' }
+        ]
+      }
     ]
   }
 ];

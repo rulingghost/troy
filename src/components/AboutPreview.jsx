@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './AboutPreview.css';
 
 const AboutPreview = () => {
@@ -21,14 +22,14 @@ const AboutPreview = () => {
             <h4 className="about-subtitle">Biz Kimiz?</h4>
             <h2 className="about-title">Geleceğin Çözümlerini Bugünden Tasarlıyoruz</h2>
             <p className="about-desc">
-              Alexander Troy olarak, yenilikçi yaklaşımımız ve globale yayılan tecrübemizle kurumunuza özel çözümler üreten dijital etkinlik, eğitim ve danışmanlık partneriniziz.
+              İhtiyaçlarınıza özel, bilimsel temelli ve özgün yaklaşımlarla, ulusal ve uluslararası çerçevede 360 derece stratejik çözümler üreten güvenilir ve sürdürülebilir bir iş ortağıyız.
             </p>
             <p className="about-desc">
-              Sürdürülebilirlik, bilimsel yaklaşım ve yaratıcılık ilkelerimizle, ihtiyaç duyduğunuz her alanda güvenilir bir iş ortağı olarak yanınızda yer alıyoruz.
+              Alx Troy olarak; kurumsal etkinliklerin sadece bir organizasyon olmanın ötesinde, şirket kültürünüzü besleyen ve hedeflerinize hizmet eden &ldquo;stratejik birer yolculuk&rdquo; olduğuna inanıyoruz.
             </p>
-            <a href="#hakkimizda" className="btn btn-outline about-btn">
+            <Link to="/kurumsal/hakkimizda" className="btn btn-outline about-btn">
               Hakkımızda Daha Fazla <ArrowRight size={18} style={{ marginLeft: '8px' }} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
