@@ -3,8 +3,6 @@ import Hero from '../components/Hero';
 import AboutPreview from '../components/AboutPreview';
 import Journey from '../components/Journey';
 import Services from '../components/Services';
-import References from '../components/References';
-import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 
 const Home = () => {
@@ -18,8 +16,6 @@ const Home = () => {
       <AboutPreview />
       <Journey />
       <Services />
-      <References />
-      <Testimonials />
       <Contact />
     </main>
   );

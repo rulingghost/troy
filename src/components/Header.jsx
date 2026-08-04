@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X, Globe } from 'lucide-react';
 import './Header.css';
-
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const menuData = [
   {
@@ -96,22 +95,10 @@ const menuData = [
       { name: 'Online Canlı Yayın', children: [{ name: 'Genel', path: '/alx-need/online-canli-yayin' }] },
       { name: 'Omnichannel Yönetimi', children: [{ name: 'Genel', path: '/alx-need/omnichannel' }] }
     ]
-  },
-  {
-    title: 'Galeri',
-    submenus: [
-      {
-        name: 'Galeri',
-        children: [
-          { name: 'Fotoğraflar', path: '/galeri/fotograflar' },
-          { name: 'Videolar', path: '/galeri/videolar' }
-        ]
-      }
-    ]
   }
 ];
 
-const Header = () => {
+const Header = ({ hasBanner = true }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -126,7 +113,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className={`header ${isScrolled ? 'scrolled' : ''} ${hasBanner ? 'with-banner' : ''}`}>
       <div className="container header-container">
         <div className="logo">
           <Link to="/">

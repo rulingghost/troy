@@ -5,15 +5,23 @@
   width: 100%;
   z-index: 1000;
   transition: all 0.4s ease;
-  padding: 20px 0;
+  padding: 16px 0;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
+.header.with-banner {
+  top: 36px;
+}
+
 .header.scrolled {
-  padding: 12px 0;
+  padding: 10px 0;
   box-shadow: var(--shadow-sm);
+}
+
+.header.scrolled.with-banner {
+  top: 0;
 }
 
 .header-container {
@@ -23,9 +31,15 @@
 }
 
 .logo-image {
-  height: 48px;
+  height: 68px;
   width: auto;
   display: block;
+  object-fit: contain;
+  transition: height 0.3s ease;
+}
+
+.header.scrolled .logo-image {
+  height: 54px;
 }
 
 .desktop-nav {
