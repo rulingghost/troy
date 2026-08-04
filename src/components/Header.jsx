@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const menuData = [
   {
     title: 'Kurumsal',
+    path: '/kurumsal',
     submenus: [
       {
         name: 'Kurumsal',
@@ -19,6 +20,7 @@ const menuData = [
   },
   {
     title: 'Alx MICE',
+    path: '/alx-mice',
     submenus: [
       {
         name: 'Kongre & Toplantı',
@@ -39,6 +41,7 @@ const menuData = [
   },
   {
     title: 'Alx 4 You',
+    path: '/alx-4-you',
     submenus: [
       {
         name: 'Own Event',
@@ -74,6 +77,7 @@ const menuData = [
   },
   {
     title: 'Alx Digi',
+    path: '/alx-digi',
     submenus: [
       {
         name: 'Dijital Çözümler',
@@ -88,6 +92,7 @@ const menuData = [
   },
   {
     title: 'Alx Need',
+    path: '/alx-need',
     submenus: [
       {
         name: 'Stratejik Çözümler',
@@ -137,7 +142,7 @@ const Header = ({ hasBanner = true }) => {
                 onMouseEnter={() => setActiveDropdown(index)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <Link to={menuData[index].submenus[0]?.children[0]?.path || '/'}>
+                <Link to={menu.path} onClick={() => setActiveDropdown(null)}>
                   {menu.title} <ChevronDown size={16} className="dropdown-icon" />
                 </Link>
                 
@@ -188,7 +193,9 @@ const Header = ({ hasBanner = true }) => {
           <li className="mobile-nav-item"><Link to="/" onClick={() => setMobileMenuOpen(false)}>Anasayfa</Link></li>
           {menuData.map((menu, index) => (
             <li key={index} className="mobile-nav-item">
-              <div className="mobile-nav-title">{menu.title}</div>
+              <Link to={menu.path} onClick={() => setMobileMenuOpen(false)} className="mobile-nav-title" style={{ display: 'block', textDecoration: 'none' }}>
+                {menu.title}
+              </Link>
               <ul className="mobile-sub-list">
                 {menu.submenus.map((sub, subIdx) => (
                   <li key={subIdx}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, ArrowRight, ExternalLink, MapPin, Globe, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, ExternalLink, MapPin, Globe, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './ServiceSubPage.css';
 
@@ -125,22 +125,22 @@ const congressEvents = [
 
 const destinationItems = {
   yurtdisi: [
-    { name: 'İspanya', landmark: 'Sagrada Familia & Madrid Plaza', image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&q=80&w=600', icon: '🇪🇸' },
-    { name: 'İtalya', landmark: 'Kolezyum & Venedik Kanalları', image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&q=80&w=600', icon: '🇮🇹' },
-    { name: 'Cezayir', landmark: 'Şehitler Anıtı & Kasbah Sokakları', image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&q=80&w=600', icon: '🇩🇿' },
-    { name: 'Mısır', landmark: 'Gize Piramitleri & Kahire Müzesi', image: 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=600', icon: '🇪🇬' },
-    { name: 'Arnavutluk', landmark: 'Tiran İskender Bey Meydanı & Berat', image: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&q=80&w=600', icon: '🇦🇱' },
-    { name: 'Kosova', landmark: 'Prizren Taş Köprü & Priştine', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600', icon: '🇽🇰' },
-    { name: 'Makedonya', landmark: 'Üsküp Taş Köprü & Ohrid Gölü', image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&q=80&w=600', icon: '🇲🇰' },
-    { name: 'Azerbaycan', landmark: 'Haydar Aliyev Merkezi & Bakü Kuleleri', image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=600', icon: '🇦🇿' }
+    { name: 'İspanya', landmark: 'Sagrada Familia & Madrid Plaza', image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&q=80&w=600', icon: '🇪🇸' },
+    { name: 'İtalya', landmark: 'Kolezyum & Venedik Kanalları', image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=80&w=600', icon: '🇮🇹' },
+    { name: 'Cezayir', landmark: 'Şehitler Anıtı & Kasbah Sokakları', image: 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?auto=format&fit=crop&q=80&w=600', icon: '🇩🇿' },
+    { name: 'Mısır', landmark: 'Gize Piramitleri & Kahire Müzesi', image: 'https://images.unsplash.com/photo-1539768942893-daf53e736b68?auto=format&fit=crop&q=80&w=600', icon: '🇪🇬' },
+    { name: 'Arnavutluk', landmark: 'Tiran İskender Bey Meydanı & Berat', image: 'https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?auto=format&fit=crop&q=80&w=600', icon: '🇦🇱' },
+    { name: 'Kosova', landmark: 'Prizren Taş Köprü & Priştine', image: 'https://images.unsplash.com/photo-1592480102905-f9350de2d1c5?auto=format&fit=crop&q=80&w=600', icon: '🇽🇰' },
+    { name: 'Makedonya', landmark: 'Üsküp Taş Köprü & Ohrid Gölü', image: 'https://images.unsplash.com/photo-1580481072645-022f17cc738b?auto=format&fit=crop&q=80&w=600', icon: '🇲🇰' },
+    { name: 'Azerbaycan', landmark: 'Haydar Aliyev Merkezi & Bakü Kuleleri', image: 'https://images.unsplash.com/photo-1609856878074-cf31e21ccb6b?auto=format&fit=crop&q=80&w=600', icon: '🇦🇿' }
   ],
   yurtici: [
     { name: 'Kapadokya', landmark: 'Peri Bacaları & Sıcak Hava Balonları', image: 'https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?auto=format&fit=crop&q=80&w=600', icon: '🎈' },
-    { name: 'Kars', landmark: 'Ani Harabeleri & Çıldır Gölü', image: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&q=80&w=600', icon: '❄️' },
-    { name: 'Trabzon - Rize', landmark: 'Uzungöl, Ayder Yaylası & Fırtına Deresi', image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&q=80&w=600', icon: '🌲' },
-    { name: 'Gaziantep', landmark: 'Zeugma Mozaik Müzesi & Tarihi Çarşı', image: 'https://images.unsplash.com/photo-1590077428563-f5e576cb787e?auto=format&fit=crop&q=80&w=600', icon: '🏛️' },
-    { name: 'Hatay', landmark: 'Medeniyetler Şehri & Antakya Mozaik', image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&q=80&w=600', icon: '🕌' },
-    { name: 'Çanakkale', landmark: 'Truva Atı & Şehitler Abidesi', image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&q=80&w=600', icon: '⚔️' }
+    { name: 'Kars', landmark: 'Ani Harabeleri & Çıldır Gölü', image: 'https://images.unsplash.com/photo-1672594291710-7a66f81b0b2e?auto=format&fit=crop&q=80&w=600', icon: '❄️' },
+    { name: 'Trabzon - Rize', landmark: 'Uzungöl, Ayder Yaylası & Fırtına Deresi', image: 'https://images.unsplash.com/photo-1625127569613-0e37e4a0c01a?auto=format&fit=crop&q=80&w=600', icon: '🌲' },
+    { name: 'Gaziantep', landmark: 'Zeugma Mozaik Müzesi & Tarihi Çarşı', image: 'https://images.unsplash.com/photo-1590071089561-c38a83d36407?auto=format&fit=crop&q=80&w=600', icon: '🏛️' },
+    { name: 'Hatay', landmark: 'Medeniyetler Şehri & Antakya Mozaik', image: 'https://images.unsplash.com/photo-1624476786462-49e6a95bbe77?auto=format&fit=crop&q=80&w=600', icon: '🕌' },
+    { name: 'Çanakkale', landmark: 'Truva Atı & Şehitler Abidesi', image: 'https://images.unsplash.com/photo-1568640458540-cf8b8a89f6b0?auto=format&fit=crop&q=80&w=600', icon: '⚔️' }
   ]
 };
 
@@ -208,13 +208,25 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             />
           </div>
           <div className="service-hero-content">
-            <div className="service-hero-brand">
-              <span className="brand-dots"></span>
-              <div>
-                <strong>Alexander Troy</strong>
-                <small>{catInfo.title}</small>
+            <div className="service-breadcrumb">
+              <Link to="/">Anasayfa</Link>
+              <ChevronRight size={14} className="bread-icon" />
+              <Link to={`/${catKey}`}>{categoryTitle}</Link>
+              {pageTitle && (
+                <>
+                  <ChevronRight size={14} className="bread-icon" />
+                  <span className="bread-active">{pageTitle}</span>
+                </>
+              )}
+            </div>
+
+            <div className="service-badge-container">
+              <div className="service-badge-tag">
+                <Sparkles size={14} className="sparkle-icon" />
+                <span>Alexander Troy • {categoryTitle}</span>
               </div>
             </div>
+
             <h1 className="service-hero-title">{pageTitle || catInfo.title}</h1>
             <p className="service-hero-desc">
               {catInfo.desc}
@@ -361,7 +373,14 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                   {destinationItems.yurtdisi.map((dest, idx) => (
                     <div key={idx} className="destination-card">
                       <div className="dest-image-wrapper">
-                        <img src={dest.image} alt={dest.name} />
+                        <img 
+                          src={dest.image} 
+                          alt={dest.name} 
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=600';
+                          }}
+                        />
                         <span className="dest-flag">{dest.icon}</span>
                       </div>
                       <div className="dest-info">
@@ -381,7 +400,14 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                   {destinationItems.yurtici.map((dest, idx) => (
                     <div key={idx} className="destination-card">
                       <div className="dest-image-wrapper">
-                        <img src={dest.image} alt={dest.name} />
+                        <img 
+                          src={dest.image} 
+                          alt={dest.name} 
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=600';
+                          }}
+                        />
                         <span className="dest-flag">{dest.icon}</span>
                       </div>
                       <div className="dest-info">

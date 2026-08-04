@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import SubPage from './pages/SubPage';
 import ContactPage from './pages/ContactPage';
 
+import CategoryOverviewPage from './pages/CategoryOverviewPage';
+
 function AppContent() {
   const [showBanner, setShowBanner] = useState(true);
   const location = useLocation();
@@ -25,6 +27,7 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/iletisim" element={<ContactPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/:category" element={<CategoryOverviewPage />} />
         <Route path="/:category/:slug" element={<SubPage />} />
       </Routes>
       <Footer />

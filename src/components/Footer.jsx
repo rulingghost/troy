@@ -18,10 +18,10 @@ const Footer = () => {
           <div className="footer-links-group">
             <h4 className="footer-heading">Hizmetlerimiz</h4>
             <ul className="footer-links">
-              <li><a href="/#services">Alx MICE</a></li>
-              <li><a href="/#services">Alx 4 You</a></li>
-              <li><a href="/#services">Alx Digi</a></li>
-              <li><a href="/#services">Alx Need</a></li>
+              <li><Link to="/alx-mice">Alx MICE</Link></li>
+              <li><Link to="/alx-4-you">Alx 4 You</Link></li>
+              <li><Link to="/alx-digi">Alx Digi</Link></li>
+              <li><Link to="/alx-need">Alx Need</Link></li>
             </ul>
           </div>
 
