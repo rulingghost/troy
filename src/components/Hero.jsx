@@ -77,9 +77,6 @@ const Hero = () => {
             style={{ backgroundImage: `url(${slide.image})` }}
           >
             <div className="slide-overlay"></div>
-            
-            {/* Animated background glow */}
-            <div className="glow-effect"></div>
 
             <div className="container slide-container">
               <div className="slide-content">

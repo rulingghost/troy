@@ -274,13 +274,12 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  background: rgba(29, 35, 90, 0.85);
+  background: rgba(29, 35, 90, 0.92);
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 20px;
-  backdrop-filter: blur(4px);
 }
 
 .preceptor-info {
@@ -574,8 +573,7 @@
   top: 12px;
   right: 12px;
   font-size: 1.8rem;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.95);
   padding: 4px 8px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);

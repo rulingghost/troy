@@ -27,12 +27,6 @@ const DarkThemeSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
 
   return (
     <div className="dark-theme-wrapper">
-      <div className="dark-bg-decorations">
-        <div className="dark-circle circle-1"></div>
-        <div className="dark-circle circle-2"></div>
-        <div className="dark-circle circle-3"></div>
-      </div>
-
       <div className="container dark-theme-container">
         {/* Section 1: Hero */}
         <section className="dark-hero-section">

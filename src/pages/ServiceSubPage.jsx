@@ -198,12 +198,6 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
 
   return (
     <div className="service-theme-wrapper">
-      <div className="service-bg-decorations">
-        <div className="service-circle circle-1"></div>
-        <div className="service-circle circle-2"></div>
-        <div className="service-circle circle-3"></div>
-      </div>
-
       <div className="container service-theme-container">
         {/* Section 1: Hero */}
         <section className="service-hero-section">
