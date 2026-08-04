@@ -8,14 +8,14 @@ const servicesData = [
     title: 'Alx MICE',
     subtitle: 'Etkinlik, Kongre & Sempozyum',
     desc: 'Yurt içi ve yurt dışı kongre, toplantı, sempozyum hizmetleri (Ulaşım (Uçak bileti), konaklama, organizasyon süresince alınacak yemekler, tur programları, profesyonel rehberlik hizmetleri).',
-    link: '/alx-mice/kongre',
+    link: '/alx-mice/yurtici-kongre',
     bgImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=800'
   },
   {
     title: 'Alx 4 You',
     subtitle: 'Butik & Kurumsal Çözümler',
     desc: 'Size özel planlanan yurt içi ve yurt dışı toplantı, preceptorship, kurs ve seminer, incentive hizmetleri (Tanıtım yönetmeliğine uygun program, kurum iletişimi, toplantı altyapı hizmeti, Ulaşım (Uçak bileti), konaklama, organizasyon süresince alınacak yemekler, tur programları, profesyonel rehberlik hizmetleri).',
-    link: '/alx-4-you/own-event',
+    link: '/alx-4-you/own-event-yurtici',
     bgImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800'
   },
   {
