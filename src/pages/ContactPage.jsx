@@ -16,6 +16,7 @@ import {
   Headphones
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import OrganizationContactForm from '../components/OrganizationContactForm';
 import './ContactPage.css';
 
 const ContactPage = () => {
@@ -369,6 +370,9 @@ const ContactPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Organization Contact Form */}
+        <OrganizationContactForm />
 
         {/* FAQ Section */}
         <div className="contact-faq-section glass-panel">

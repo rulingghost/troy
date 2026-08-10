@@ -4,6 +4,7 @@ import AboutPreview from '../components/AboutPreview';
 import Journey from '../components/Journey';
 import Services from '../components/Services';
 import Contact from '../components/Contact';
+import OrganizationContactForm from '../components/OrganizationContactForm';
 
 const Home = () => {
   useEffect(() => {
@@ -16,6 +17,7 @@ const Home = () => {
       <AboutPreview />
       <Journey />
       <Services />
+      <OrganizationContactForm />
       <Contact />
     </main>
   );

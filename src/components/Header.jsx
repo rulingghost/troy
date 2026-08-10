@@ -82,10 +82,10 @@ const menuData = [
       {
         name: 'Dijital Çözümler',
         children: [
-          { name: 'Online Sağlık Danışmanlık', path: '/alx-digi/online-saglik-danismanlik' },
-          { name: 'Online Sağlık Asistan', path: '/alx-digi/online-saglik-asistan' },
-          { name: 'AI Sağlık Hizmetleri', path: '/alx-digi/ai-saglik-hizmetleri' },
-          { name: 'Giyilebilir Teknoloji ile Online Canlı Yayın', path: '/alx-digi/giyilebilir-teknoloji-online-canli-yayin' }
+          { name: 'Online Sağlık Danışmanlık (Doktorum Yanımda)', path: '/alx-digi/online-saglik-danismanlik' },
+          { name: 'Online Sağlık Asistan (Beynex)', path: '/alx-digi/online-saglik-asistan' },
+          { name: 'AI Sağlık Hizmetleri (Niceye)', path: '/alx-digi/ai-saglik-hizmetleri' },
+          { name: 'Online Canlı Yayın (Niceye)', path: '/alx-digi/giyilebilir-teknoloji-online-canli-yayin' }
         ]
       }
     ]
@@ -97,9 +97,9 @@ const menuData = [
       {
         name: 'Stratejik Çözümler',
         children: [
-          { name: 'Medikal & Bilimsel', path: '/alx-need/medikal-bilimsel' },
-          { name: 'İstatistik & Çeviri', path: '/alx-need/istatistik-ceviri' },
-          { name: 'Omnichannel', path: '/alx-need/omnichannel' }
+          { name: 'Medikal & Bilimsel (Gama CRO)', path: '/alx-need/medikal-bilimsel' },
+          { name: 'İstatistik & Çeviri (Gama CRO)', path: '/alx-need/istatistik-ceviri' },
+          { name: 'Omnichannel (Niceye)', path: '/alx-need/omnichannel' }
         ]
       }
     ]

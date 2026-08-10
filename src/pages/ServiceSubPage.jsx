@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, ArrowRight, ExternalLink, MapPin, Globe, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import OrganizationContactForm from '../components/OrganizationContactForm';
 import './ServiceSubPage.css';
 
 const categoryData = {
@@ -47,13 +48,13 @@ const categoryData = {
   },
   'alx-digi': {
     title: 'Alx Digi',
-    desc: 'Online sağlık danışmanlık ve asistan uygulamaları, AI destekli sağlık hizmetleri ve aplikasyonlar, sağlıkta giyilebilir teknoloji, online canlı yayın platformu.',
+    desc: 'Online sağlık danışmanlık ve asistan uygulamaları (Doktorum Yanımda, Beynex), AI destekli sağlık hizmetleri (Niceye Vidizayn), giyilebilir teknoloji ve canlı yayın platformu (Niceye Vistream).',
     heroImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800',
     subServices: [
-      { title: 'Online Sağlık Danışmanlık', desc: 'Dijital ortamda güvenli ve hızlı danışmanlık modülleri.', icon: '🩺', slug: 'online-saglik-danismanlik' },
-      { title: 'Online Sağlık Asistan', desc: 'Kullanıcı dostu, yapay zeka destekli dijital asistan sistemleri.', icon: '🤖', slug: 'online-saglik-asistan' },
-      { title: 'AI Sağlık Hizmetleri', desc: 'Yapay zeka destekli tanı, analiz ve eğitim aplikasyonları.', icon: '⚡', slug: 'ai-saglik-hizmetleri' },
-      { title: 'Giyilebilir Teknoloji & Canlı Yayın', desc: 'Sağlıkta giyilebilir sensörler ve yüksek kalitede canlı yayın platformu.', icon: '📡', slug: 'giyilebilir-teknoloji-online-canli-yayin' }
+      { title: 'Online Sağlık Danışmanlık', desc: 'Doktorum Yanımda altyapısı ile görüntülü danışmanlık.', icon: '🩺', slug: 'online-saglik-danismanlik', brand: 'Doktorum Yanımda', link: 'https://doktorumyanimda.net/' },
+      { title: 'Online Sağlık Asistan', desc: 'Beynex platformu ile akıllı dijital asistan sistemleri.', icon: '🤖', slug: 'online-saglik-asistan', brand: 'Beynex', link: 'https://www.beynex.com/tr/' },
+      { title: 'AI Sağlık Hizmetleri', desc: 'Niceye (Vidizayn) ile yapay zeka destekli içerik ve tanı araçları.', icon: '⚡', slug: 'ai-saglik-hizmetleri', brand: 'Niceye', link: 'https://niceye.com/vidizayn' },
+      { title: 'Giyilebilir Teknoloji & Canlı Yayın', desc: 'Niceye (Vistream) ile giyilebilir teknoloji ve canlı yayın altyapısı.', icon: '📡', slug: 'giyilebilir-teknoloji-online-canli-yayin', brand: 'Niceye', link: 'https://niceye.com/vistream' }
     ],
     stats: [
       { value: 'AI', label: 'Yapay Zeka Destekli' },
@@ -64,12 +65,12 @@ const categoryData = {
   },
   'alx-need': {
     title: 'Alx Need',
-    desc: 'Medikal ve bilimsel hizmetler, istatistik ve çeviri hizmetleri, omnichannel marka yönetimi.',
+    desc: 'Medikal ve bilimsel hizmetler (Gama CRO Medical Writing), biyo-istatistik ve çeviri hizmetleri (Gama CRO Bioinformatics), omnichannel marka yönetimi (Niceye IT).',
     heroImage: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800',
     subServices: [
-      { title: 'Medikal & Bilimsel', desc: 'Medikal yazım, bilimsel danışmanlık ve içerik üretimi.', icon: '🔬', slug: 'medikal-bilimsel' },
-      { title: 'İstatistik & Çeviri', desc: 'Biyo-istatistiksel analizler ve tıbbi/akademik çeviri hizmetleri.', icon: '📊', slug: 'istatistik-ceviri' },
-      { title: 'Omnichannel Marka Yönetimi', desc: 'Farklı kanallarda entegre medikal marka ve iletişim stratejileri.', icon: '🔄', slug: 'omnichannel' }
+      { title: 'Medikal & Bilimsel', desc: 'Gama CRO ile medikal yazım ve bilimsel danışmanlık.', icon: '🔬', slug: 'medikal-bilimsel', brand: 'Gama CRO', link: 'https://gamacro.com/medical-writing/' },
+      { title: 'İstatistik & Çeviri', desc: 'Gama CRO ile biyo-istatistiksel analizler ve tıbbi çeviri.', icon: '📊', slug: 'istatistik-ceviri', brand: 'Gama CRO', link: 'https://gamacro.com/bioinformatics-and-data-analysis/' },
+      { title: 'Omnichannel Marka Yönetimi', desc: 'Niceye (Niceye IT) ile entegre omnichannel pazarlama.', icon: '🔄', slug: 'omnichannel', brand: 'Niceye', link: 'https://niceye.com/niceyeit' }
     ],
     stats: [
       { value: '360°', label: 'Omnichannel Strateji' },
@@ -78,6 +79,69 @@ const categoryData = {
       { value: 'Sürdürülebilir', label: 'Marka Büyüme Modeli' }
     ]
   }
+};
+
+const partnerPlatforms = {
+  'alx-digi': [
+    {
+      title: 'Online Sağlık Danışmanlık',
+      brand: 'Doktorum Yanımda',
+      link: 'https://doktorumyanimda.net/',
+      desc: 'Doktorum Yanımda altyapısı ile hastaların hekimlerle 7/24 online görüntülü danışmanlık yapabildiği şifreli ve güvenli sağlık platformu.',
+      icon: '🩺',
+      slug: 'online-saglik-danismanlik'
+    },
+    {
+      title: 'Online Sağlık Asistan',
+      brand: 'Beynex',
+      link: 'https://www.beynex.com/tr/',
+      desc: 'Beynex platformu ile beyin sağlığı takibi, dijital asistan çözümleri ve kişiselleştirilmiş zihinsel egzersiz modülleri.',
+      icon: '🤖',
+      slug: 'online-saglik-asistan'
+    },
+    {
+      title: 'AI Sağlık Hizmetleri',
+      brand: 'Niceye',
+      link: 'https://niceye.com/vidizayn',
+      desc: 'Niceye Vidizayn ile yapay zeka destekli medikal içerik tasarımı, tanı yardım algoritmaları ve yenilikçi sağlık aplikasyonları.',
+      icon: '⚡',
+      slug: 'ai-saglik-hizmetleri'
+    },
+    {
+      title: 'Giyilebilir Teknoloji & Canlı Yayın',
+      brand: 'Niceye',
+      link: 'https://niceye.com/vistream',
+      desc: 'Niceye Vistream altyapısı ile giyilebilir sensör entegrasyonu ve ameliyathanelerden HD kalitesinde kesintisiz canlı yayın imkanı.',
+      icon: '📡',
+      slug: 'giyilebilir-teknoloji-online-canli-yayin'
+    }
+  ],
+  'alx-need': [
+    {
+      title: 'Medikal & Bilimsel',
+      brand: 'Gama CRO',
+      link: 'https://gamacro.com/medical-writing/',
+      desc: 'Gama CRO Medical Writing altyapısı ile uluslararası standartlarda medikal metin yazımı, bilimsel yayınlar ve literatür özetleri.',
+      icon: '🔬',
+      slug: 'medikal-bilimsel'
+    },
+    {
+      title: 'İstatistik & Çeviri',
+      brand: 'Gama CRO',
+      link: 'https://gamacro.com/bioinformatics-and-data-analysis/',
+      desc: 'Gama CRO Bioinformatics & Data Analysis ile biyomedikal veri analizi, biyo-istatistiksel raporlama ve medikal çeviri.',
+      icon: '📊',
+      slug: 'istatistik-ceviri'
+    },
+    {
+      title: 'Omnichannel Marka Yönetimi',
+      brand: 'Niceye',
+      link: 'https://niceye.com/niceyeit',
+      desc: 'Niceye IT altyapısıyla fiziksel ve dijital tüm kanallarda bütünleşik omnichannel medikal marka yönetimi ve iletişim kurguları.',
+      icon: '🔄',
+      slug: 'omnichannel'
+    }
+  ]
 };
 
 const congressEvents = [
@@ -253,12 +317,47 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                 </div>
                 <div className="service-service-bottom">
                   <h3>{sub.title}</h3>
+                  {sub.brand && (
+                    <span style={{ fontSize: '0.8rem', color: 'var(--secondary)', fontWeight: '700', margin: '2px 0 6px 0', display: 'block' }}>
+                      {sub.brand}
+                    </span>
+                  )}
                   <p className="service-card-desc">{sub.desc}</p>
                 </div>
               </Link>
             ))}
           </div>
         </section>
+
+        {/* Dynamic Section: Partner Platforms (Alx Digi & Alx Need) */}
+        {(catKey === 'alx-digi' || catKey === 'alx-need') && partnerPlatforms[catKey] && (
+          <section className="events-links-section">
+            <h2 className="service-section-title">
+              {catKey === 'alx-digi' ? 'Öne Çıkan Dijital & AI Sağlık Platformları' : 'Stratejik Medikal & Bilimsel Çözüm Ortakları'}
+            </h2>
+            <div className="events-grid">
+              {partnerPlatforms[catKey].map((plat, idx) => (
+                <div key={idx} className={`event-card ${activeSlug === plat.slug ? 'active-partner-card' : ''}`}>
+                  <div className="event-header">
+                    <span className="event-badge">{plat.brand}</span>
+                    <span style={{ fontSize: '1.8rem' }}>{plat.icon}</span>
+                  </div>
+                  <h3 className="event-title">{plat.title}</h3>
+                  <div className="event-org">Platform / Hizmet: {plat.brand}</div>
+                  <p className="event-desc">{plat.desc}</p>
+                  <a 
+                    href={plat.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-outline event-link-btn"
+                  >
+                    Resmi Web Sitesini Ziyaret Et ({plat.brand}) <ExternalLink size={16} style={{ marginLeft: '6px' }} />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Dynamic Section: Preceptorship Cards */}
         {showPreceptorship && (
@@ -421,6 +520,104 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             )}
           </section>
         )}
+
+        {/* Dynamic Section: Rich Corporate Travel & Organization Content (Yurtdışı & Yurtiçi) */}
+        {(catKey === 'alx-4-you' || activeSlug.includes('own-event')) && (
+          <section className="events-links-section org-text-showcase">
+            {(!isOwnEventYurtici || catKey === 'alx-4-you') && (
+              <div className="org-detail-card glass-panel">
+                <div className="org-card-header">
+                  <span className="org-motto">&ldquo;Enjoy Your Journey&rdquo; — We Take Care of Every Detail</span>
+                  <h2 className="org-main-title">YURTDIŞI SEYAHAT VE ORGANİZASYONLAR</h2>
+                  <h3 className="org-subtitle">Dünya Genelinde Organizasyon ve Seyahat Çözümleri</h3>
+                </div>
+                <div className="org-card-body">
+                  <p className="org-lead">
+                    Kurumsal firmaların yurt dışındaki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını dünyanın her noktasında planlıyor ve yönetiyoruz. Avrupa’dan Uzak Doğu’ya, Amerika’dan Orta Doğu’ya kadar farklı destinasyonlarda; kurumların hedeflerine, katılımcı profiline ve organizasyonun kapsamına uygun profesyonel çözümler sunuyoruz.
+                  </p>
+                  <p className="org-text">
+                    İster bir şehirde gerçekleştirilecek özel bir toplantı, ister farklı ülkeleri kapsayan geniş katılımlı bir organizasyon olsun; lokasyondan bağımsız olarak tüm operasyonu tek merkezden yönetiyoruz.
+                  </p>
+
+                  <div className="org-feature-block">
+                    <h4>Dünyanın Her Noktasında, Tek Merkezden Organizasyon</h4>
+                    <p className="org-desc-note">Yurt dışı organizasyonlarında destinasyon seçimi ve program planlamasından başlayarak tüm süreci uçtan uca yönetiyoruz.</p>
+                    <div className="org-services-grid">
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Uluslararası şirket toplantıları ve seminerler</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kongre, sempozyum ve bilimsel toplantılar</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Eğitim ve motivasyon organizasyonları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bayi, distribütör ve iş ortağı toplantıları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Lansman ve tanıtım etkinlikleri</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bölge ve saha toplantıları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal geziler ve incentive organizasyonları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Fuar ve etkinlik katılım organizasyonları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Konaklama, uçuş ve şehir içi ulaşım</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Havalimanı ve özel transfer organizasyonları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal yemek, davet ve sosyal programlar</div>
+                    </div>
+                  </div>
+
+                  <div className="org-dual-blocks">
+                    <div className="org-block-box">
+                      <h4>Baştan Sona Kusursuz Planlama</h4>
+                      <p>Uluslararası organizasyonların beraberinde getirdiği farklı ihtiyaçları ve operasyonel detayları biliyor, her aşamayı önceden planlıyoruz. Uçuş ve transferlerden konaklamaya, toplantı mekanlarından etkinlik programlarına ve sosyal aktivitelere kadar tüm süreci koordineli biçimde yönetiyoruz.</p>
+                      <p>Farklı ülkelerdeki yerel çözüm ortaklarımız ve global organizasyon ağımız sayesinde, dünyanın neresinde olursa olsun kurumunuzun ihtiyaçlarına hızlı ve güvenilir çözümler sunuyoruz.</p>
+                    </div>
+                    <div className="org-block-box">
+                      <h4>Dünyanın Her Yerinde, Aynı Özen</h4>
+                      <p>Her destinasyonun kendine özgü koşullarını dikkate alarak, kurumunuzun beklentilerine uygun programlar oluşturuyoruz. Katılımcı deneyimini, operasyonel kusursuzluğu ve organizasyonun hedeflerini bir arada gözetiyoruz.</p>
+                      <p className="org-highlight-quote">&ldquo;Siz organizasyonunuzun hedefini belirleyin, dünyanın neresinde olursa olsun tüm detaylarını biz planlayalım.&rdquo;</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {(!isOwnEventYurtdisi || catKey === 'alx-4-you') && (
+              <div className="org-detail-card glass-panel" style={{ marginTop: '40px' }}>
+                <div className="org-card-header">
+                  <h2 className="org-main-title">YURTİÇİ SEYAHAT VE ORGANİZASYONLAR</h2>
+                  <h3 className="org-subtitle">Yurt İçi Organizasyon ve Seyahat Çözümleri</h3>
+                </div>
+                <div className="org-card-body">
+                  <p className="org-lead">
+                    Kurumsal firmaların yurt içindeki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını uçtan uca planlıyor ve yönetiyoruz. Farklı sektörlerde faaliyet gösteren kurumların ihtiyaçlarını anlayarak; her organizasyonun amacına, katılımcı profiline ve programına uygun, profesyonel çözümler sunuyoruz.
+                  </p>
+                  <p className="org-text">
+                    Şirket toplantıları, seminer ve eğitimler, bayi organizasyonları, motivasyon gezileri, lansmanlar, kongre ve sempozyumlar, hekim ve sağlık profesyonellerine yönelik toplantılar, bölge toplantıları ve özel kurumsal etkinlikler dahil olmak üzere her ölçekteki organizasyonu titizlikle planlıyoruz.
+                  </p>
+
+                  <div className="org-feature-block">
+                    <h4>Organizasyonun Her Aşamasında Yanınızdayız</h4>
+                    <p className="org-desc-note">Bir organizasyonun yalnızca etkinlik gününden ibaret olmadığını biliyoruz. Bu nedenle planlama aşamasından başlayarak ulaşım, konaklama, toplantı mekanı, transfer, teknik ihtiyaçlar, yemek ve sosyal programlar dahil olmak üzere tüm detayları tek merkezden yönetiyoruz.</p>
+                    <div className="org-services-grid">
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal toplantı ve seminerler</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Eğitim ve motivasyon organizasyonları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bayi, distribütör ve iş ortağı toplantıları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Lansman ve tanıtım etkinlikleri</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kongre, sempozyum ve bilimsel toplantılar</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Hekim ve sağlık profesyonellerine yönelik organizasyonlar</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bölge ve saha toplantıları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal geziler ve özel etkinlikler</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Konaklama, ulaşım ve transfer organizasyonları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal yemek ve sosyal programlar</div>
+                    </div>
+                  </div>
+
+                  <div className="org-single-block">
+                    <h4>Her Kuruma, İhtiyacına Özel Çözüm</h4>
+                    <p>Her kurumun beklentisinin ve organizasyon hedefinin farklı olduğuna inanıyoruz. Bu nedenle hazır paketler yerine, kurumun ihtiyaçlarına ve organizasyonun amacına göre şekillenen çözümler geliştiriyoruz.</p>
+                    <p>Katılımcıların seyahatinden konaklamasına, toplantı alanından etkinlik programına kadar tüm süreci koordineli biçimde yöneterek kurumların organizasyon yükünü üstleniyoruz.</p>
+                    <p className="org-highlight-quote">&ldquo;Siz organizasyonunuzun amacına odaklanın, biz tüm detayları planlayıp yönetelim.&rdquo;</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Form Integration for Organization Pages */}
+        {catKey === 'alx-4-you' && <OrganizationContactForm />}
 
         {/* Section 3: Hexagon Stats */}
         <section className="service-stats-section">

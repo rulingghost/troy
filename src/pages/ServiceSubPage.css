@@ -726,3 +726,162 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Corporate Organization Showcase Card Styling */
+.org-text-showcase {
+  margin-top: 50px;
+  margin-bottom: 70px;
+}
+
+.org-detail-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 12px 35px rgba(40, 52, 72, 0.06);
+  padding: 44px 48px;
+}
+
+.org-card-header {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.org-motto {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+
+.org-main-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.org-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+}
+
+.org-lead {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #334155;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.org-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #475569;
+  margin-bottom: 28px;
+}
+
+.org-feature-block {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 32px;
+}
+
+.org-feature-block h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.org-desc-note {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.org-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.org-service-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.org-service-item .check-icon {
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+
+.org-dual-blocks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-top: 24px;
+}
+
+.org-block-box {
+  background: #ffffff;
+  border-left: 4px solid var(--secondary);
+  padding: 22px 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  border-left-width: 4px;
+}
+
+.org-block-box h4, .org-single-block h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.org-block-box p, .org-single-block p {
+  font-size: 0.98rem;
+  line-height: 1.68;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.org-highlight-quote {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: var(--secondary) !important;
+  font-style: italic;
+  margin-top: 12px !important;
+  padding-left: 12px;
+  border-left: 3px solid var(--secondary);
+}
+
+@media (max-width: 768px) {
+  .org-detail-card {
+    padding: 24px 20px;
+  }
+  .org-main-title {
+    font-size: 1.7rem;
+  }
+  .org-dual-blocks {
+    grid-template-columns: 1fr;
+  }
+  .org-services-grid {
+    grid-template-columns: 1fr;
+  }
+}

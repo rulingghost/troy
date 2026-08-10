@@ -18,7 +18,8 @@ import {
   BarChart3,
   MapPin,
   GraduationCap,
-  Tv
+  Tv,
+  ExternalLink
 } from 'lucide-react';
 import './CategoryOverviewPage.css';
 
@@ -168,20 +169,20 @@ const categoryOverviewData = {
         groupDesc: 'Bölgeye özgü simge ikonları ve kültürel konseptleriyle tasarlanan kurumsal seyahatler.',
         items: [
           {
-            name: 'Own Event - Yurtiçi',
+            name: 'Yurt İçi Seyahat ve Organizasyonlar',
             path: '/alx-4-you/own-event-yurtici',
             icon: MapPin,
-            tag: 'Yurtiçi Destinasyon',
-            shortDesc: 'Kapadokya, Kars, Trabzon, Gaziantep, Hatay ve Çanakkale konsept seyahatleri ve özel gala programları.',
-            highlights: ['Simge ikonlar & kültür turları', 'Bölgesel gastronomi deneyimleri', 'Butik konaklama çözümleri']
+            tag: 'Yurt İçi Destinasyon',
+            shortDesc: 'Kurumsal firmaların yurt içindeki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını uçtan uca planlıyor ve yönetiyoruz.',
+            highlights: ['Kurumsal toplantı & lansmanlar', 'Eğitim, bayi & motivasyon gezileri', 'Konaklama, ulaşım & transfer organizasyonları']
           },
           {
-            name: 'Own Event - Yurtdışı',
+            name: 'Yurtdışı Seyahat ve Organizasyonlar',
             path: '/alx-4-you/own-event-yurtdisi',
             icon: Globe,
             tag: 'Yurtdışı Destinasyon',
-            shortDesc: 'İspanya, İtalya, Cezayir, Mısır, Balkanlar ve Azerbaycan rotalarında kuruma özel yurt dışı etkinlik yönetimi.',
-            highlights: ['İspanya & İtalya simge rotaları', 'Mısır & Cezayir konsept turları', 'Balkanlar & Azerbaycan seyahatleri']
+            shortDesc: 'Kurumsal firmaların yurt dışındaki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını dünyanın her noktasında planlıyor ve yönetiyoruz.',
+            highlights: ['Dünya genelinde organizasyon & seyahat', 'Uluslararası toplantı, kongre & incentive', 'Lokasyondan bağımsız tek merkezden yönetim']
           }
         ]
       },
@@ -298,32 +299,40 @@ const categoryOverviewData = {
             path: '/alx-digi/online-saglik-danismanlik',
             icon: Stethoscope,
             tag: 'Dijital Danışmanlık',
-            shortDesc: 'Hekimler ve hastalar arasında güvenli, KVKK uyumlu ve yüksek kaliteli online görüntülü görüşme altyapısı.',
-            highlights: ['Şifreli veri güvenliği', 'Görüntülü görüşme modülü', 'Randevu & takip paneli']
+            brand: 'Doktorum Yanımda',
+            externalUrl: 'https://doktorumyanimda.net/',
+            shortDesc: 'Doktorum Yanımda altyapısıyla hekimler ve hastalar arasında güvenli, KVKK uyumlu ve yüksek kaliteli online görüntülü görüşme hizmetleri.',
+            highlights: ['Doktorum Yanımda çözümü', 'Şifreli veri güvenliği', 'Görüntülü görüşme & randevu altyapısı']
           },
           {
             name: 'Online Sağlık Asistan',
             path: '/alx-digi/online-saglik-asistan',
             icon: Cpu,
             tag: 'Akıllı Asistan',
-            shortDesc: '7/24 erişilebilir, kullanıcı dostu ve akıllı algoritmalarla desteklenen dijital asistan platformu.',
-            highlights: ['7/24 Kesintisiz destek', 'Otomatik hatırlatmalar', 'Kullanıcı dostu arayüz']
+            brand: 'Beynex',
+            externalUrl: 'https://www.beynex.com/tr/',
+            shortDesc: 'Beynex platformu ile 7/24 erişilebilir, kullanıcı dostu ve akıllı algoritmalarla desteklenen dijital asistan sistemleri.',
+            highlights: ['Beynex dijital asistan', '7/24 Kesintisiz destek', 'Otomatik hatırlatma & takip']
           },
           {
             name: 'AI Sağlık Hizmetleri',
             path: '/alx-digi/ai-saglik-hizmetleri',
             icon: Sparkles,
             tag: 'Yapay Zeka AI',
-            shortDesc: 'Yapay zeka destekli veri analizi, tanı yardımcı araçları ve kişiselleştirilmiş sağlık içerikleri.',
-            highlights: ['Derin öğrenme algoritmaları', 'Hızlı veri analitiği', 'Kişiselleştirilmiş öneriler']
+            brand: 'Niceye',
+            externalUrl: 'https://niceye.com/vidizayn',
+            shortDesc: 'Niceye (Vidizayn) teknolojisiyle yapay zeka destekli veri analizi, tanı yardımcı araçları ve kişiselleştirilmiş sağlık içerikleri.',
+            highlights: ['Niceye Vidizayn altyapısı', 'Derin öğrenme algoritmaları', 'Kişiselleştirilmiş öneriler']
           },
           {
             name: 'Giyilebilir Teknoloji & Canlı Yayın',
             path: '/alx-digi/giyilebilir-teknoloji-online-canli-yayin',
             icon: Tv,
             tag: 'IoT & Live Stream',
-            shortDesc: 'Sağlıkta giyilebilir sensör verilerinin entegrasyonu ve ameliyathanelerden HD kalitesinde canlı yayın imkanı.',
-            highlights: ['Ameliyathane canlı yayını', 'Giyilebilir sensör entegrasyonu', 'Yüksek çözünürlüklü akış']
+            brand: 'Niceye',
+            externalUrl: 'https://niceye.com/vistream',
+            shortDesc: 'Niceye (Vistream) altyapısıyla sağlıkta giyilebilir sensör verilerinin entegrasyonu ve HD kalitesinde ameliyathane canlı yayını.',
+            highlights: ['Niceye Vistream canlı yayın', 'Ameliyathane HD yayın altyapısı', 'Giyilebilir sensör entegrasyonu']
           }
         ]
       }
@@ -358,24 +367,30 @@ const categoryOverviewData = {
             path: '/alx-need/medikal-bilimsel',
             icon: Stethoscope,
             tag: 'Medikal İçerik',
-            shortDesc: 'Medikal makale yazımı, bilimsel literatür özetleri, sunumlar ve hekim iletişimine özel içerik geliştirme.',
-            highlights: ['Tıbbi yazım (Medical Writing)', 'Literatür & derleme hazırlığı', 'Bilimsel danışmanlık']
+            brand: 'Gama CRO',
+            externalUrl: 'https://gamacro.com/medical-writing/',
+            shortDesc: 'Gama CRO medikal yazım (Medical Writing) uzmanlığı ile bilimsel makale yazımı, literatür özetleri ve hekim iletişimi içerikleri.',
+            highlights: ['Gama CRO Medical Writing', 'Literatür & derleme hazırlığı', 'Bilimsel danışmanlık']
           },
           {
             name: 'İstatistik & Çeviri',
             path: '/alx-need/istatistik-ceviri',
             icon: BarChart3,
             tag: 'Biyo-İstatistik',
-            shortDesc: 'Klinik araştırmalar için biyo-istatistiksel analiz raporlamaları ve medikal/akademik terminolojiye tam uygun çeviri.',
-            highlights: ['Biyo-istatistiksel analiz (SPSS/R)', 'Medikal & akademik çeviri', 'Dil ve üslup editörlüğü']
+            brand: 'Gama CRO',
+            externalUrl: 'https://gamacro.com/bioinformatics-and-data-analysis/',
+            shortDesc: 'Gama CRO biyo-enformatik ve veri analizi (Bioinformatics & Data Analysis) ile biyo-istatistiksel raporlama ve nitelikli tıbbi çeviri.',
+            highlights: ['Gama CRO Bio-informatics & Data Analysis', 'Biyo-istatistiksel analiz', 'Medikal & akademik çeviri']
           },
           {
             name: 'Omnichannel',
             path: '/alx-need/omnichannel',
             icon: Globe,
             tag: 'Entegre Marka',
-            shortDesc: 'Fiziksel ve dijital tüm temas noktalarında markanızın mesajını tutarlı ve etkili kılan entegre medikal pazarlama.',
-            highlights: ['Fiziksel & dijital kanal entegrasyonu', 'Hekim & hasta iletişimi', 'Ölçülebilir marka büyütme']
+            brand: 'Niceye',
+            externalUrl: 'https://niceye.com/niceyeit',
+            shortDesc: 'Niceye (Niceye IT) altyapısıyla tüm fiziksel ve dijital temas noktalarında markanızın mesajını entegre kılan pazarlama.',
+            highlights: ['Niceye IT omnichannel çözümü', 'Fiziksel & dijital kanal entegrasyonu', 'Ölçülebilir marka büyütme']
           }
         ]
       }
@@ -479,6 +494,13 @@ const CategoryOverviewPage = () => {
                       </div>
 
                       <h4 className="cat-item-name">{item.name}</h4>
+
+                      {item.brand && (
+                        <div className="cat-brand-pill">
+                          <span className="cat-brand-label">Çözüm Platformu: <strong>{item.brand}</strong></span>
+                        </div>
+                      )}
+
                       <p className="cat-item-short">{item.shortDesc}</p>
 
                       <ul className="cat-item-highlights">
@@ -495,6 +517,18 @@ const CategoryOverviewPage = () => {
                           <span>Sayfayı İncele</span>
                           <ArrowRight size={18} className="link-arrow" />
                         </Link>
+                        {item.externalUrl && (
+                          <a 
+                            href={item.externalUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="cat-ext-link-btn"
+                            title={`${item.brand} web sitesine git (${item.externalUrl})`}
+                          >
+                            <span>{item.brand} Web Sitesi</span>
+                            <ExternalLink size={14} style={{ marginLeft: '4px' }} />
+                          </a>
+                        )}
                       </div>
                     </div>
                   );

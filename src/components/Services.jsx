@@ -21,14 +21,14 @@ const servicesData = [
   {
     title: 'Alx Digi',
     subtitle: 'Dijital & AI Sağlık Teknolojileri',
-    desc: 'Online sağlık danışmanlık ve asistan uygulamaları, AI destekli sağlık hizmetleri ve aplikasyonlar, sağlıkta giyilebilir teknoloji, online canlı yayın platformu.',
+    desc: 'Doktorum Yanımda, Beynex ve Niceye altyapılarıyla online sağlık danışmanlık, AI asistan, giyilebilir teknoloji ve canlı yayın platformları.',
     link: '/alx-digi',
     bgImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
   },
   {
     title: 'Alx Need',
     subtitle: 'Medikal & Omnichannel Yönetimi',
-    desc: 'Medikal ve bilimsel hizmetler, istatistik ve çeviri hizmetleri, omnichannel marka yönetimi.',
+    desc: 'Gama CRO ve Niceye altyapılarıyla medikal & bilimsel hizmetler, biyo-istatistik, tıbbi çeviri ve omnichannel marka yönetimi.',
     link: '/alx-need',
     bgImage: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800'
   }
