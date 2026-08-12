@@ -47,7 +47,8 @@ const menuData = [
         name: 'Own Event',
         children: [
           { name: 'Own Event - Yurtiçi', path: '/alx-4-you/own-event-yurtici' },
-          { name: 'Own Event - Yurtdışı', path: '/alx-4-you/own-event-yurtdisi' }
+          { name: 'Own Event - Yurtdışı', path: '/alx-4-you/own-event-yurtdisi' },
+          { name: 'Uluslararası Misafir Hizmetleri', path: '/alx-4-you/uluslararasi-misafir-hizmetleri' }
         ]
       },
       {

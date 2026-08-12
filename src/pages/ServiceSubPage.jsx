@@ -30,6 +30,7 @@ const categoryData = {
     subServices: [
       { title: 'Own Event - Yurtiçi', desc: 'Kapadokya, Kars, Trabzon, Gaziantep, Hatay ve Çanakkale organizasyonları.', icon: '🇹🇷', slug: 'own-event-yurtici' },
       { title: 'Own Event - Yurtdışı', desc: 'İspanya, İtalya, Cezayir, Mısır, Arnavutluk, Kosova, Makedonya ve Azerbaycan organizasyonları.', icon: '🌐', slug: 'own-event-yurtdisi' },
+      { title: 'Uluslararası Misafir Hizmetleri', desc: 'Yurt dışından gelen iş ortaklarınız ve VIP misafirleriniz için Türkiye’de 360° seyahat ve ağırlama çözümleri.', icon: '🧳', slug: 'uluslararasi-misafir-hizmetleri' },
       { title: 'Yurtiçi Preceptorship', desc: 'Bronkoskopi, TAVİ, Bifürkasyon, Parkinson Pil Cerrahisi deneyim programları.', icon: '🏥', slug: 'preceptorship-yurtici' },
       { title: 'Yurtdışı Preceptorship', desc: 'Bronkoskopi, EBUS, TAVİ, Bifürkasyon uluslararası gözlem programları.', icon: '🌍', slug: 'preceptorship-yurtdisi' },
       { title: 'Uygulamalı Kurslar', desc: 'Paydaşlar için gelişimi interaktif ve pratik hale getiren eğitimler.', icon: '🩺', slug: 'uygulamali-kurslar' },
@@ -247,6 +248,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
   // Check destination display for Alx 4 You / Own Event
   const isOwnEventYurtici = activeSlug === 'own-event-yurtici';
   const isOwnEventYurtdisi = activeSlug === 'own-event-yurtdisi';
+  const isMisafirHizmetleri = activeSlug === 'uluslararasi-misafir-hizmetleri';
   const showDestinations = isOwnEventYurtici || isOwnEventYurtdisi || activeSlug.includes('own-event');
 
   // Check Preceptorship
@@ -521,10 +523,62 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           </section>
         )}
 
-        {/* Dynamic Section: Rich Corporate Travel & Organization Content (Yurtdışı & Yurtiçi) */}
-        {(catKey === 'alx-4-you' || activeSlug.includes('own-event')) && (
+        {/* Dynamic Section: Rich Corporate Travel & Organization Content (Yurtdışı, Yurtiçi & Misafir Hizmetleri) */}
+        {(catKey === 'alx-4-you' || activeSlug.includes('own-event') || isMisafirHizmetleri) && (
           <section className="events-links-section org-text-showcase">
-            {(!isOwnEventYurtici || catKey === 'alx-4-you') && (
+            {(isMisafirHizmetleri || (catKey === 'alx-4-you' && !isOwnEventYurtici && !isOwnEventYurtdisi)) && (
+              <div className="org-detail-card glass-panel" style={{ marginBottom: '40px' }}>
+                <div className="org-card-header">
+                  <span className="org-motto">&ldquo;Enjoy Your Journey&rdquo; — Yolculuğun keyfini çıkarın, gerisini bize bırakın</span>
+                  <h2 className="org-main-title">ULUSLARARASI MİSAFİR HİZMETLERİ</h2>
+                  <h3 className="org-subtitle">Misafirlerinizin Yolculuğu, Bizim Profesyonel Dokunuşumuzla Başlar</h3>
+                </div>
+                <div className="org-card-body">
+                  <p className="org-lead">
+                    Yurt dışından gelen iş ortaklarınız, müşterileriniz, yöneticileriniz ve özel misafirleriniz için Türkiye’de ihtiyaç duyabilecekleri tüm seyahat ve organizasyon hizmetlerini tek noktadan yönetiyoruz.
+                  </p>
+                  <p className="org-text">
+                    Konaklama, VIP transfer, toplantı, etkinlik, restoran ve yemek organizasyonlarından sosyal ve kültürel programlara kadar her detayı kurumunuza özel olarak planlıyor ve hayata geçiriyoruz.
+                  </p>
+                  <p className="org-text">
+                    Misafirlerinizin Türkiye’de geçirdiği zamanı konforlu, güvenli ve keyifli bir deneyime dönüştürürken, siz işinize ve iş ilişkilerinize odaklanın.
+                  </p>
+
+                  <div className="org-feature-block">
+                    <h4>Gelişinizden Uğurlamanıza Kadar Her Detay Bizim Sorumluluğumuzda</h4>
+                    <p className="org-desc-note">
+                      Havalimanı karşılamasından otel rezervasyonlarına, toplantı organizasyonlarından özel davetlere kadar tüm süreçleri deneyimli ekibimizle uçtan uca yönetiyoruz.
+                    </p>
+                    <div className="org-services-grid">
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Havalimanı Karşılama &amp; VIP Transfer</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Lüks Otel Rezervasyonları &amp; Konaklama Yönetimi</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Özel Toplantı &amp; Etkinlik Organizasyonları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Restoran, Gurme Yemek &amp; Özel Davet Yönetimi</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Sosyal &amp; Kültürel Programlar, Şehir Turları</div>
+                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> 7/24 Kesintisiz Rehberlik &amp; Saha Destek Hizmetleri</div>
+                    </div>
+                  </div>
+
+                  <div className="org-dual-blocks">
+                    <div className="org-block-box">
+                      <h4>Kişiye &amp; Kuruma Özel Çözümler</h4>
+                      <p>
+                        İhtiyaçlarınızı önceden öngören, detayları titizlikle planlayan ve her organizasyona özel çözümler geliştiren hizmet anlayışımızla, kurumsal misafirleriniz için yalnızca bir seyahat değil, unutulmaz bir deneyim tasarlıyoruz.
+                      </p>
+                    </div>
+                    <div className="org-block-box">
+                      <h4>İşiniz Sizin, Misafirleriniz Bizim Sorumluluğumuzda</h4>
+                      <p>
+                        Profesyonel organizasyon, kusursuz planlama ve kişiye özel hizmet anlayışımızla, Türkiye’deki kurumsal seyahat ve ağırlama süreçlerinizi sizin için kolaylaştırıyoruz.
+                      </p>
+                      <p className="org-highlight-quote">&ldquo;Siz işinize odaklanın, biz tüm detaylarla ilgilenelim.&rdquo;</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {(!isOwnEventYurtici && !isMisafirHizmetleri) && (
               <div className="org-detail-card glass-panel">
                 <div className="org-card-header">
                   <span className="org-motto">&ldquo;Enjoy Your Journey&rdquo; — We Take Care of Every Detail</span>
@@ -573,7 +627,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
               </div>
             )}
 
-            {(!isOwnEventYurtdisi || catKey === 'alx-4-you') && (
+            {(!isOwnEventYurtdisi && !isMisafirHizmetleri) && (
               <div className="org-detail-card glass-panel" style={{ marginTop: '40px' }}>
                 <div className="org-card-header">
                   <h2 className="org-main-title">YURTİÇİ SEYAHAT VE ORGANİZASYONLAR</h2>

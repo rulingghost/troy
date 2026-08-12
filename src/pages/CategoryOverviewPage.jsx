@@ -183,6 +183,14 @@ const categoryOverviewData = {
             tag: 'Yurtdışı Destinasyon',
             shortDesc: 'Kurumsal firmaların yurt dışındaki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını dünyanın her noktasında planlıyor ve yönetiyoruz.',
             highlights: ['Dünya genelinde organizasyon & seyahat', 'Uluslararası toplantı, kongre & incentive', 'Lokasyondan bağımsız tek merkezden yönetim']
+          },
+          {
+            name: 'Uluslararası Misafir Hizmetleri',
+            path: '/alx-4-you/uluslararasi-misafir-hizmetleri',
+            icon: HeartHandshake,
+            tag: 'VIP Misafir & Ağırlama',
+            shortDesc: 'Yurt dışından gelen iş ortaklarınız, müşterileriniz ve VIP misafirleriniz için Türkiye’de konaklama, VIP transfer ve organizasyon yönetimi.',
+            highlights: ['Havalimanı VIP karşılama & transfer', 'Lüks konaklama, restoran & davet organizasyonu', 'Kurumunuza özel 360° misafir ağırlama']
           }
         ]
       },
