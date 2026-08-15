@@ -1,18 +1,34 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Send, MessageSquare, Globe, ExternalLink, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../context/ContentContext';
 import './Contact.css';
 
 const Contact = () => {
+  const { content } = useContent();
+  const contact = content?.contact || {};
+
+  const title = contact.title || 'Bizimle İletişime Geçin';
+  const subtitle = contact.subtitle || 'İletişim & Destek';
+  const desc = contact.desc || 'Etkinlik, kongre, medikal çeviri ve yapay zeka dijital çözümlerimiz için bize dilediğiniz kanaldan ulaşabilirsiniz.';
+  const phone = contact.phone || '+90 (212) 555 01 23';
+  const rawPhone = (contact.whatsapp || '+90 (555) 012 34 56').replace(/[^0-9]/g, '');
+  const whatsapp = contact.whatsapp || '+90 (555) 012 34 56';
+  const whatsappText = contact.whatsappText || 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.';
+  const email = contact.email || 'info@alx.com.tr';
+  const address = contact.address || 'Levent, Büyükdere Cd. No:195, Şişli / İstanbul';
+  const instagram = contact.instagram || 'https://instagram.com';
+  const wechat = contact.wechat || '#';
+
+  const waLink = `https://wa.me/${rawPhone}?text=${encodeURIComponent(whatsappText)}`;
+
   return (
     <section id="contact" className="contact-section">
       <div className="container">
         <div className="contact-header">
-          <span className="contact-subtitle-badge">İletişim & Destek</span>
-          <h2 className="contact-main-title">Bizimle İletişime Geçin</h2>
-          <p className="contact-header-desc">
-            Etkinlik, kongre, medikal çeviri ve yapay zeka dijital çözümlerimiz için bize dilediğiniz kanaldan ulaşabilirsiniz.
-          </p>
+          <span className="contact-subtitle-badge">{subtitle}</span>
+          <h2 className="contact-main-title">{title}</h2>
+          <p className="contact-header-desc">{desc}</p>
           <div className="contact-header-actions">
             <Link to="/iletisim" className="btn btn-outline dedicated-contact-btn">
               Detaylı İletişim & Harita Sayfası <ArrowRight size={16} style={{ marginLeft: '6px' }} />
@@ -31,7 +47,7 @@ const Contact = () => {
             {/* Quick Action Badges */}
             <div className="quick-contact-actions">
               <a 
-                href="https://wa.me/905550123456?text=Merhaba,%20Alexander%20Troy%20hizmetleri%20hakkinda%20bilgi%20almak%20istiyorum." 
+                href={waLink} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="action-card whatsapp-card"
@@ -41,18 +57,18 @@ const Contact = () => {
                 </div>
                 <div className="card-body">
                   <strong>WhatsApp Canlı Destek</strong>
-                  <span>+90 (555) 012 34 56</span>
+                  <span>{whatsapp}</span>
                 </div>
                 <ExternalLink size={16} className="card-arrow" />
               </a>
 
-              <a href="tel:+902125550123" className="action-card phone-card">
+              <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="action-card phone-card">
                 <div className="card-icon phone-bg">
                   <Phone size={22} />
                 </div>
                 <div className="card-body">
                   <strong>Telefon İletişim</strong>
-                  <span>+90 (212) 555 01 23</span>
+                  <span>{phone}</span>
                 </div>
                 <ExternalLink size={16} className="card-arrow" />
               </a>
@@ -63,14 +79,14 @@ const Contact = () => {
                 <div className="info-icon"><MapPin size={22} /></div>
                 <div>
                   <strong>Adres:</strong>
-                  <p>Levent, Büyükdere Cd. No:195, Şişli / İstanbul</p>
+                  <p>{address}</p>
                 </div>
               </li>
               <li>
                 <div className="info-icon"><Mail size={22} /></div>
                 <div>
                   <strong>E-posta:</strong>
-                  <p><a href="mailto:info@alx.com.tr">info@alx.com.tr</a></p>
+                  <p><a href={`mailto:${email}`}>{email}</a></p>
                 </div>
               </li>
             </ul>
@@ -80,7 +96,7 @@ const Contact = () => {
               <h4>Sosyal Medya & Diğer Kanallar</h4>
               <div className="social-buttons-grid">
                 <a 
-                  href="https://wa.me/905550123456" 
+                  href={waLink} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="social-btn whatsapp-btn"
@@ -91,7 +107,7 @@ const Contact = () => {
                 </a>
 
                 <a 
-                  href="tel:+902125550123" 
+                  href={`tel:${phone.replace(/[^0-9+]/g, '')}`} 
                   className="social-btn phone-btn"
                   title="Telefon"
                 >
@@ -100,7 +116,7 @@ const Contact = () => {
                 </a>
 
                 <a 
-                  href="https://instagram.com" 
+                  href={instagram} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="social-btn instagram-btn"
@@ -114,14 +130,18 @@ const Contact = () => {
                   <span>Instagram</span>
                 </a>
 
-                <a 
-                  href="#" 
-                  className="social-btn wechat-btn"
-                  title="WeChat"
-                >
-                  <Globe size={18} />
-                  <span>WeChat</span>
-                </a>
+                {wechat && wechat !== '#' && (
+                  <a 
+                    href={wechat} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-btn wechat-btn"
+                    title="WeChat"
+                  >
+                    <Globe size={18} />
+                    <span>WeChat</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>

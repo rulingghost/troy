@@ -1,50 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 import './Services.css';
 
-const servicesData = [
-  {
-    title: 'Alx MICE',
-    subtitle: 'Etkinlik, Kongre & Sempozyum',
-    desc: 'Yurt içi ve yurt dışı kongre, toplantı, sempozyum hizmetleri (Ulaşım (Uçak bileti), konaklama, organizasyon süresince alınacak yemekler, tur programları, profesyonel rehberlik hizmetleri).',
-    link: '/alx-mice',
-    bgImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    title: 'Alx 4 You',
-    subtitle: 'Butik & Kurumsal Çözümler',
-    desc: 'Size özel planlanan yurt içi ve yurt dışı toplantı, preceptorship, kurs ve seminer, incentive hizmetleri (Tanıtım yönetmeliğine uygun program, kurum iletişimi, toplantı altyapı hizmeti, Ulaşım (Uçak bileti), konaklama, organizasyon süresince alınacak yemekler, tur programları, profesyonel rehberlik hizmetleri).',
-    link: '/alx-4-you',
-    bgImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    title: 'Alx Digi',
-    subtitle: 'Dijital & AI Sağlık Teknolojileri',
-    desc: 'Doktorum Yanımda, Beynex ve Niceye altyapılarıyla online sağlık danışmanlık, AI asistan, giyilebilir teknoloji ve canlı yayın platformları.',
-    link: '/alx-digi',
-    bgImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    title: 'Alx Need',
-    subtitle: 'Medikal & Omnichannel Yönetimi',
-    desc: 'Gama CRO ve Niceye altyapılarıyla medikal & bilimsel hizmetler, biyo-istatistik, tıbbi çeviri ve omnichannel marka yönetimi.',
-    link: '/alx-need',
-    bgImage: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800'
-  }
-];
-
 const Services = () => {
+  const { content } = useContent();
+  const services = content?.services || {};
+  const items = services.items || [];
+  const sectionTitle = services.title || 'Hizmetlerimiz';
+
   return (
     <section id="services" className="brands-section">
       <div className="container">
-        <h2 className="brands-title">Hizmetlerimiz</h2>
+        <h2 className="brands-title">{sectionTitle}</h2>
         <div className="brands-grid-wrapper">
           <div className="brands-grid new-layout">
-            {servicesData.map((service, index) => (
+            {items.map((service, index) => (
               <Link 
-                to={service.link}
-                key={index} 
+                to={service.link || '/'}
+                key={service.id || index} 
                 className="service-feature-card"
                 style={{ backgroundImage: `url(${service.bgImage})` }}
               >
@@ -53,7 +28,7 @@ const Services = () => {
                   <ArrowUpRight className="corner-icon" size={20} />
                 </div>
                 <div className="service-feature-content">
-                  <span className="service-feature-badge">{service.subtitle}</span>
+                  {service.subtitle && <span className="service-feature-badge">{service.subtitle}</span>}
                   <h4 className="service-feature-title">{service.title}</h4>
                   <p className="service-feature-desc">{service.desc}</p>
                 </div>

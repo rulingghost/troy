@@ -2,116 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X, Globe } from 'lucide-react';
 import './Header.css';
 import { Link } from 'react-router-dom';
-
-const menuData = [
-  {
-    title: 'Kurumsal',
-    path: '/kurumsal',
-    submenus: [
-      {
-        name: 'Kurumsal',
-        children: [
-          { name: 'Hakkımızda', path: '/kurumsal/hakkimizda' },
-          { name: 'Vizyon', path: '/kurumsal/vizyon' },
-          { name: 'Misyon', path: '/kurumsal/misyon' }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Alx MICE',
-    path: '/alx-mice',
-    submenus: [
-      {
-        name: 'Kongre & Toplantı',
-        children: [
-          { name: 'Yurtiçi Kongre', path: '/alx-mice/yurtici-kongre' },
-          { name: 'Yurtdışı Kongre', path: '/alx-mice/yurtdisi-kongre' },
-          { name: 'Toplantı', path: '/alx-mice/toplanti' }
-        ]
-      },
-      {
-        name: 'Sempozyum',
-        children: [
-          { name: 'Yurtiçi Sempozyum', path: '/alx-mice/yurtici-sempozyum' },
-          { name: 'Yurtdışı Sempozyum', path: '/alx-mice/yurtdisi-sempozyum' }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Alx 4 You',
-    path: '/alx-4-you',
-    submenus: [
-      {
-        name: 'Own Event',
-        children: [
-          { name: 'Own Event - Yurtiçi', path: '/alx-4-you/own-event-yurtici' },
-          { name: 'Own Event - Yurtdışı', path: '/alx-4-you/own-event-yurtdisi' },
-          { name: 'Uluslararası Misafir Hizmetleri', path: '/alx-4-you/uluslararasi-misafir-hizmetleri' }
-        ]
-      },
-      {
-        name: 'Preceptorship',
-        children: [
-          { name: 'Yurtiçi Preceptorship', path: '/alx-4-you/preceptorship-yurtici' },
-          { name: 'Yurtdışı Preceptorship', path: '/alx-4-you/preceptorship-yurtdisi' }
-        ]
-      },
-      {
-        name: 'Kurs & Eğitim',
-        children: [
-          { name: 'Uygulamalı Kurslar', path: '/alx-4-you/uygulamali-kurslar' },
-          { name: 'AI Destekli Kurslar', path: '/alx-4-you/ai-destekli-kurslar' },
-          { name: 'VR Destekli Öğrenme', path: '/alx-4-you/vr-destekli-ogrenme' }
-        ]
-      },
-      {
-        name: 'Incentive',
-        children: [
-          { name: 'Motivasyonel Faaliyetler', path: '/alx-4-you/motivasyonel-faaliyetler' },
-          { name: 'Lansman Toplantıları', path: '/alx-4-you/lansman-toplantilari' },
-          { name: 'Şirket Piknikleri', path: '/alx-4-you/sirket-piknikleri' }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Alx Digi',
-    path: '/alx-digi',
-    submenus: [
-      {
-        name: 'Dijital Çözümler',
-        children: [
-          { name: 'Online Sağlık Danışmanlık (Doktorum Yanımda)', path: '/alx-digi/online-saglik-danismanlik' },
-          { name: 'Online Sağlık Asistan (Beynex)', path: '/alx-digi/online-saglik-asistan' },
-          { name: 'AI Sağlık Hizmetleri (Niceye)', path: '/alx-digi/ai-saglik-hizmetleri' },
-          { name: 'Online Canlı Yayın (Niceye)', path: '/alx-digi/giyilebilir-teknoloji-online-canli-yayin' }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Alx Need',
-    path: '/alx-need',
-    submenus: [
-      {
-        name: 'Stratejik Çözümler',
-        children: [
-          { name: 'Medikal & Bilimsel (Gama CRO)', path: '/alx-need/medikal-bilimsel' },
-          { name: 'İstatistik & Çeviri (Gama CRO)', path: '/alx-need/istatistik-ceviri' },
-          { name: 'Omnichannel (Niceye)', path: '/alx-need/omnichannel' }
-        ]
-      }
-    ]
-  }
-];
+import { useContent } from '../context/ContentContext';
 
 const Header = ({ hasBanner = true }) => {
+  const { content } = useContent();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [lang, setLang] = useState('TR');
+
+  const menus = content?.menus || [];
+  const logoSrc = content?.general?.logo || '/logo.png';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,7 +27,7 @@ const Header = ({ hasBanner = true }) => {
       <div className="container header-container">
         <div className="logo">
           <Link to="/">
-            <img src="/logo.png" alt="Alexander Troy" className="logo-image" />
+            <img src={logoSrc} alt={content?.general?.siteTitle || "Alexander Troy"} className="logo-image" />
           </Link>
         </div>
 
@@ -136,36 +37,38 @@ const Header = ({ hasBanner = true }) => {
             <li className="nav-item">
               <Link to="/">Anasayfa</Link>
             </li>
-            {menuData.map((menu, index) => (
+            {menus.map((menu, index) => (
               <li 
-                key={index} 
+                key={menu.id || index} 
                 className="nav-item dropdown-trigger"
                 onMouseEnter={() => setActiveDropdown(index)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <Link to={menu.path} onClick={() => setActiveDropdown(null)}>
-                  {menu.title} <ChevronDown size={16} className="dropdown-icon" />
+                  {menu.title} {menu.submenus && menu.submenus.length > 0 && <ChevronDown size={16} className="dropdown-icon" />}
                 </Link>
                 
                 {/* Mega Menu Dropdown */}
-                <div className={`dropdown-menu ${activeDropdown === index ? 'active' : ''}`}>
-                  <div className="dropdown-inner">
-                    <div className="dropdown-grid">
-                      {menu.submenus.map((sub, subIdx) => (
-                        <div key={subIdx} className="dropdown-column">
-                          <h4 className="dropdown-column-title">{sub.name}</h4>
-                          {sub.children.length > 0 && (
-                            <ul className="dropdown-sublist">
-                              {sub.children.map((child, childIdx) => (
-                                <li key={childIdx}><Link to={child.path} onClick={() => setActiveDropdown(null)}>{child.name}</Link></li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      ))}
+                {menu.submenus && menu.submenus.length > 0 && (
+                  <div className={`dropdown-menu ${activeDropdown === index ? 'active' : ''}`}>
+                    <div className="dropdown-inner">
+                      <div className="dropdown-grid">
+                        {menu.submenus.map((sub, subIdx) => (
+                          <div key={subIdx} className="dropdown-column">
+                            <h4 className="dropdown-column-title">{sub.name}</h4>
+                            {sub.children && sub.children.length > 0 && (
+                              <ul className="dropdown-sublist">
+                                {sub.children.map((child, childIdx) => (
+                                  <li key={childIdx}><Link to={child.path} onClick={() => setActiveDropdown(null)}>{child.name}</Link></li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </li>
             ))}
             <li className="nav-item">
@@ -192,25 +95,27 @@ const Header = ({ hasBanner = true }) => {
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
         <ul className="mobile-nav-list">
           <li className="mobile-nav-item"><Link to="/" onClick={() => setMobileMenuOpen(false)}>Anasayfa</Link></li>
-          {menuData.map((menu, index) => (
-            <li key={index} className="mobile-nav-item">
+          {menus.map((menu, index) => (
+            <li key={menu.id || index} className="mobile-nav-item">
               <Link to={menu.path} onClick={() => setMobileMenuOpen(false)} className="mobile-nav-title" style={{ display: 'block', textDecoration: 'none' }}>
                 {menu.title}
               </Link>
-              <ul className="mobile-sub-list">
-                {menu.submenus.map((sub, subIdx) => (
-                  <li key={subIdx}>
-                    <span>{sub.name}</span>
-                    {sub.children.length > 0 && (
-                      <ul className="mobile-child-list">
-                        {sub.children.map((child, childIdx) => (
-                          <li key={childIdx}><Link to={child.path} onClick={() => setMobileMenuOpen(false)}>- {child.name}</Link></li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
+              {menu.submenus && menu.submenus.length > 0 && (
+                <ul className="mobile-sub-list">
+                  {menu.submenus.map((sub, subIdx) => (
+                    <li key={subIdx}>
+                      <span>{sub.name}</span>
+                      {sub.children && sub.children.length > 0 && (
+                        <ul className="mobile-child-list">
+                          {sub.children.map((child, childIdx) => (
+                            <li key={childIdx}><Link to={child.path} onClick={() => setMobileMenuOpen(false)}>- {child.name}</Link></li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
           <li className="mobile-nav-item">

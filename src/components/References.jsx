@@ -1,33 +1,40 @@
 import React from 'react';
+import { useContent } from '../context/ContentContext';
 import './References.css';
 
-const logos = [
-  'GSK',
-  'Kyowa Kirin',
-  'Teva',
-  'Novo Nordisk',
-  'Janssen',
-  'Bristol-Myers',
-  'Lilly',
-  'Johnson & Johnson'
-];
-
 const References = () => {
+  const { content } = useContent();
+  const referencesData = content?.references || {};
+  const items = referencesData.items || [];
+  const title = referencesData.title || 'Çözüm Ortaklarımız';
+
+  if (!items || items.length === 0) {
+    return null;
+  }
+
   return (
     <section className="references-section">
       <div className="container">
-        <h2 className="references-title">Çözüm Ortaklarımız</h2>
+        <h2 className="references-title">{title}</h2>
         <div className="references-marquee">
           <div className="marquee-content">
-            {logos.map((logo, index) => (
-              <div key={index} className="reference-logo">
-                {logo}
+            {items.map((item, index) => (
+              <div key={item.id || index} className="reference-logo">
+                {item.logo ? (
+                  <img src={item.logo} alt={item.name} className="reference-img" />
+                ) : (
+                  <span>{item.name}</span>
+                )}
               </div>
             ))}
             {/* Duplicate for infinite scroll effect */}
-            {logos.map((logo, index) => (
-              <div key={`dup-${index}`} className="reference-logo">
-                {logo}
+            {items.map((item, index) => (
+              <div key={`dup-${item.id || index}`} className="reference-logo">
+                {item.logo ? (
+                  <img src={item.logo} alt={item.name} className="reference-img" />
+                ) : (
+                  <span>{item.name}</span>
+                )}
               </div>
             ))}
           </div>

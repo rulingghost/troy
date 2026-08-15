@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { ContentProvider } from './context/ContentContext';
 import TopBanner from './components/TopBanner';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import SubPage from './pages/SubPage';
 import ContactPage from './pages/ContactPage';
-
 import CategoryOverviewPage from './pages/CategoryOverviewPage';
+import Admin from './pages/Admin';
 
 function AppContent() {
   const [showBanner, setShowBanner] = useState(true);
   const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
 
   // Reset banner visibility and scroll to top on route change and page reload
   useEffect(() => {
     setShowBanner(true);
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname]);
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    );
+  }
 
   return (
     <div className="app-container">
@@ -37,9 +47,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ContentProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </ContentProvider>
   );
 }
 

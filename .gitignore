@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .vercel
+.dev-site-content.json
 
 
 # Editor directories and files
