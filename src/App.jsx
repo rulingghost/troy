@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import SubPage from './pages/SubPage';
 import ContactPage from './pages/ContactPage';
 import CategoryOverviewPage from './pages/CategoryOverviewPage';
+import NotFoundPage from './pages/NotFoundPage';
 import Admin from './pages/Admin';
 
 import { useContent } from './context/ContentContext';
@@ -52,6 +53,7 @@ function AppContent() {
     return (
       <Routes>
         <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     );
   }
@@ -66,6 +68,7 @@ function AppContent() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/:category" element={<CategoryOverviewPage />} />
         <Route path="/:category/:slug" element={<SubPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <FloatingSupport />
       <Footer />
