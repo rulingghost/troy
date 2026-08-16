@@ -18,6 +18,7 @@ import {
   Paperclip,
   X
 } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 import './OrganizationContactForm.css';
 
 const ORG_TYPES = [

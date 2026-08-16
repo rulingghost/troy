@@ -207,34 +207,26 @@ const SubPage = () => {
 
             <div className="subpage-sidebar">
               <div className="sidebar-card contact-card">
-                <h3>Sorularınız mı var?</h3>
-                <p>Ekibimiz {pageTitle} konusuyla ilgili tüm sorularınızı yanıtlamaktan mutluluk duyacaktır.</p>
+                <h3>{content?.pages?.sidebarConfig?.contactTitle || 'Sorularınız mı var?'}</h3>
+                <p>{content?.pages?.sidebarConfig?.contactDesc || `Ekibimiz ${pageTitle} konusuyla ilgili tüm sorularınızı yanıtlamaktan mutluluk duyacaktır.`}</p>
                 <Link to="/iletisim" className="btn btn-primary sidebar-btn">Bize Ulaşın</Link>
               </div>
 
               <div className="sidebar-card features-card">
-                <h3>Öne Çıkan Özellikler</h3>
-                <div className="feature-item">
-                  <div className="feature-icon">✨</div>
-                  <div>
-                    <h4>Kalite Garantisi</h4>
-                    <span>Uluslararası kalite standartları</span>
+                <h3>{content?.pages?.sidebarConfig?.featuresTitle || 'Öne Çıkan Özellikler'}</h3>
+                {(content?.pages?.sidebarConfig?.features || [
+                  { icon: '✨', title: 'Kalite Garantisi', desc: 'Uluslararası kalite standartları' },
+                  { icon: '🚀', title: 'Hızlı Entegrasyon', desc: 'Süreçlerinize anında uyum' },
+                  { icon: '🌐', title: 'Global Erişilebilirlik', desc: '360° stratejik iş ortaklığı' }
+                ]).map((feat, idx) => (
+                  <div key={idx} className="feature-item">
+                    <div className="feature-icon">{feat.icon || '✨'}</div>
+                    <div>
+                      <h4>{feat.title}</h4>
+                      <span>{feat.desc}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="feature-item">
-                  <div className="feature-icon">🚀</div>
-                  <div>
-                    <h4>Hızlı Entegrasyon</h4>
-                    <span>Süreçlerinize anında uyum</span>
-                  </div>
-                </div>
-                <div className="feature-item">
-                  <div className="feature-icon">🌐</div>
-                  <div>
-                    <h4>Global Erişilebilirlik</h4>
-                    <span>360° stratejik iş ortaklığı</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

@@ -654,6 +654,55 @@ const Admin = () => {
     handleSubServicesDataChange('incentive', updated);
   };
 
+  // Corporate Travel Texts
+  const handleCorporateTravelChange = (section, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const corpTravel = { ...(currentSubData.corporateTravel || defaultContent.pages.subServicesData.corporateTravel) };
+    corpTravel[section] = {
+      ...(corpTravel[section] || {}),
+      [field]: val
+    };
+    handleSubServicesDataChange('corporateTravel', corpTravel);
+  };
+
+  const handleCorporateTravelServiceChange = (section, sIdx, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const corpTravel = { ...(currentSubData.corporateTravel || defaultContent.pages.subServicesData.corporateTravel) };
+    const currentServices = [...(corpTravel[section]?.services || [])];
+    currentServices[sIdx] = val;
+    corpTravel[section] = {
+      ...(corpTravel[section] || {}),
+      services: currentServices
+    };
+    handleSubServicesDataChange('corporateTravel', corpTravel);
+  };
+
+  const handleAddCorporateTravelService = (section) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const corpTravel = { ...(currentSubData.corporateTravel || defaultContent.pages.subServicesData.corporateTravel) };
+    const currentServices = [...(corpTravel[section]?.services || []), 'Yeni Hizmet Maddesi'];
+    corpTravel[section] = {
+      ...(corpTravel[section] || {}),
+      services: currentServices
+    };
+    handleSubServicesDataChange('corporateTravel', corpTravel);
+  };
+
+  const handleDeleteCorporateTravelService = (section, sIdx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const corpTravel = { ...(currentSubData.corporateTravel || defaultContent.pages.subServicesData.corporateTravel) };
+    const currentServices = (corpTravel[section]?.services || []).filter((_, i) => i !== sIdx);
+    corpTravel[section] = {
+      ...(corpTravel[section] || {}),
+      services: currentServices
+    };
+    handleSubServicesDataChange('corporateTravel', corpTravel);
+  };
+
   // --- MENU MANAGEMENT HANDLERS ---
   const handleAddMenu = () => {
     const newMenu = {
@@ -2392,6 +2441,14 @@ const Admin = () => {
                     <Sparkles size={16} />
                     <span>⚡ Incentive &amp; Motivasyon</span>
                   </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${subservicesSubTab === 'travelText' ? 'active' : ''}`}
+                    onClick={() => setSubservicesSubTab('travelText')}
+                  >
+                    <Building2 size={16} />
+                    <span>🏢 Seyahat &amp; Misafir Tanıtım Metinleri</span>
+                  </button>
                 </div>
 
                 <div className="page-editor-container">
@@ -3051,6 +3108,258 @@ const Admin = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* SUBTAB 7: CORPORATE TRAVEL & GUEST SERVICES */}
+                  {subservicesSubTab === 'travelText' && (() => {
+                    const corp = subData.corporateTravel || defaultContent.pages.subServicesData.corporateTravel;
+                    const gs = corp.guestServices || defaultContent.pages.subServicesData.corporateTravel.guestServices;
+                    const ot = corp.overseasTravel || defaultContent.pages.subServicesData.corporateTravel.overseasTravel;
+                    const dt = corp.domesticTravel || defaultContent.pages.subServicesData.corporateTravel.domesticTravel;
+
+                    return (
+                      <div className="page-editor-container">
+                        {/* 1. Misafir Hizmetleri */}
+                        <div className="admin-card">
+                          <div className="card-header-bar">
+                            <div>
+                              <h3 className="card-subheading">🛎️ Uluslararası Misafir Hizmetleri Bölümü Metinleri</h3>
+                              <p className="card-hint">/alx-4-you/uluslararasi-misafir-hizmetleri sayfasındaki detaylı tanıtım ve hizmet maddelerini düzenleyin.</p>
+                            </div>
+                          </div>
+
+                          <div className="grid-2-col">
+                            <div className="input-group">
+                              <label className="admin-label">Ana Başlık</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={gs.title || ''}
+                                onChange={(e) => handleCorporateTravelChange('guestServices', 'title', e.target.value)}
+                              />
+                            </div>
+                            <div className="input-group">
+                              <label className="admin-label">Alt Başlık</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={gs.subtitle || ''}
+                                onChange={(e) => handleCorporateTravelChange('guestServices', 'subtitle', e.target.value)}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Üst Slogan / Motto</label>
+                            <input 
+                              type="text" 
+                              className="admin-input"
+                              value={gs.motto || ''}
+                              onChange={(e) => handleCorporateTravelChange('guestServices', 'motto', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Giriş Paragrafı (Lead)</label>
+                            <textarea 
+                              className="admin-textarea"
+                              rows={2}
+                              value={gs.lead || ''}
+                              onChange={(e) => handleCorporateTravelChange('guestServices', 'lead', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="grid-2-col">
+                            <div className="input-group">
+                              <label className="admin-label">Detay Paragraf 1</label>
+                              <textarea 
+                                className="admin-textarea"
+                                rows={2}
+                                value={gs.text1 || ''}
+                                onChange={(e) => handleCorporateTravelChange('guestServices', 'text1', e.target.value)}
+                              />
+                            </div>
+                            <div className="input-group">
+                              <label className="admin-label">Detay Paragraf 2</label>
+                              <textarea 
+                                className="admin-textarea"
+                                rows={2}
+                                value={gs.text2 || ''}
+                                onChange={(e) => handleCorporateTravelChange('guestServices', 'text2', e.target.value)}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="bullets-container" style={{ marginTop: '16px' }}>
+                            <div className="card-header-bar">
+                              <label className="admin-label">Hizmet Maddeleri ({gs.services?.length || 0})</label>
+                              <button type="button" className="btn-add-secondary" onClick={() => handleAddCorporateTravelService('guestServices')}>
+                                <Plus size={14} /> Madde Ekle
+                              </button>
+                            </div>
+                            {(gs.services || []).map((srv, sIdx) => (
+                              <div key={sIdx} className="bullet-row">
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={srv}
+                                  onChange={(e) => handleCorporateTravelServiceChange('guestServices', sIdx, e.target.value)}
+                                />
+                                <button type="button" className="btn-icon btn-danger" onClick={() => handleDeleteCorporateTravelService('guestServices', sIdx)}>
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* 2. Yurtdışı Seyahat & Org */}
+                        <div className="admin-card">
+                          <div className="card-header-bar">
+                            <div>
+                              <h3 className="card-subheading">✈️ Yurtdışı Seyahat ve Organizasyonlar Bölümü</h3>
+                              <p className="card-hint">Yurtdışı seyahat sayfalarında gösterilen ana metin ve hizmet kapsamı.</p>
+                            </div>
+                          </div>
+
+                          <div className="grid-2-col">
+                            <div className="input-group">
+                              <label className="admin-label">Ana Başlık</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={ot.title || ''}
+                                onChange={(e) => handleCorporateTravelChange('overseasTravel', 'title', e.target.value)}
+                              />
+                            </div>
+                            <div className="input-group">
+                              <label className="admin-label">Alt Başlık</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={ot.subtitle || ''}
+                                onChange={(e) => handleCorporateTravelChange('overseasTravel', 'subtitle', e.target.value)}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Giriş Paragrafı (Lead)</label>
+                            <textarea 
+                              className="admin-textarea"
+                              rows={2}
+                              value={ot.lead || ''}
+                              onChange={(e) => handleCorporateTravelChange('overseasTravel', 'lead', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Detay Açıklama</label>
+                            <textarea 
+                              className="admin-textarea"
+                              rows={2}
+                              value={ot.text || ''}
+                              onChange={(e) => handleCorporateTravelChange('overseasTravel', 'text', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="bullets-container" style={{ marginTop: '16px' }}>
+                            <div className="card-header-bar">
+                              <label className="admin-label">Hizmet Maddeleri ({ot.services?.length || 0})</label>
+                              <button type="button" className="btn-add-secondary" onClick={() => handleAddCorporateTravelService('overseasTravel')}>
+                                <Plus size={14} /> Madde Ekle
+                              </button>
+                            </div>
+                            {(ot.services || []).map((srv, sIdx) => (
+                              <div key={sIdx} className="bullet-row">
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={srv}
+                                  onChange={(e) => handleCorporateTravelServiceChange('overseasTravel', sIdx, e.target.value)}
+                                />
+                                <button type="button" className="btn-icon btn-danger" onClick={() => handleDeleteCorporateTravelService('overseasTravel', sIdx)}>
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* 3. Yurtiçi Seyahat & Org */}
+                        <div className="admin-card">
+                          <div className="card-header-bar">
+                            <div>
+                              <h3 className="card-subheading">🇹🇷 Yurtiçi Seyahat ve Organizasyonlar Bölümü</h3>
+                              <p className="card-hint">Yurtiçi organizasyon sayfalarında gösterilen ana metin ve hizmet kapsamı.</p>
+                            </div>
+                          </div>
+
+                          <div className="grid-2-col">
+                            <div className="input-group">
+                              <label className="admin-label">Ana Başlık</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={dt.title || ''}
+                                onChange={(e) => handleCorporateTravelChange('domesticTravel', 'title', e.target.value)}
+                              />
+                            </div>
+                            <div className="input-group">
+                              <label className="admin-label">Alt Başlık</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={dt.subtitle || ''}
+                                onChange={(e) => handleCorporateTravelChange('domesticTravel', 'subtitle', e.target.value)}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Giriş Paragrafı (Lead)</label>
+                            <textarea 
+                              className="admin-textarea"
+                              rows={2}
+                              value={dt.lead || ''}
+                              onChange={(e) => handleCorporateTravelChange('domesticTravel', 'lead', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Detay Açıklama</label>
+                            <textarea 
+                              className="admin-textarea"
+                              rows={2}
+                              value={dt.text || ''}
+                              onChange={(e) => handleCorporateTravelChange('domesticTravel', 'text', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="bullets-container" style={{ marginTop: '16px' }}>
+                            <div className="card-header-bar">
+                              <label className="admin-label">Hizmet Maddeleri ({dt.services?.length || 0})</label>
+                              <button type="button" className="btn-add-secondary" onClick={() => handleAddCorporateTravelService('domesticTravel')}>
+                                <Plus size={14} /> Madde Ekle
+                              </button>
+                            </div>
+                            {(dt.services || []).map((srv, sIdx) => (
+                              <div key={sIdx} className="bullet-row">
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={srv}
+                                  onChange={(e) => handleCorporateTravelServiceChange('domesticTravel', sIdx, e.target.value)}
+                                />
+                                <button type="button" className="btn-icon btn-danger" onClick={() => handleDeleteCorporateTravelService('domesticTravel', sIdx)}>
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </div>
               </section>
             );

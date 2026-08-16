@@ -259,6 +259,10 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
   const currentPartners = subData.partnerPlatforms || partnerPlatforms;
   const currentCourses = subData.courses || coursesData;
   const currentIncentive = subData.incentive || incentiveData;
+  const currentCorpTravel = subData.corporateTravel || defaultContent.pages.subServicesData.corporateTravel;
+  const guestServ = currentCorpTravel?.guestServices || defaultContent.pages.subServicesData.corporateTravel.guestServices;
+  const overseasTravel = currentCorpTravel?.overseasTravel || defaultContent.pages.subServicesData.corporateTravel.overseasTravel;
+  const domesticTravel = currentCorpTravel?.domesticTravel || defaultContent.pages.subServicesData.corporateTravel.domesticTravel;
 
   // Filter congress events if applicable
   const filteredEvents = (currentEvents || []).filter(ev => ev.category === activeSlug);
@@ -548,33 +552,24 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             {(isMisafirHizmetleri || (catKey === 'alx-4-you' && !isOwnEventYurtici && !isOwnEventYurtdisi)) && (
               <div className="org-detail-card glass-panel" style={{ marginBottom: '40px' }}>
                 <div className="org-card-header">
-                  <span className="org-motto"><em>&ldquo;Enjoy Your Journey&rdquo;</em> — Yolculuğun keyfini çıkarın, gerisini bize bırakın</span>
-                  <h2 className="org-main-title">ULUSLARARASI MİSAFİR HİZMETLERİ</h2>
-                  <h3 className="org-subtitle">Misafirlerinizin Yolculuğu, Bizim Profesyonel Dokunuşumuzla Başlar</h3>
+                  <span className="org-motto"><em>&ldquo;{guestServ.motto || 'Enjoy Your Journey'}&rdquo;</em></span>
+                  <h2 className="org-main-title">{guestServ.title}</h2>
+                  <h3 className="org-subtitle">{guestServ.subtitle}</h3>
                 </div>
                 <div className="org-card-body">
-                  <p className="org-lead">
-                    Yurt dışından gelen iş ortaklarınız, müşterileriniz, yöneticileriniz ve özel misafirleriniz için Türkiye’de ihtiyaç duyabilecekleri tüm seyahat ve organizasyon hizmetlerini tek noktadan yönetiyoruz.
-                  </p>
-                  <p className="org-text">
-                    Konaklama, VIP transfer, toplantı, etkinlik, restoran ve yemek organizasyonlarından sosyal ve kültürel programlara kadar her detayı kurumunuza özel olarak planlıyor ve hayata geçiriyoruz.
-                  </p>
-                  <p className="org-text">
-                    Misafirlerinizin Türkiye’de geçirdiği zamanı konforlu, güvenli ve keyifli bir deneyime dönüştürürken, siz işinize ve iş ilişkilerinize odaklanın.
-                  </p>
+                  <p className="org-lead">{guestServ.lead}</p>
+                  {guestServ.text1 && <p className="org-text">{guestServ.text1}</p>}
+                  {guestServ.text2 && <p className="org-text">{guestServ.text2}</p>}
 
                   <div className="org-feature-block">
-                    <h4>Gelişinizden Uğurlamanıza Kadar Her Detay Bizim Sorumluluğumuzda</h4>
-                    <p className="org-desc-note">
-                      Havalimanı karşılamasından otel rezervasyonlarına, toplantı organizasyonlarından özel davetlere kadar tüm süreçleri deneyimli ekibimizle uçtan uca yönetiyoruz.
-                    </p>
+                    <h4>{guestServ.featureTitle}</h4>
+                    <p className="org-desc-note">{guestServ.featureNote}</p>
                     <div className="org-services-grid">
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Havalimanı Karşılama &amp; VIP Transfer</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Lüks Otel Rezervasyonları &amp; Konaklama Yönetimi</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Özel Toplantı &amp; Etkinlik Organizasyonları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Restoran, Gurme Yemek &amp; Özel Davet Yönetimi</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Sosyal &amp; Kültürel Programlar, Şehir Turları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> 7/24 Kesintisiz Rehberlik &amp; Saha Destek Hizmetleri</div>
+                      {(guestServ.services || []).map((srv, idx) => (
+                        <div key={idx} className="org-service-item">
+                          <CheckCircle2 size={16} className="check-icon" /> {srv}
+                        </div>
+                      ))}
                     </div>
                   </div>
 
@@ -600,33 +595,23 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             {(!isOwnEventYurtici && !isMisafirHizmetleri) && (
               <div className="org-detail-card glass-panel">
                 <div className="org-card-header">
-                  <span className="org-motto"><em>&ldquo;Enjoy Your Journey&rdquo;</em> — We Take Care of Every Detail</span>
-                  <h2 className="org-main-title">YURTDIŞI SEYAHAT VE ORGANİZASYONLAR</h2>
-                  <h3 className="org-subtitle">Dünya Genelinde Organizasyon ve Seyahat Çözümleri</h3>
+                  <span className="org-motto"><em>&ldquo;{overseasTravel.motto || 'Enjoy Your Journey'}&rdquo;</em></span>
+                  <h2 className="org-main-title">{overseasTravel.title}</h2>
+                  <h3 className="org-subtitle">{overseasTravel.subtitle}</h3>
                 </div>
                 <div className="org-card-body">
-                  <p className="org-lead">
-                    Kurumsal firmaların yurt dışındaki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını dünyanın her noktasında planlıyor ve yönetiyoruz. Avrupa’dan Uzak Doğu’ya, Amerika’dan Orta Doğu’ya kadar farklı destinasyonlarda; kurumların hedeflerine, katılımcı profiline ve organizasyonun kapsamına uygun profesyonel çözümler sunuyoruz.
-                  </p>
-                  <p className="org-text">
-                    İster bir şehirde gerçekleştirilecek özel bir toplantı, ister farklı ülkeleri kapsayan geniş katılımlı bir organizasyon olsun; lokasyondan bağımsız olarak tüm operasyonu tek merkezden yönetiyoruz.
-                  </p>
+                  <p className="org-lead">{overseasTravel.lead}</p>
+                  <p className="org-text">{overseasTravel.text}</p>
 
                   <div className="org-feature-block">
-                    <h4>Dünyanın Her Noktasında, Tek Merkezden Organizasyon</h4>
-                    <p className="org-desc-note">Yurt dışı organizasyonlarında destinasyon seçimi ve program planlamasından başlayarak tüm süreci uçtan uca yönetiyoruz.</p>
+                    <h4>{overseasTravel.featureTitle}</h4>
+                    <p className="org-desc-note">{overseasTravel.featureNote}</p>
                     <div className="org-services-grid">
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Uluslararası şirket toplantıları ve seminerler</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kongre, sempozyum ve bilimsel toplantılar</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Eğitim ve motivasyon organizasyonları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bayi, distribütör ve iş ortağı toplantıları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Lansman ve tanıtım etkinlikleri</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bölge ve saha toplantıları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal geziler ve incentive organizasyonları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Fuar ve etkinlik katılım organizasyonları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Konaklama, uçuş ve şehir içi ulaşım</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Havalimanı ve özel transfer organizasyonları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal yemek, davet ve sosyal programlar</div>
+                      {(overseasTravel.services || []).map((srv, idx) => (
+                        <div key={idx} className="org-service-item">
+                          <CheckCircle2 size={16} className="check-icon" /> {srv}
+                        </div>
+                      ))}
                     </div>
                   </div>
 
@@ -649,31 +634,22 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             {(!isOwnEventYurtdisi && !isMisafirHizmetleri) && (
               <div className="org-detail-card glass-panel" style={{ marginTop: '40px' }}>
                 <div className="org-card-header">
-                  <h2 className="org-main-title">YURTİÇİ SEYAHAT VE ORGANİZASYONLAR</h2>
-                  <h3 className="org-subtitle">Yurt İçi Organizasyon ve Seyahat Çözümleri</h3>
+                  <h2 className="org-main-title">{domesticTravel.title}</h2>
+                  <h3 className="org-subtitle">{domesticTravel.subtitle}</h3>
                 </div>
                 <div className="org-card-body">
-                  <p className="org-lead">
-                    Kurumsal firmaların yurt içindeki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını uçtan uca planlıyor ve yönetiyoruz. Farklı sektörlerde faaliyet gösteren kurumların ihtiyaçlarını anlayarak; her organizasyonun amacına, katılımcı profiline ve programına uygun, profesyonel çözümler sunuyoruz.
-                  </p>
-                  <p className="org-text">
-                    Şirket toplantıları, seminer ve eğitimler, bayi organizasyonları, motivasyon gezileri, lansmanlar, kongre ve sempozyumlar, hekim ve sağlık profesyonellerine yönelik toplantılar, bölge toplantıları ve özel kurumsal etkinlikler dahil olmak üzere her ölçekteki organizasyonu titizlikle planlıyoruz.
-                  </p>
+                  <p className="org-lead">{domesticTravel.lead}</p>
+                  <p className="org-text">{domesticTravel.text}</p>
 
                   <div className="org-feature-block">
-                    <h4>Organizasyonun Her Aşamasında Yanınızdayız</h4>
-                    <p className="org-desc-note">Bir organizasyonun yalnızca etkinlik gününden ibaret olmadığını biliyoruz. Bu nedenle planlama aşamasından başlayarak ulaşım, konaklama, toplantı mekanı, transfer, teknik ihtiyaçlar, yemek ve sosyal programlar dahil olmak üzere tüm detayları tek merkezden yönetiyoruz.</p>
+                    <h4>{domesticTravel.featureTitle}</h4>
+                    <p className="org-desc-note">{domesticTravel.featureNote}</p>
                     <div className="org-services-grid">
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal toplantı ve seminerler</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Eğitim ve motivasyon organizasyonları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bayi, distribütör ve iş ortağı toplantıları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Lansman ve tanıtım etkinlikleri</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kongre, sempozyum ve bilimsel toplantılar</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Hekim ve sağlık profesyonellerine yönelik organizasyonlar</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Bölge ve saha toplantıları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal geziler ve özel etkinlikler</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Konaklama, ulaşım ve transfer organizasyonları</div>
-                      <div className="org-service-item"><CheckCircle2 size={16} className="check-icon" /> Kurumsal yemek ve sosyal programlar</div>
+                      {(domesticTravel.services || []).map((srv, idx) => (
+                        <div key={idx} className="org-service-item">
+                          <CheckCircle2 size={16} className="check-icon" /> {srv}
+                        </div>
+                      ))}
                     </div>
                   </div>
 

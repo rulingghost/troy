@@ -75,7 +75,25 @@ export const ContentProvider = ({ children }) => {
                   'alx-need': incomingPages.subServicesData?.partnerPlatforms?.['alx-need'] || defaultContent.pages.subServicesData.partnerPlatforms['alx-need']
                 },
                 courses: incomingPages.subServicesData?.courses || defaultContent.pages.subServicesData.courses,
-                incentive: incomingPages.subServicesData?.incentive || defaultContent.pages.subServicesData.incentive
+                incentive: incomingPages.subServicesData?.incentive || defaultContent.pages.subServicesData.incentive,
+                corporateTravel: {
+                  guestServices: {
+                    ...defaultContent.pages.subServicesData.corporateTravel.guestServices,
+                    ...(incomingPages.subServicesData?.corporateTravel?.guestServices || {})
+                  },
+                  overseasTravel: {
+                    ...defaultContent.pages.subServicesData.corporateTravel.overseasTravel,
+                    ...(incomingPages.subServicesData?.corporateTravel?.overseasTravel || {})
+                  },
+                  domesticTravel: {
+                    ...defaultContent.pages.subServicesData.corporateTravel.domesticTravel,
+                    ...(incomingPages.subServicesData?.corporateTravel?.domesticTravel || {})
+                  }
+                }
+              },
+              sidebarConfig: {
+                ...defaultContent.pages.sidebarConfig,
+                ...(incomingPages.sidebarConfig || {})
               }
             }
           };

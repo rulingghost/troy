@@ -846,6 +846,80 @@ export const defaultContent = {
         { title: 'Indoor & Outdoor Motivasyonel Faaliyetler', desc: 'Takım ruhunu pekiştiren, enerjiyi yükselten iç ve dış mekan motivasyon aktiviteleri.', icon: '⚡', badge: 'Motivasyon Etkinliği' },
         { title: 'İç ve Dış Paydaş Lansman Toplantıları', desc: 'Yeni ürün, hizmet veya stratejilerinizin kurumsal lansman organizasyonları.', icon: '🎤', badge: 'Lansman Toplantısı' },
         { title: 'Şirket Piknikleri ve Özel Etkinlikler', desc: 'Çalışan aileleri ve ekibiniz için unutulmaz açık alan konsept piknik organizasyonları.', icon: '🎪', badge: 'Kurumsal Etkinlik' }
+      ],
+      corporateTravel: {
+        guestServices: {
+          motto: 'Enjoy Your Journey — Yolculuğun keyfini çıkarın, gerisini bize bırakın',
+          title: 'ULUSLARARASI MİSAFİR HİZMETLERİ',
+          subtitle: 'Misafirlerinizin Yolculuğu, Bizim Profesyonel Dokunuşumuzla Başlar',
+          lead: 'Yurt dışından gelen iş ortaklarınız, müşterileriniz, yöneticileriniz ve özel misafirleriniz için Türkiye’de ihtiyaç duyabilecekleri tüm seyahat ve organizasyon hizmetlerini tek noktadan yönetiyoruz.',
+          text1: 'Konaklama, VIP transfer, toplantı, etkinlik, restoran ve yemek organizasyonlarından sosyal ve kültürel programlara kadar her detayı kurumunuza özel olarak planlıyor ve hayata geçiriyoruz.',
+          text2: 'Misafirlerinizin Türkiye’de geçirdiği zamanı konforlu, güvenli ve keyifli bir deneyime dönüştürürken, siz işinize ve iş ilişkilerinize odaklanın.',
+          featureTitle: 'Gelişinizden Uğurlamanıza Kadar Her Detay Bizim Sorumluluğumuzda',
+          featureNote: 'Havalimanı karşılamasından otel rezervasyonlarına, toplantı organizasyonlarından özel davetlere kadar tüm süreçleri deneyimli ekibimizle uçtan uca yönetiyoruz.',
+          services: [
+            'Havalimanı Karşılama & VIP Transfer',
+            'Lüks Otel Rezervasyonları & Konaklama Yönetimi',
+            'Özel Toplantı & Etkinlik Organizasyonları',
+            'Restoran, Gurme Yemek & Özel Davet Yönetimi',
+            'Sosyal & Kültürel Programlar, Şehir Turları',
+            '7/24 Kesintisiz Rehberlik & Saha Destek Hizmetleri'
+          ]
+        },
+        overseasTravel: {
+          motto: 'Enjoy Your Journey — We Take Care of Every Detail',
+          title: 'YURTDIŞI SEYAHAT VE ORGANİZASYONLAR',
+          subtitle: 'Dünya Genelinde Organizasyon ve Seyahat Çözümleri',
+          lead: 'Kurumsal firmaların yurt dışındaki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını dünyanın her noktasında planlıyor ve yönetiyoruz. Avrupa’dan Uzak Doğu’ya, Amerika’dan Orta Doğu’ya kadar farklı destinasyonlarda; kurumların hedeflerine, katılımcı profiline ve organizasyonun kapsamına uygun profesyonel çözümler sunuyoruz.',
+          text: 'İster bir şehirde gerçekleştirilecek özel bir toplantı, ister farklı ülkeleri kapsayan geniş katılımlı bir organizasyon olsun; lokasyondan bağımsız olarak tüm operasyonu tek merkezden yönetiyoruz.',
+          featureTitle: 'Dünyanın Her Noktasında, Tek Merkezden Organizasyon',
+          featureNote: 'Yurt dışı organizasyonlarında destinasyon seçimi ve program planlamasından başlayarak tüm süreci uçtan uca yönetiyoruz.',
+          services: [
+            'Uluslararası şirket toplantıları ve seminerler',
+            'Kongre, sempozyum ve bilimsel toplantılar',
+            'Eğitim ve motivasyon organizasyonları',
+            'Bayi, distribütör ve iş ortağı toplantıları',
+            'Lansman ve tanıtım etkinlikleri',
+            'Bölge ve saha toplantıları',
+            'Kurumsal geziler ve incentive organizasyonları',
+            'Fuar ve etkinlik katılım organizasyonları',
+            'Konaklama, uçuş ve şehir içi ulaşım',
+            'Havalimanı ve özel transfer organizasyonları',
+            'Kurumsal yemek, davet ve sosyal programlar'
+          ]
+        },
+        domesticTravel: {
+          title: 'YURTİÇİ SEYAHAT VE ORGANİZASYONLAR',
+          subtitle: 'Yurt İçi Organizasyon ve Seyahat Çözümleri',
+          lead: 'Kurumsal firmaların yurt içindeki toplantı, etkinlik, seyahat ve organizasyon ihtiyaçlarını uçtan uca planlıyor ve yönetiyoruz. Farklı sektörlerde faaliyet gösteren kurumların ihtiyaçlarını anlayarak; her organizasyonun amacına, katılımcı profiline ve programına uygun, profesyonel çözümler sunuyoruz.',
+          text: 'Şirket toplantıları, seminer ve eğitimler, bayi organizasyonları, motivasyon gezileri, lansmanlar, kongre ve sempozyumlar, hekim ve sağlık profesyonellerine yönelik toplantılar, bölge toplantıları ve özel kurumsal etkinlikler dahil olmak üzere her ölçekteki organizasyonu titizlikle planlıyoruz.',
+          featureTitle: 'Organizasyonun Her Aşamasında Yanınızdayız',
+          featureNote: 'Planlama aşamasından başlayarak ulaşım, konaklama, toplantı mekanı, transfer, teknik ihtiyaçlar, yemek ve sosyal programlar dahil olmak üzere tüm detayları tek merkezden yönetiyoruz.',
+          services: [
+            'Kurumsal toplantı ve seminerler',
+            'Eğitim ve motivasyon organizasyonları',
+            'Bayi, distribütör ve iş ortağı toplantıları',
+            'Lansman ve tanıtım etkinlikleri',
+            'Kongre, sempozyum ve bilimsel toplantılar',
+            'Hekim ve sağlık profesyonellerine yönelik organizasyonlar',
+            'Bölge ve saha toplantıları',
+            'Kurumsal geziler ve özel etkinlikler',
+            'Konaklama, ulaşım ve transfer organizasyonları',
+            'Kurumsal yemek ve sosyal programlar'
+          ]
+        }
+      }
+    },
+
+    // 5. Yan Panel (Sidebar) Genel Ayarları
+    sidebarConfig: {
+      contactTitle: 'Sorularınız mı var?',
+      contactDesc: 'Ekibimiz hizmetlerimiz ve projelerinizle ilgili tüm sorularınızı yanıtlamaktan mutluluk duyacaktır.',
+      featuresTitle: 'Öne Çıkan Özellikler',
+      features: [
+        { icon: '✨', title: 'Kalite Garantisi', desc: 'Uluslararası kalite standartları' },
+        { icon: '🚀', title: 'Hızlı Entegrasyon', desc: 'Süreçlerinize anında uyum' },
+        { icon: '🌐', title: 'Global Erişilebilirlik', desc: '360° stratejik iş ortaklığı' }
       ]
     }
   }
