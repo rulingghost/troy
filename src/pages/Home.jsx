@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
 import AboutPreview from '../components/AboutPreview';
-import Journey from '../components/Journey';
 import Services from '../components/Services';
-import Contact from '../components/Contact';
+import Journey from '../components/Journey';
+import References from '../components/References';
+import Testimonials from '../components/Testimonials';
 import OrganizationContactForm from '../components/OrganizationContactForm';
+import Contact from '../components/Contact';
 
 const Home = () => {
   useEffect(() => {
@@ -15,8 +17,10 @@ const Home = () => {
     <main>
       <Hero />
       <AboutPreview />
-      <Journey />
       <Services />
+      <Journey />
+      <References />
+      <Testimonials />
       <OrganizationContactForm />
       <Contact />
     </main>
