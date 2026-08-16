@@ -15,11 +15,12 @@ const iconMap = {
 };
 
 const Journey = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const journey = content?.journey || {};
   const steps = journey.steps || [];
-  const title = journey.title || 'Alx 360° Hizmet Süreci';
-  const subtitle = journey.subtitle || 'Projelerinizi başarıya ulaştıran uçtan uca yöntemimiz';
+  const title = journey.title || (isEn ? 'Alx 360° Service Journey' : 'Alx 360° Hizmet Süreci');
+  const subtitle = journey.subtitle || (isEn ? 'Our end-to-end process taking your events to success' : 'Projelerinizi başarıya ulaştıran uçtan uca yöntemimiz');
 
   return (
     <section id="journey" className="journey-section">

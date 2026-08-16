@@ -5,7 +5,8 @@ import { useContent } from '../context/ContentContext';
 import './Hero.css';
 
 const Hero = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const slides = content?.hero?.slides || [];
   const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -114,13 +115,13 @@ const Hero = () => {
         {/* Slider Controls */}
         {slides.length > 1 && (
           <div className="slider-controls">
-            <button className="slider-btn prev" onClick={prevSlide} aria-label="Önceki Slayt">
+            <button className="slider-btn prev" onClick={prevSlide} aria-label={isEn ? "Previous Slide" : "Önceki Slayt"}>
               <ChevronLeft size={28} />
             </button>
-            <button className="slider-btn toggle-play" onClick={togglePlay} aria-label="Oynat / Durdur">
+            <button className="slider-btn toggle-play" onClick={togglePlay} aria-label={isEn ? (isPlaying ? "Pause" : "Play") : (isPlaying ? "Durdur" : "Oynat")}>
               {isPlaying ? <Pause size={20} /> : <Play size={20} />}
             </button>
-            <button className="slider-btn next" onClick={nextSlide} aria-label="Sonraki Slayt">
+            <button className="slider-btn next" onClick={nextSlide} aria-label={isEn ? "Next Slide" : "Sonraki Slayt"}>
               <ChevronRight size={28} />
             </button>
           </div>
@@ -134,7 +135,7 @@ const Hero = () => {
                 key={index} 
                 className={`slider-dot ${index === activeIndex ? 'active' : ''}`}
                 onClick={() => setCurrent(index)}
-                aria-label={`Slayt ${index + 1}`}
+                aria-label={isEn ? `Slide ${index + 1}` : `Slayt ${index + 1}`}
               >
                 <span className="dot-number">0{index + 1}</span>
               </button>

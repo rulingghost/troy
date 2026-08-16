@@ -3,10 +3,11 @@ import { useContent } from '../context/ContentContext';
 import './References.css';
 
 const References = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const referencesData = content?.references || {};
   const items = referencesData.items || [];
-  const title = referencesData.title || 'Çözüm Ortaklarımız';
+  const title = referencesData.title || (isEn ? 'Our Solution Partners & References' : 'Çözüm Ortaklarımız');
 
   if (!items || items.length === 0) {
     return null;

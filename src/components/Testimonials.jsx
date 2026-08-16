@@ -4,10 +4,11 @@ import { useContent } from '../context/ContentContext';
 import './Testimonials.css';
 
 const Testimonials = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const testimonialsData = content?.testimonials || {};
   const testimonials = testimonialsData.items || [];
-  const sectionTitle = testimonialsData.title || 'Müşteri Yorumları';
+  const sectionTitle = testimonialsData.title || (isEn ? 'Client Testimonials' : 'Müşteri Yorumları');
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(2);
@@ -43,7 +44,7 @@ const Testimonials = () => {
         
         <div className="testimonials-carousel">
           {testimonials.length > itemsPerView && (
-            <button className="carousel-btn prev" onClick={prevSlide} aria-label="Önceki Yorum">
+            <button className="carousel-btn prev" onClick={prevSlide} aria-label={isEn ? "Previous testimonial" : "Önceki Yorum"}>
               <ChevronLeft size={24} />
             </button>
           )}
@@ -76,7 +77,7 @@ const Testimonials = () => {
           </div>
 
           {testimonials.length > itemsPerView && (
-            <button className="carousel-btn next" onClick={nextSlide} aria-label="Sonraki Yorum">
+            <button className="carousel-btn next" onClick={nextSlide} aria-label={isEn ? "Next testimonial" : "Sonraki Yorum"}>
               <ChevronRight size={24} />
             </button>
           )}
@@ -89,7 +90,7 @@ const Testimonials = () => {
                 key={idx} 
                 className={`dot ${idx === currentIndex ? 'active' : ''}`}
                 onClick={() => setCurrentIndex(idx)}
-                aria-label={`Yorum sayfası ${idx + 1}`}
+                aria-label={isEn ? `Testimonial page ${idx + 1}` : `Yorum sayfası ${idx + 1}`}
               ></button>
             ))}
           </div>

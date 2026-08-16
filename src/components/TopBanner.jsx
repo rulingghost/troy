@@ -4,7 +4,8 @@ import { useContent } from '../context/ContentContext';
 import './TopBanner.css';
 
 const TopBanner = ({ onClose }) => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const bannerText = content?.general?.topBannerText || 'Enjoy Your Journey';
   const isEnabled = content?.general?.topBannerEnabled !== false;
 
@@ -23,8 +24,8 @@ const TopBanner = ({ onClose }) => {
         <button 
           className="top-banner-close-btn" 
           onClick={onClose} 
-          aria-label="Kapat"
-          title="Kapat"
+          aria-label={isEn ? "Close" : "Kapat"}
+          title={isEn ? "Close" : "Kapat"}
         >
           <X size={14} />
         </button>

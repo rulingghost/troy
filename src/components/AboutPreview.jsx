@@ -5,15 +5,16 @@ import { useContent } from '../context/ContentContext';
 import './AboutPreview.css';
 
 const AboutPreview = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const about = content?.about || {};
 
-  const subtitle = about.subtitle || 'Biz Kimiz?';
-  const title = about.title || 'Geleceğin Çözümlerini Bugünden Tasarlıyoruz';
-  const desc1 = about.desc1 || 'İhtiyaçlarınıza özel, bilimsel temelli ve özgün yaklaşımlarla, ulusal ve uluslararası çerçevede 360 derece stratejik çözümler üreten güvenilir ve sürdürülebilir bir iş ortağıyız.';
-  const desc2 = about.desc2 || 'Alx Troy olarak; kurumsal etkinliklerin sadece bir organizasyon olmanın ötesinde, şirket kültürünüzü besleyen ve hedeflerinize hizmet eden "stratejik birer yolculuk" olduğuna inanıyoruz.';
+  const subtitle = about.subtitle || (isEn ? 'Who We Are' : 'Biz Kimiz?');
+  const title = about.title || (isEn ? 'Designing Tomorrow’s Solutions Today' : 'Geleceğin Çözümlerini Bugünden Tasarlıyoruz');
+  const desc1 = about.desc1 || (isEn ? 'We are a trusted and sustainable partner producing 360-degree strategic solutions in national and international frameworks with bespoke, science-based, and unique approaches.' : 'İhtiyaçlarınıza özel, bilimsel temelli ve özgün yaklaşımlarla, ulusal ve uluslararası çerçevede 360 derece stratejik çözümler üreten güvenilir ve sürdürülebilir bir iş ortağıyız.');
+  const desc2 = about.desc2 || (isEn ? 'As Alx Troy, we believe corporate events are more than just organizations—they are strategic journeys that nurture company culture and serve your business goals.' : 'Alx Troy olarak; kurumsal etkinliklerin sadece bir organizasyon olmanın ötesinde, şirket kültürünüzü besleyen ve hedeflerinize hizmet eden "stratejik birer yolculuk" olduğuna inanıyoruz.');
   const image = about.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800';
-  const ctaText = about.ctaText || 'Hakkımızda Daha Fazla';
+  const ctaText = about.ctaText || (isEn ? 'Learn More About Us' : 'Hakkımızda Daha Fazla');
   const ctaLink = about.ctaLink || '/kurumsal/hakkimizda';
 
   return (

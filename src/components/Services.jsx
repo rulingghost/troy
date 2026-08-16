@@ -5,10 +5,11 @@ import { useContent } from '../context/ContentContext';
 import './Services.css';
 
 const Services = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const services = content?.services || {};
   const items = services.items || [];
-  const sectionTitle = services.title || 'Hizmetlerimiz';
+  const sectionTitle = services.title || (isEn ? 'Our Services' : 'Hizmetlerimiz');
 
   return (
     <section id="services" className="brands-section">
