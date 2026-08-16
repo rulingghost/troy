@@ -749,12 +749,15 @@
 
 .org-motto {
   display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   margin-bottom: 8px;
+}
+
+.org-motto em {
+  font-style: italic;
 }
 
 .org-main-title {

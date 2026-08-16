@@ -170,7 +170,7 @@ const OrganizationContactForm = () => {
           <div className="org-form-header">
             <div className="org-header-badge">
               <Sparkles size={16} />
-              <span>Enjoy Your Journey</span>
+              <span><em>Enjoy Your Journey</em></span>
             </div>
             <h2 className="org-form-title">Hayalinizdeki Organizasyonu Birlikte Planlayalım</h2>
             <p className="org-form-tagline">&ldquo;Siz hayal edin, biz tüm detayları planlayalım.&rdquo;</p>
@@ -190,7 +190,7 @@ const OrganizationContactForm = () => {
                 Sayın <strong>{formData.yetkiliAdSoyad}</strong> ({formData.firmaAdi}), talebinizi aldık. Ekibimiz en kısa sürede sizinle iletişime geçerek detayları birlikte değerlendirecek ve size özel teklif sunacaktır.
               </p>
               <div className="success-quote">
-                &ldquo;Enjoy Your Journey — We Take Care of Every Detail&rdquo;
+                <em>&ldquo;Enjoy Your Journey — We Take Care of Every Detail&rdquo;</em>
               </div>
               <button type="button" onClick={resetForm} className="btn btn-primary btn-reset">
                 Yeni Talep Oluştur

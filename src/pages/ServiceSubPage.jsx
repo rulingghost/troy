@@ -529,7 +529,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             {(isMisafirHizmetleri || (catKey === 'alx-4-you' && !isOwnEventYurtici && !isOwnEventYurtdisi)) && (
               <div className="org-detail-card glass-panel" style={{ marginBottom: '40px' }}>
                 <div className="org-card-header">
-                  <span className="org-motto">&ldquo;Enjoy Your Journey&rdquo; — Yolculuğun keyfini çıkarın, gerisini bize bırakın</span>
+                  <span className="org-motto"><em>&ldquo;Enjoy Your Journey&rdquo;</em> — Yolculuğun keyfini çıkarın, gerisini bize bırakın</span>
                   <h2 className="org-main-title">ULUSLARARASI MİSAFİR HİZMETLERİ</h2>
                   <h3 className="org-subtitle">Misafirlerinizin Yolculuğu, Bizim Profesyonel Dokunuşumuzla Başlar</h3>
                 </div>
@@ -581,7 +581,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
             {(!isOwnEventYurtici && !isMisafirHizmetleri) && (
               <div className="org-detail-card glass-panel">
                 <div className="org-card-header">
-                  <span className="org-motto">&ldquo;Enjoy Your Journey&rdquo; — We Take Care of Every Detail</span>
+                  <span className="org-motto"><em>&ldquo;Enjoy Your Journey&rdquo;</em> — We Take Care of Every Detail</span>
                   <h2 className="org-main-title">YURTDIŞI SEYAHAT VE ORGANİZASYONLAR</h2>
                   <h3 className="org-subtitle">Dünya Genelinde Organizasyon ve Seyahat Çözümleri</h3>
                 </div>

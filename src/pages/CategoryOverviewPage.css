@@ -119,6 +119,7 @@
 .cat-hero-tagline {
   font-size: 1.35rem;
   font-weight: 600;
+  font-style: italic;
   color: var(--secondary);
   margin-bottom: 18px;
 }

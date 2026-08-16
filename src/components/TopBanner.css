@@ -44,8 +44,8 @@
   font-family: 'Outfit', 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: 1.5px;
   color: #ffffff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }

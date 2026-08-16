@@ -2,7 +2,7 @@ export const defaultContent = {
   general: {
     siteTitle: 'Alexander Troy Corporate',
     logo: '/logo.png',
-    topBannerText: 'Enjoy your journey',
+    topBannerText: 'Enjoy Your Journey',
     topBannerEnabled: true,
   },
   menus: [
@@ -121,7 +121,7 @@ export const defaultContent = {
         badge: '🤖 Yapay Zeka & MICE Teknolojileri',
         title: 'Geleceğin AI Destekli Etkinlik & Kongre Yönetimi',
         desc: 'Yapay zeka algoritmaları, akıllı dijital katılımcı deneyimleri ve hibrit platformlarla organizasyonlarınızı kusursuz bir yolculuğa dönüştürüyoruz.',
-        slogan: 'Enjoy your journey',
+        slogan: 'Enjoy Your Journey',
         primaryCta: 'Hizmetleri Keşfet',
         primaryCtaLink: '#services',
         secondaryCta: 'Bize Ulaşın',
@@ -133,7 +133,7 @@ export const defaultContent = {
         badge: '💡 Alx Digi & Medikal Teknoloji',
         title: 'Tele-Sağlık & Sanal Gerçeklik (VR) Çözümleri',
         desc: 'Giyilebilir teknolojiler, yapay zeka destekli klinik eğitim simülasyonları ve interaktif sağlık platformları ile sınırları kaldırın.',
-        slogan: 'Enjoy your journey',
+        slogan: 'Enjoy Your Journey',
         primaryCta: 'Dijital Çözümler',
         primaryCtaLink: '/alx-digi',
         secondaryCta: 'İletişime Geçin',
@@ -145,7 +145,7 @@ export const defaultContent = {
         badge: '🌐 Omnichannel & Kurumsal Strateji',
         title: 'Uçtan Uca Akıllı Veri & Canlı Yayın Yönetimi',
         desc: '360° medikal iletişim, canlı dijital yayınlar ve yapay zeka destekli çeviri çözümleriyle her adımda yenilikçi iş ortağınızız.',
-        slogan: 'Enjoy your journey',
+        slogan: 'Enjoy Your Journey',
         primaryCta: 'Sürecimizi İnceleyin',
         primaryCtaLink: '#journey',
         secondaryCta: 'Bizimle Görüşün',
@@ -267,7 +267,7 @@ export const defaultContent = {
     address: 'Levent, Büyükdere Cd. No:195, Şişli / İstanbul',
     instagram: 'https://instagram.com',
     wechat: '#',
-    copyright: 'Alexander Troy Corporate. Tüm hakları saklıdır. — Enjoy your journey'
+    copyright: 'Alexander Troy Corporate. Tüm hakları saklıdır. — Enjoy Your Journey'
   },
   security: {
     adminPassword: 'admin'

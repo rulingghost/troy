@@ -28,7 +28,7 @@ const categoryOverviewData = {
     id: 'kurumsal',
     title: 'Kurumsal',
     badge: 'Alexander Troy Kurumsal',
-    tagline: 'Enjoy your journey',
+    tagline: 'Enjoy Your Journey',
     heroImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1920',
     description: 'Alexander Troy; kurumsal etkinliklerin ötesinde şirket kültürünüzü besleyen ve hedeflerinize hizmet eden stratejik bir yol arkadaşıdır. 25 yılı aşkın tecrübemiz ve Amerika merkezli uluslararası gücümüzle yanınızdayız.',
     stats: [

@@ -105,7 +105,7 @@ export const ContentProvider = ({ children }) => {
       const result = await res.json();
 
       if (res.ok && result.success) {
-        setSaveStatus({ type: 'success', message: 'Değişiklikler Vercel KV veritabanına başarıyla kaydedildi!' });
+        setSaveStatus({ type: 'success', message: 'Değişiklikler veritabanına başarıyla kaydedildi!' });
         setContent(dataToSave);
         setTimeout(() => setSaveStatus({ type: 'idle', message: '' }), 4000);
         return { success: true };
@@ -113,7 +113,7 @@ export const ContentProvider = ({ children }) => {
         const errorMsg = result.error || 'Kaydetme sırasında bir hata oluştu.';
         setSaveStatus({ 
           type: 'warning', 
-          message: `Yerel önbelleğe kaydedildi. Vercel KV: ${errorMsg}` 
+          message: `Yerel önbelleğe kaydedildi. Veritabanı: ${errorMsg}` 
         });
         setTimeout(() => setSaveStatus({ type: 'idle', message: '' }), 6000);
         return { success: false, error: errorMsg };
@@ -122,7 +122,7 @@ export const ContentProvider = ({ children }) => {
       console.error('Save error:', err);
       setSaveStatus({ 
         type: 'warning', 
-        message: 'Yerel önbelleğe kaydedildi. (API çevrimdışı veya Vercel KV yapılandırması bekleniyor)' 
+        message: 'Yerel önbelleğe kaydedildi. (Veritabanı API bağlantısı bekleniyor)' 
       });
       setTimeout(() => setSaveStatus({ type: 'idle', message: '' }), 6000);
       return { success: false, error: err.message };
@@ -174,6 +174,36 @@ export const ContentProvider = ({ children }) => {
     await saveContent(defaultContent);
   }, [saveContent]);
 
+  // Export JSON backup
+  const exportContentJson = useCallback(() => {
+    const jsonStr = JSON.stringify(content, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alx-content-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, [content]);
+
+  // Import JSON backup
+  const importContentJson = useCallback(async (jsonString) => {
+    try {
+      const parsed = JSON.parse(jsonString);
+      if (!parsed || typeof parsed !== 'object') {
+        throw new Error('Geçersiz JSON formatı.');
+      }
+      setContent(parsed);
+      const res = await saveContent(parsed);
+      return res;
+    } catch (e) {
+      console.error('Import error:', e);
+      throw e;
+    }
+  }, [saveContent]);
+
   return (
     <ContentContext.Provider
       value={{
@@ -186,6 +216,8 @@ export const ContentProvider = ({ children }) => {
         saveContent,
         uploadImageFile,
         resetToDefaults,
+        exportContentJson,
+        importContentJson,
         refreshContent: fetchContent
       }}
     >

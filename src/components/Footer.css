@@ -81,7 +81,7 @@
 
 .footer-bottom em {
   color: var(--secondary);
-  font-style: normal;
+  font-style: italic;
   font-weight: 600;
 }
 

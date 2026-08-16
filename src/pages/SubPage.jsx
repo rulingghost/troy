@@ -110,7 +110,7 @@ const SubPage = () => {
             Biz; her kurumun kendine özgü dinamiklerine odaklanan, projelere bilimsel ve butik-kreatif çözümlerle yaklaşan yeni nesil bir MICE partneriyiz.
           </p>
           <p className="about-text-p">
-            Bu doğrultuda <strong>&ldquo;Enjoy your journey&rdquo;</strong> mottomuzla, planlama aşamasından etkinlik sonrasına kadar tüm süreci sizin için keyifli bir deneyime dönüştürüyoruz. Ve sadece bir tedarikçi değil, taleplerinize katma değer sağlayan stratejik bir ortak vizyonuyla yaklaşıyoruz.
+            Bu doğrultuda <strong><em>&ldquo;Enjoy Your Journey&rdquo;</em></strong> mottomuzla, planlama aşamasından etkinlik sonrasına kadar tüm süreci sizin için keyifli bir deneyime dönüştürüyoruz. Ve sadece bir tedarikçi değil, taleplerinize katma değer sağlayan stratejik bir ortak vizyonuyla yaklaşıyoruz.
           </p>
 
           <div className="about-stats-card">

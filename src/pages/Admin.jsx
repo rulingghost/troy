@@ -31,7 +31,11 @@ import {
   Copy,
   ChevronRight,
   ShieldCheck,
-  HelpCircle
+  HelpCircle,
+  Sliders,
+  Download,
+  UploadCloud,
+  Database
 } from 'lucide-react';
 import './Admin.css';
 
@@ -121,7 +125,16 @@ const ImageUploader = ({ label, value, onChange, placeholder = 'Görsel URL veya
 };
 
 const Admin = () => {
-  const { content, updateContent, saveContent, isSaving, saveStatus, resetToDefaults } = useContent();
+  const { 
+    content, 
+    updateContent, 
+    saveContent, 
+    isSaving, 
+    saveStatus, 
+    resetToDefaults, 
+    exportContentJson, 
+    importContentJson 
+  } = useContent();
   
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -132,7 +145,7 @@ const Admin = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState('menu');
+  const [activeTab, setActiveTab] = useState('general');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [blobQuickUrl, setBlobQuickUrl] = useState('');
 
@@ -140,6 +153,29 @@ const Admin = () => {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [passwordSuccess, setPasswordSuccess] = useState('');
+
+  // Backup & Restore state
+  const [importStatus, setImportStatus] = useState('');
+  const [importLoading, setImportLoading] = useState(false);
+
+  const handleImportJsonFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImportLoading(true);
+    setImportStatus('');
+    try {
+      const text = await file.text();
+      await importContentJson(text);
+      setImportStatus('Yedek JSON dosyası başarıyla yüklendi ve yayına alındı!');
+      setTimeout(() => setImportStatus(''), 5000);
+    } catch (err) {
+      alert('Yedek dosyası yüklenirken hata: ' + (err.message || 'Geçersiz dosya'));
+      setImportStatus('Hata: Dosya yüklenemedi.');
+    } finally {
+      setImportLoading(false);
+      e.target.value = '';
+    }
+  };
 
   const currentAdminPassword = content?.security?.adminPassword || 'alxtroy2026';
 
@@ -355,7 +391,7 @@ const Admin = () => {
       badge: '✨ Yeni Başlık Rozeti',
       title: 'Yeni Slayt Başlığı',
       desc: 'Slayt açıklama metnini buraya giriniz.',
-      slogan: 'Enjoy your journey',
+      slogan: 'Enjoy Your Journey',
       primaryCta: 'Hizmetleri Keşfet',
       primaryCtaLink: '#services',
       secondaryCta: 'Bize Ulaşın',
@@ -687,11 +723,20 @@ const Admin = () => {
           <nav className="admin-nav-tabs">
             <button 
               type="button"
+              className={`tab-btn ${activeTab === 'general' ? 'active' : ''}`}
+              onClick={() => setActiveTab('general')}
+            >
+              <Sliders size={18} />
+              <span>Genel Ayarlar &amp; Logo</span>
+            </button>
+
+            <button 
+              type="button"
               className={`tab-btn ${activeTab === 'menu' ? 'active' : ''}`}
               onClick={() => setActiveTab('menu')}
             >
               <Navigation size={18} />
-              <span>Menü & Navigasyon</span>
+              <span>Menü &amp; Navigasyon</span>
             </button>
 
             <button 
@@ -700,7 +745,7 @@ const Admin = () => {
               onClick={() => setActiveTab('hero')}
             >
               <Sparkles size={18} />
-              <span>Hero & Slaytlar</span>
+              <span>Hero &amp; Slaytlar</span>
             </button>
 
             <button 
@@ -709,7 +754,7 @@ const Admin = () => {
               onClick={() => setActiveTab('about')}
             >
               <FileText size={18} />
-              <span>Hakkımızda & Tanıtım</span>
+              <span>Hakkımızda &amp; Tanıtım</span>
             </button>
 
             <button 
@@ -754,7 +799,7 @@ const Admin = () => {
               onClick={() => setActiveTab('contact')}
             >
               <PhoneCall size={18} />
-              <span>İletişim & Altbilgi</span>
+              <span>İletişim &amp; Altbilgi</span>
             </button>
 
             <button 
@@ -772,14 +817,14 @@ const Admin = () => {
               onClick={() => setActiveTab('security')}
             >
               <KeyRound size={18} />
-              <span>Güvenlik & Şifre</span>
+              <span>Güvenlik &amp; Yedekleme</span>
             </button>
           </nav>
 
           <div className="admin-sidebar-footer">
             <div className="kv-info-badge">
               <span className="dot online"></span>
-              <span>Vercel KV + Blob Aktif</span>
+              <span>Upstash + Blob Aktif</span>
             </div>
             <p className="admin-hint-text">
               Tüm değişiklikler anında kaydedilir ve sitenizde gerçek zamanlı yayınlanır.
@@ -789,6 +834,71 @@ const Admin = () => {
 
         {/* Tab Panels */}
         <main className="admin-tab-content">
+          {/* TAB 0: GENERAL SETTINGS & LOGO */}
+          {activeTab === 'general' && (
+            <section className="admin-section">
+              <div className="section-header">
+                <div>
+                  <h2 className="section-heading">Genel Site Ayarları &amp; Logo</h2>
+                  <p className="section-desc">
+                    Site başlığı, logo görseli, üst bildirim/motto şeridi ve genel marka ayarlarınızı buradan yönetin.
+                  </p>
+                </div>
+              </div>
+
+              <div className="admin-card">
+                <h3 className="card-subheading">Marka &amp; Başlık Bilgileri</h3>
+                <div className="grid-2-col">
+                  <div className="input-group">
+                    <label className="admin-label">Site Başlığı / Marka Adı</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={content.general?.siteTitle || ''} 
+                      onChange={(e) => handleGeneralChange('siteTitle', e.target.value)}
+                      placeholder="Örn: Alexander Troy Corporate"
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-label">Üst Kayan Banner / Slogan Metni</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={content.general?.topBannerText || ''} 
+                      onChange={(e) => handleGeneralChange('topBannerText', e.target.value)}
+                      placeholder="Enjoy Your Journey"
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group" style={{ marginTop: '16px' }}>
+                  <label className="admin-checkbox-label">
+                    <input 
+                      type="checkbox" 
+                      checked={content.general?.topBannerEnabled !== false} 
+                      onChange={(e) => handleGeneralChange('topBannerEnabled', e.target.checked)}
+                    />
+                    <span>En üstteki renkli bildirim / slogan şeridi (Top Banner) sitede aktif olsun</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="admin-card">
+                <h3 className="card-subheading">Site Logosu</h3>
+                <p className="card-hint">
+                  Header ve menüde görüntülenecek logonun görsel URL'sini girin veya doğrudan Vercel Blob sunucusuna yükleyin.
+                </p>
+                <ImageUploader 
+                  label="Logo Görseli"
+                  value={content.general?.logo || ''} 
+                  onChange={(url) => handleGeneralChange('logo', url)}
+                  placeholder="/logo.png veya https://... URL adresi"
+                />
+              </div>
+            </section>
+          )}
+
           {/* TAB 1: MENU MANAGEMENT */}
           {activeTab === 'menu' && (
             <section className="admin-section">
@@ -1060,7 +1170,7 @@ const Admin = () => {
                           className="admin-input" 
                           value={slide.slogan || ''} 
                           onChange={(e) => handleUpdateSlide(slideIdx, 'slogan', e.target.value)}
-                          placeholder="Enjoy your journey"
+                          placeholder="Enjoy Your Journey"
                         />
                       </div>
                     </div>
@@ -1783,18 +1893,96 @@ const Admin = () => {
             </section>
           )}
 
-          {/* TAB 10: SECURITY & PASSWORD SETTINGS */}
+          {/* TAB 10: SECURITY & BACKUP SETTINGS */}
           {activeTab === 'security' && (
             <section className="admin-section">
               <div className="section-header">
                 <div>
-                  <h2 className="section-heading">Güvenlik ve Şifre Ayarları</h2>
+                  <h2 className="section-heading">Güvenlik, Veritabanı &amp; Yedekleme</h2>
                   <p className="section-desc">
-                    Yönetim paneli giriş şifresini buradan güncelleyebilir ve Vercel KV veritabanında saklayabilirsiniz.
+                    Yönetim paneli giriş şifresi, Upstash veritabanı durumu ve tüm site içeriğini JSON olarak yedekleme / geri yükleme araçları.
                   </p>
                 </div>
               </div>
 
+              {/* Database & Infrastructure Info Card */}
+              <div className="admin-card">
+                <h3 className="card-subheading">Sistem &amp; Veritabanı Durumu</h3>
+                <div className="system-status-grid">
+                  <div className="system-status-item">
+                    <div className="status-icon-box">
+                      <Database size={22} className="text-secondary" />
+                    </div>
+                    <div className="status-info">
+                      <span className="status-title">İçerik Veritabanı</span>
+                      <span className="status-val text-success">Upstash Redis (Aktif / REST API)</span>
+                      <span className="status-desc">Metinler, menüler ve ayarlar anlık senkronize ediliyor.</span>
+                    </div>
+                  </div>
+
+                  <div className="system-status-item">
+                    <div className="status-icon-box">
+                      <ImageIcon size={22} className="text-secondary" />
+                    </div>
+                    <div className="status-info">
+                      <span className="status-title">Medya &amp; Görsel Deposu</span>
+                      <span className="status-val text-success">Vercel Blob Storage (Aktif)</span>
+                      <span className="status-desc">Yüklenen logolar ve fotoğraflar CDN üzerinden hızlı sunuluyor.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Backup & Restore Card */}
+              <div className="admin-card">
+                <h3 className="card-subheading">JSON Yedekleme &amp; Geri Yükleme</h3>
+                <p className="card-hint">
+                  Sitenizdeki tüm içerikleri, menüleri, slaytları ve metinleri tek tıkla bilgisayarınıza yedekleyebilir veya daha önce aldığınız bir yedeği anında geri yükleyebilirsiniz.
+                </p>
+
+                <div className="backup-actions-grid">
+                  <div className="backup-card-col">
+                    <h4>Yedek Al (Dışa Aktar)</h4>
+                    <p>Mevcut tüm site verilerini `.json` dosyası olarak indirin.</p>
+                    <button 
+                      type="button" 
+                      className="btn-admin-action" 
+                      onClick={exportContentJson}
+                    >
+                      <Download size={16} />
+                      <span>Tüm İçeriği JSON Olarak İndir</span>
+                    </button>
+                  </div>
+
+                  <div className="backup-card-col">
+                    <h4>Yedekten Geri Yükle (İçe Aktar)</h4>
+                    <p>Daha önce indirdiğiniz `.json` dosyasını seçip siteye yükleyin.</p>
+                    <label className={`btn-admin-action btn-upload-json ${importLoading ? 'loading' : ''}`}>
+                      <UploadCloud size={16} />
+                      <span>{importLoading ? 'Yükleniyor...' : 'JSON Yedek Dosyası Seç'}</span>
+                      <input 
+                        type="file" 
+                        accept=".json,application/json" 
+                        onChange={handleImportJsonFile} 
+                        disabled={importLoading} 
+                        style={{ display: 'none' }}
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                {importStatus && (
+                  <div className="blob-success-banner" style={{ marginTop: '16px' }}>
+                    <CheckCircle2 size={20} className="text-success" />
+                    <div>
+                      <strong>Durum:</strong>
+                      <p>{importStatus}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Password Change Card */}
               <div className="admin-card">
                 <h3 className="card-subheading">Yönetici Şifresini Değiştir</h3>
                 

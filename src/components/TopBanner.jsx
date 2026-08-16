@@ -5,7 +5,7 @@ import './TopBanner.css';
 
 const TopBanner = ({ onClose }) => {
   const { content } = useContent();
-  const bannerText = content?.general?.topBannerText || 'Enjoy your journey';
+  const bannerText = content?.general?.topBannerText || 'Enjoy Your Journey';
   const isEnabled = content?.general?.topBannerEnabled !== false;
 
   if (!isEnabled) {

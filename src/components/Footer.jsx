@@ -20,7 +20,7 @@ const Footer = () => {
             <Link to="/" className="footer-logo">
               {general.siteTitle || 'Alexander Troy'}<span>.</span>
             </Link>
-            <p className="footer-slogan">&ldquo;{general.topBannerText || 'Enjoy your journey'}&rdquo;</p>
+            <p className="footer-slogan"><em>&ldquo;{general.topBannerText || 'Enjoy Your Journey'}&rdquo;</em></p>
             <p className="footer-desc">
               {contact.desc || 'Geleceğin yapay zeka destekli kurumsal iletişim, MICE etkinlik ve medikal teknoloji çözümleriyle yanınızdayız.'}
             </p>
@@ -58,7 +58,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} {contact.copyright || 'Alexander Troy Corporate. Tüm hakları saklıdır. — Enjoy your journey'}</p>
+          <p>&copy; {new Date().getFullYear()} {contact.copyright || 'Alexander Troy Corporate. Tüm hakları saklıdır. — Enjoy Your Journey'}</p>
           <div className="footer-legal">
             <a href="#">Gizlilik Politikası</a>
             <a href="#">Kullanım Koşulları</a>
