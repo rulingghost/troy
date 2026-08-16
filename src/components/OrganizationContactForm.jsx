@@ -19,9 +19,10 @@ import {
   X
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import { defaultContent } from '../data/defaultContent';
 import './OrganizationContactForm.css';
 
-const ORG_TYPES = [
+const DEFAULT_ORG_TYPES = [
   'Toplantı / Seminer',
   'Kongre / Sempozyum',
   'Eğitim Organizasyonu',
@@ -33,7 +34,7 @@ const ORG_TYPES = [
   'Diğer'
 ];
 
-const SERVICES_LIST = [
+const DEFAULT_SERVICES_LIST = [
   'Uçak / Ulaşım',
   'Otel / Konaklama',
   'Havalimanı ve Şehir İçi Transfer',
@@ -46,6 +47,11 @@ const SERVICES_LIST = [
 ];
 
 const OrganizationContactForm = () => {
+  const { content } = useContent();
+  const formConfig = content?.pages?.orgFormConfig || defaultContent.pages.orgFormConfig || {};
+  const currentOrgTypes = formConfig.orgTypes || DEFAULT_ORG_TYPES;
+  const currentServicesList = formConfig.servicesList || DEFAULT_SERVICES_LIST;
+
   const [formData, setFormData] = useState({
     firmaAdi: '',
     yetkiliAdSoyad: '',
@@ -171,13 +177,12 @@ const OrganizationContactForm = () => {
           <div className="org-form-header">
             <div className="org-header-badge">
               <Sparkles size={16} />
-              <span><em>Enjoy Your Journey</em></span>
+              <span><em>{formConfig.badge || 'Enjoy Your Journey'}</em></span>
             </div>
-            <h2 className="org-form-title">Hayalinizdeki Organizasyonu Birlikte Planlayalım</h2>
-            <p className="org-form-tagline">&ldquo;Siz hayal edin, biz tüm detayları planlayalım.&rdquo;</p>
+            <h2 className="org-form-title">{formConfig.title || 'Hayalinizdeki Organizasyonu Birlikte Planlayalım'}</h2>
+            <p className="org-form-tagline">&ldquo;{formConfig.subtitle || 'Siz hayal edin, biz tüm detayları planlayalım.'}&rdquo;</p>
             <p className="org-form-desc">
-              Yurt içinde veya dünyanın herhangi bir noktasında gerçekleştirmek istediğiniz kurumsal organizasyonunuzu bize anlatın. 
-              Toplantı, kongre, sempozyum, bayi organizasyonu, lansman, eğitim, motivasyon gezisi, kurumsal seyahat veya özel etkinlikleriniz için ihtiyaçlarınıza uygun çözümleri birlikte oluşturalım.
+              {formConfig.desc || 'Yurt içinde veya dünyanın herhangi bir noktasında gerçekleştirmek istediğiniz kurumsal organizasyonunuzu bize anlatın. Toplantı, kongre, sempozyum, bayi organizasyonu, lansman, eğitim, motivasyon gezisi, kurumsal seyahat veya özel etkinlikleriniz için ihtiyaçlarınıza uygun çözümleri birlikte oluşturalım.'}
             </p>
           </div>
 
@@ -186,9 +191,9 @@ const OrganizationContactForm = () => {
               <div className="success-icon-wrapper">
                 <CheckCircle2 size={60} />
               </div>
-              <h3>Organizasyon Talebiniz Başarıyla Alındı!</h3>
+              <h3>{formConfig.successTitle || 'Organizasyon Talebiniz Başarıyla Alındı!'}</h3>
               <p>
-                Sayın <strong>{formData.yetkiliAdSoyad}</strong> ({formData.firmaAdi}), talebinizi aldık. Ekibimiz en kısa sürede sizinle iletişime geçerek detayları birlikte değerlendirecek ve size özel teklif sunacaktır.
+                Sayın <strong>{formData.yetkiliAdSoyad}</strong> ({formData.firmaAdi}), talebinizi aldık. {formConfig.successDesc || 'Ekibimiz en kısa sürede sizinle iletişime geçerek detayları birlikte değerlendirecek ve size özel teklif sunacaktır.'}
               </p>
               <div className="success-quote">
                 <em>&ldquo;Enjoy Your Journey — We Take Care of Every Detail&rdquo;</em>
@@ -281,7 +286,7 @@ const OrganizationContactForm = () => {
                 <div className="org-sub-block">
                   <label className="org-checkbox-group-label">Organizasyon Türü (İlgili seçenekleri işaretleyiniz)</label>
                   <div className="org-checkbox-grid">
-                    {ORG_TYPES.map((type, idx) => {
+                    {currentOrgTypes.map((type, idx) => {
                       const isSelected = formData.orgTurleri.includes(type);
                       return (
                         <div 
@@ -358,7 +363,7 @@ const OrganizationContactForm = () => {
                 <div className="org-sub-block">
                   <label className="org-checkbox-group-label">Hangi hizmetlere ihtiyacınız var?</label>
                   <div className="org-checkbox-grid">
-                    {SERVICES_LIST.map((service, idx) => {
+                    {currentServicesList.map((service, idx) => {
                       const isSelected = formData.hizmetler.includes(service);
                       return (
                         <div 
@@ -454,7 +459,7 @@ const OrganizationContactForm = () => {
                     <span>Gönderiliyor...</span>
                   ) : (
                     <>
-                      <span>ORGANİZASYON TALEBİMİ GÖNDER</span>
+                      <span>{formConfig.submitBtnText || 'ORGANİZASYON TALEBİMİ GÖNDER'}</span>
                       <Send size={18} style={{ marginLeft: '10px' }} />
                     </>
                   )}

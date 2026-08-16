@@ -41,7 +41,8 @@ import {
   Target,
   Award,
   Building2,
-  MapPin
+  MapPin,
+  ClipboardCheck
 } from 'lucide-react';
 import './Admin.css';
 
@@ -156,6 +157,7 @@ const Admin = () => {
   const [selectedCategoryKey, setSelectedCategoryKey] = useState('kurumsal');
   const [contactSubTab, setContactSubTab] = useState('info');
   const [subservicesSubTab, setSubservicesSubTab] = useState('congress');
+  const [legalSubTab, setLegalSubTab] = useState('privacy');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [blobQuickUrl, setBlobQuickUrl] = useState('');
 
@@ -703,6 +705,115 @@ const Admin = () => {
     handleSubServicesDataChange('corporateTravel', corpTravel);
   };
 
+  // --- LEGAL PAGES HANDLERS ---
+  const handleLegalPageChange = (pageKey, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const legalPages = { ...(currentPages.legalPages || defaultContent.pages.legalPages) };
+    legalPages[pageKey] = {
+      ...(legalPages[pageKey] || {}),
+      [field]: val
+    };
+    updateContent({
+      pages: {
+        ...currentPages,
+        legalPages
+      }
+    });
+  };
+
+  // --- ORG FORM CONFIG HANDLERS ---
+  const handleOrgFormConfigChange = (field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const orgForm = { ...(currentPages.orgFormConfig || defaultContent.pages.orgFormConfig) };
+    orgForm[field] = val;
+    updateContent({
+      pages: {
+        ...currentPages,
+        orgFormConfig: orgForm
+      }
+    });
+  };
+
+  const handleOrgTypeChange = (idx, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const orgForm = { ...(currentPages.orgFormConfig || defaultContent.pages.orgFormConfig) };
+    const list = [...(orgForm.orgTypes || defaultContent.pages.orgFormConfig.orgTypes)];
+    list[idx] = val;
+    orgForm.orgTypes = list;
+    updateContent({
+      pages: {
+        ...currentPages,
+        orgFormConfig: orgForm
+      }
+    });
+  };
+
+  const handleAddOrgType = () => {
+    const currentPages = content.pages || defaultContent.pages;
+    const orgForm = { ...(currentPages.orgFormConfig || defaultContent.pages.orgFormConfig) };
+    const list = [...(orgForm.orgTypes || defaultContent.pages.orgFormConfig.orgTypes), 'Yeni Organizasyon Türü'];
+    orgForm.orgTypes = list;
+    updateContent({
+      pages: {
+        ...currentPages,
+        orgFormConfig: orgForm
+      }
+    });
+  };
+
+  const handleDeleteOrgType = (idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const orgForm = { ...(currentPages.orgFormConfig || defaultContent.pages.orgFormConfig) };
+    const list = (orgForm.orgTypes || defaultContent.pages.orgFormConfig.orgTypes).filter((_, i) => i !== idx);
+    orgForm.orgTypes = list;
+    updateContent({
+      pages: {
+        ...currentPages,
+        orgFormConfig: orgForm
+      }
+    });
+  };
+
+  const handleOrgServiceChange = (idx, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const orgForm = { ...(currentPages.orgFormConfig || defaultContent.pages.orgFormConfig) };
+    const list = [...(orgForm.servicesList || defaultContent.pages.orgFormConfig.servicesList)];
+    list[idx] = val;
+    orgForm.servicesList = list;
+    updateContent({
+      pages: {
+        ...currentPages,
+        orgFormConfig: orgForm
+      }
+    });
+  };
+
+  const handleAddOrgService = () => {
+    const currentPages = content.pages || defaultContent.pages;
+    const orgForm = { ...(currentPages.orgFormConfig || defaultContent.pages.orgFormConfig) };
+    const list = [...(orgForm.servicesList || defaultContent.pages.orgFormConfig.servicesList), 'Yeni Hizmet Türü'];
+    orgForm.servicesList = list;
+    updateContent({
+      pages: {
+        ...currentPages,
+        orgFormConfig: orgForm
+      }
+    });
+  };
+
+  const handleDeleteOrgService = (idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const orgForm = { ...(currentPages.orgFormConfig || defaultContent.pages.orgFormConfig) };
+    const list = (orgForm.servicesList || defaultContent.pages.orgFormConfig.servicesList).filter((_, i) => i !== idx);
+    orgForm.servicesList = list;
+    updateContent({
+      pages: {
+        ...currentPages,
+        orgFormConfig: orgForm
+      }
+    });
+  };
+
   // --- MENU MANAGEMENT HANDLERS ---
   const handleAddMenu = () => {
     const newMenu = {
@@ -1231,6 +1342,24 @@ const Admin = () => {
             >
               <Sparkles size={18} />
               <span>🎯 Alt Hizmet &amp; Destinasyonlar</span>
+            </button>
+
+            <button 
+              type="button"
+              className={`tab-btn ${activeTab === 'orgForm' ? 'active' : ''}`}
+              onClick={() => setActiveTab('orgForm')}
+            >
+              <ClipboardCheck size={18} />
+              <span>📋 Organizasyon Talep Formu</span>
+            </button>
+
+            <button 
+              type="button"
+              className={`tab-btn ${activeTab === 'legal' ? 'active' : ''}`}
+              onClick={() => setActiveTab('legal')}
+            >
+              <ShieldCheck size={18} />
+              <span>📜 Yasal &amp; Sözleşme Metinleri</span>
             </button>
 
             <button 
@@ -3360,6 +3489,341 @@ const Admin = () => {
                       </div>
                     );
                   })()}
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* TAB: ORG FORM */}
+          {activeTab === 'orgForm' && (() => {
+            const orgForm = content?.pages?.orgFormConfig || defaultContent.pages.orgFormConfig;
+            const orgTypes = orgForm.orgTypes || defaultContent.pages.orgFormConfig.orgTypes;
+            const servicesList = orgForm.servicesList || defaultContent.pages.orgFormConfig.servicesList;
+
+            return (
+              <section className="admin-section">
+                <div className="section-header">
+                  <div>
+                    <h2 className="section-heading">Organizasyon &amp; Teklif Talep Formu Yönetimi</h2>
+                    <p className="section-desc">
+                      Ana sayfada ve hizmet sayfalarında yer alan kapsamlı talep formunun başlıklarını, organizasyon türlerini, hizmet listesini ve başarı mesajını özelleştirin.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="admin-card">
+                  <div className="card-header-bar">
+                    <h3 className="card-subheading">Form Başlık &amp; Tanıtım Metinleri</h3>
+                  </div>
+
+                  <div className="grid-2-col">
+                    <div className="input-group">
+                      <label className="admin-label">Üst Rozet (Badge)</label>
+                      <input 
+                        type="text" 
+                        className="admin-input" 
+                        value={orgForm.badge || ''} 
+                        onChange={(e) => handleOrgFormConfigChange('badge', e.target.value)}
+                        placeholder="Online Teklif & Planlama"
+                      />
+                    </div>
+
+                    <div className="input-group">
+                      <label className="admin-label">Ana Başlık</label>
+                      <input 
+                        type="text" 
+                        className="admin-input" 
+                        value={orgForm.title || ''} 
+                        onChange={(e) => handleOrgFormConfigChange('title', e.target.value)}
+                        placeholder="Hayalinizdeki Organizasyonu Birlikte Planlayalım"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid-2-col">
+                    <div className="input-group">
+                      <label className="admin-label">Slogan / Alt Başlık</label>
+                      <input 
+                        type="text" 
+                        className="admin-input" 
+                        value={orgForm.subtitle || ''} 
+                        onChange={(e) => handleOrgFormConfigChange('subtitle', e.target.value)}
+                        placeholder="Siz hayal edin, biz tüm detayları planlayalım."
+                      />
+                    </div>
+
+                    <div className="input-group">
+                      <label className="admin-label">Gönder Buton Metni</label>
+                      <input 
+                        type="text" 
+                        className="admin-input" 
+                        value={orgForm.submitBtnText || ''} 
+                        onChange={(e) => handleOrgFormConfigChange('submitBtnText', e.target.value)}
+                        placeholder="ORGANİZASYON TALEBİMİ GÖNDER"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-label">Açıklama Paragrafı</label>
+                    <textarea 
+                      className="admin-textarea" 
+                      rows={3} 
+                      value={orgForm.desc || ''} 
+                      onChange={(e) => handleOrgFormConfigChange('desc', e.target.value)}
+                      placeholder="Yurt içinde veya dünyanın herhangi bir noktasında..."
+                    />
+                  </div>
+                </div>
+
+                {/* Success Message Card */}
+                <div className="admin-card">
+                  <div className="card-header-bar">
+                    <h3 className="card-subheading">Başarılı Gönderim Popup Mesajı</h3>
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-label">Başarı Başlığı</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={orgForm.successTitle || ''} 
+                      onChange={(e) => handleOrgFormConfigChange('successTitle', e.target.value)}
+                      placeholder="Organizasyon Talebiniz Başarıyla Alındı!"
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-label">Başarı Açıklaması</label>
+                    <textarea 
+                      className="admin-textarea" 
+                      rows={2} 
+                      value={orgForm.successDesc || ''} 
+                      onChange={(e) => handleOrgFormConfigChange('successDesc', e.target.value)}
+                      placeholder="Ekibimiz en kısa sürede sizinle iletişime geçecektir..."
+                    />
+                  </div>
+                </div>
+
+                {/* Group 2: Org Types */}
+                <div className="admin-card">
+                  <div className="card-header-bar">
+                    <div>
+                      <h3 className="card-subheading">Organizasyon Türleri Seçenekleri ({orgTypes.length})</h3>
+                      <p className="card-hint">Kullanıcının formda işaretleyebileceği etkinlik kategorileri.</p>
+                    </div>
+                    <button type="button" className="btn-add-secondary" onClick={handleAddOrgType}>
+                      <Plus size={14} /> Seçenek Ekle
+                    </button>
+                  </div>
+
+                  <div className="capabilities-editor-grid">
+                    {orgTypes.map((type, tIdx) => (
+                      <div key={tIdx} className="bullet-row" style={{ background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                        <span style={{ fontSize: '0.85rem', color: '#64748b', minWidth: '24px' }}>#{tIdx+1}</span>
+                        <input 
+                          type="text" 
+                          className="admin-input" 
+                          value={type} 
+                          onChange={(e) => handleOrgTypeChange(tIdx, e.target.value)}
+                        />
+                        <button type="button" className="btn-icon btn-danger" onClick={() => handleDeleteOrgType(tIdx)} title="Sil">
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Group 3: Services List */}
+                <div className="admin-card">
+                  <div className="card-header-bar">
+                    <div>
+                      <h3 className="card-subheading">Hizmet Seçimleri Listesi ({servicesList.length})</h3>
+                      <p className="card-hint">Kullanıcının formda talep edebileceği kurumsal hizmetler.</p>
+                    </div>
+                    <button type="button" className="btn-add-secondary" onClick={handleAddOrgService}>
+                      <Plus size={14} /> Hizmet Ekle
+                    </button>
+                  </div>
+
+                  <div className="capabilities-editor-grid">
+                    {servicesList.map((srv, sIdx) => (
+                      <div key={sIdx} className="bullet-row" style={{ background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                        <span style={{ fontSize: '0.85rem', color: '#64748b', minWidth: '24px' }}>#{sIdx+1}</span>
+                        <input 
+                          type="text" 
+                          className="admin-input" 
+                          value={srv} 
+                          onChange={(e) => handleOrgServiceChange(sIdx, e.target.value)}
+                        />
+                        <button type="button" className="btn-icon btn-danger" onClick={() => handleDeleteOrgService(sIdx)} title="Sil">
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* TAB: LEGAL & POLICIES */}
+          {activeTab === 'legal' && (() => {
+            const legal = content?.pages?.legalPages || defaultContent.pages.legalPages;
+            const priv = legal.privacyPolicy || defaultContent.pages.legalPages.privacyPolicy;
+            const terms = legal.termsOfService || defaultContent.pages.legalPages.termsOfService;
+            const kvkk = legal.kvkk || defaultContent.pages.legalPages.kvkk;
+
+            return (
+              <section className="admin-section">
+                <div className="section-header">
+                  <div>
+                    <h2 className="section-heading">Yasal &amp; Sözleşme Metinleri</h2>
+                    <p className="section-desc">
+                      Sitede footer ve formlarda yer alan Gizlilik Politikası, Kullanım Şartları ve KVKK Aydınlatma Metinlerini düzenleyin.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="page-subtabs-nav">
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${legalSubTab === 'privacy' ? 'active' : ''}`}
+                    onClick={() => setLegalSubTab('privacy')}
+                  >
+                    <ShieldCheck size={16} />
+                    <span>Gizlilik Politikası</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${legalSubTab === 'terms' ? 'active' : ''}`}
+                    onClick={() => setLegalSubTab('terms')}
+                  >
+                    <FileText size={16} />
+                    <span>Kullanım Koşulları</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${legalSubTab === 'kvkk' ? 'active' : ''}`}
+                    onClick={() => setLegalSubTab('kvkk')}
+                  >
+                    <ClipboardCheck size={16} />
+                    <span>KVKK Aydınlatma Metni</span>
+                  </button>
+                </div>
+
+                <div className="page-editor-container">
+                  {legalSubTab === 'privacy' && (
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">🔒 Gizlilik ve Kişisel Verilerin Korunması Politikası</h3>
+                      </div>
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Başlık</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={priv.title || ''} 
+                            onChange={(e) => handleLegalPageChange('privacyPolicy', 'title', e.target.value)}
+                          />
+                        </div>
+                        <div className="input-group">
+                          <label className="admin-label">Son Güncelleme Yılı / Tarihi</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={priv.lastUpdated || ''} 
+                            onChange={(e) => handleLegalPageChange('privacyPolicy', 'lastUpdated', e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="input-group">
+                        <label className="admin-label">Politika İçerik Metni (Paragraflar)</label>
+                        <textarea 
+                          className="admin-textarea" 
+                          rows={10} 
+                          value={priv.content || ''} 
+                          onChange={(e) => handleLegalPageChange('privacyPolicy', 'content', e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {legalSubTab === 'terms' && (
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">📄 Kullanım Koşulları &amp; Hizmet Şartları</h3>
+                      </div>
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Başlık</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={terms.title || ''} 
+                            onChange={(e) => handleLegalPageChange('termsOfService', 'title', e.target.value)}
+                          />
+                        </div>
+                        <div className="input-group">
+                          <label className="admin-label">Son Güncelleme Yılı / Tarihi</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={terms.lastUpdated || ''} 
+                            onChange={(e) => handleLegalPageChange('termsOfService', 'lastUpdated', e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="input-group">
+                        <label className="admin-label">Sözleşme İçerik Metni (Paragraflar)</label>
+                        <textarea 
+                          className="admin-textarea" 
+                          rows={10} 
+                          value={terms.content || ''} 
+                          onChange={(e) => handleLegalPageChange('termsOfService', 'content', e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {legalSubTab === 'kvkk' && (
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">📋 KVKK Aydınlatma ve Rıza Metni</h3>
+                      </div>
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Başlık</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={kvkk.title || ''} 
+                            onChange={(e) => handleLegalPageChange('kvkk', 'title', e.target.value)}
+                          />
+                        </div>
+                        <div className="input-group">
+                          <label className="admin-label">Son Güncelleme Yılı / Tarihi</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={kvkk.lastUpdated || ''} 
+                            onChange={(e) => handleLegalPageChange('kvkk', 'lastUpdated', e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="input-group">
+                        <label className="admin-label">Aydınlatma İçerik Metni (Paragraflar)</label>
+                        <textarea 
+                          className="admin-textarea" 
+                          rows={10} 
+                          value={kvkk.content || ''} 
+                          onChange={(e) => handleLegalPageChange('kvkk', 'content', e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
             );

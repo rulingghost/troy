@@ -94,6 +94,26 @@ export const ContentProvider = ({ children }) => {
               sidebarConfig: {
                 ...defaultContent.pages.sidebarConfig,
                 ...(incomingPages.sidebarConfig || {})
+              },
+              legalPages: {
+                privacyPolicy: {
+                  ...defaultContent.pages.legalPages.privacyPolicy,
+                  ...(incomingPages.legalPages?.privacyPolicy || {})
+                },
+                termsOfService: {
+                  ...defaultContent.pages.legalPages.termsOfService,
+                  ...(incomingPages.legalPages?.termsOfService || {})
+                },
+                kvkk: {
+                  ...defaultContent.pages.legalPages.kvkk,
+                  ...(incomingPages.legalPages?.kvkk || {})
+                }
+              },
+              orgFormConfig: {
+                ...defaultContent.pages.orgFormConfig,
+                ...(incomingPages.orgFormConfig || {}),
+                orgTypes: incomingPages.orgFormConfig?.orgTypes || defaultContent.pages.orgFormConfig.orgTypes,
+                servicesList: incomingPages.orgFormConfig?.servicesList || defaultContent.pages.orgFormConfig.servicesList
               }
             }
           };

@@ -921,6 +921,64 @@ export const defaultContent = {
         { icon: '🚀', title: 'Hızlı Entegrasyon', desc: 'Süreçlerinize anında uyum' },
         { icon: '🌐', title: 'Global Erişilebilirlik', desc: '360° stratejik iş ortaklığı' }
       ]
+    },
+
+    // 6. Yasal & Sözleşme Metinleri (Gizlilik Politikası, Kullanım Şartları, KVKK)
+    legalPages: {
+      privacyPolicy: {
+        title: 'Gizlilik ve Kişisel Verilerin Korunması Politikası',
+        lastUpdated: '2026',
+        content: `Alexander Troy olarak, kullanıcılarımızın ve iş ortaklarımızın kişisel verilerinin güvenliğine en üst düzeyde önem veriyoruz. 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) ve uluslararası veri güvenliği standartları uyarınca, tarafımızla paylaşılan her türlü bilgi yalnızca talep edilen organizasyon, MICE, dijital sağlık veya medikal danışmanlık hizmetlerinin ifası amacıyla işlenmektedir.
+
+Kişisel verileriniz yasal zorunluluklar ve onayınız haricinde üçüncü şahıs ya da kurumlarla asla paylaşılmaz. Sistemlerimizde toplanan veriler en ileri düzey şifreleme ve güvenlik protokolleri ile korunmaktadır.`
+      },
+      termsOfService: {
+        title: 'Kullanım Koşulları & Hizmet Şartları',
+        lastUpdated: '2026',
+        content: `Bu web sitesini ziyaret eden tüm kullanıcılar, belirtilen kullanım koşullarını kabul etmiş sayılır. Alexander Troy tarafından sunulan tüm içerik, görsel, logo, marka ve tasarım unsurları telif hakları ile korunmaktadır.
+
+Yazılı izin olmaksızın site içeriğinin kopyalanması, çoğaltılması veya ticari amaçla kullanımı yasaktır. Web sitesi üzerinden iletilen teklif talepleri ve organizasyon başvuruları ön incelemeye tabidir.`
+      },
+      kvkk: {
+        title: 'KVKK Aydınlatma Metni',
+        lastUpdated: '2026',
+        content: `Alexander Troy ("Şirket") olarak, veri sorumlusu sıfatıyla kişisel verilerinizi KVKK mevzuatına tam uyumlu olarak işlemekteyiz. İletişim formları, teklif alma süreçleri ve operasyonel rezervasyonlar kapsamında toplanan ad, soyad, telefon, e-posta ve kurumsal bilgileriniz sadece hizmet süreçlerimizin yürütülmesi için kullanılmaktadır.
+
+Dilediğiniz zaman şirketimize başvurarak verilerinizin işlenme durumunu öğrenme, düzeltilmesini veya silinmesini talep etme hakkına sahipsiniz.`
+      }
+    },
+
+    // 7. Organizasyon & Teklif Talep Formu Konfigürasyonu
+    orgFormConfig: {
+      badge: 'Online Teklif & Planlama',
+      title: 'Organizasyon Talep Formu',
+      subtitle: 'Etkinlik ve Seyahat Planlamanız İçin Bize Ulaşın',
+      desc: 'Kurumunuzun hedeflerine uygun, kusursuz bir organizasyon deneyimi için formu doldurarak teklif talebinde bulunabilirsiniz.',
+      orgTypes: [
+        'Toplantı / Seminer',
+        'Kongre / Sempozyum',
+        'Eğitim Organizasyonu',
+        'Bayi / Distribütör Organizasyonu',
+        'Lansman / Tanıtım',
+        'Motivasyon / Incentive',
+        'Kurumsal Seyahat',
+        'Fuar / Etkinlik',
+        'Diğer'
+      ],
+      servicesList: [
+        'Uçak / Ulaşım',
+        'Otel / Konaklama',
+        'Havalimanı ve Şehir İçi Transfer',
+        'Toplantı / Etkinlik Alanı',
+        'Teknik Ekipman ve Organizasyon Desteği',
+        'Yemek / Davet Organizasyonu',
+        'Sosyal Program ve Aktivite',
+        'Rehberlik Hizmetleri',
+        'Diğer'
+      ],
+      submitBtnText: 'Teklif Talebini Gönder',
+      successTitle: 'Talebiniz Başarıyla Alındı!',
+      successDesc: 'Uzman operasyon ekibimiz organizasyon detaylarınızı inceleyerek en kısa sürede sizinle iletişime geçecektir.'
     }
   }
 };
