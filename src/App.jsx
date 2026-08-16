@@ -4,6 +4,7 @@ import { ContentProvider } from './context/ContentContext';
 import TopBanner from './components/TopBanner';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import FloatingSupport from './components/FloatingSupport';
 import Home from './pages/Home';
 import SubPage from './pages/SubPage';
 import ContactPage from './pages/ContactPage';
@@ -40,6 +41,7 @@ function AppContent() {
         <Route path="/:category" element={<CategoryOverviewPage />} />
         <Route path="/:category/:slug" element={<SubPage />} />
       </Routes>
+      <FloatingSupport />
       <Footer />
     </div>
   );

@@ -4,6 +4,23 @@ export const defaultContent = {
     logo: '/logo.png',
     topBannerText: 'Enjoy Your Journey',
     topBannerEnabled: true,
+    headerCtaText: 'Bize Ulaşın',
+    headerCtaLink: '/iletisim',
+    floatingButtons: {
+      enabled: true,
+      whatsapp: true,
+      phone: true,
+      scrollTop: true,
+      bubbleText: 'Size nasıl yardımcı olabiliriz?'
+    }
+  },
+  seo: {
+    metaTitle: 'Alexander Troy | MICE, Preceptorship & Medikal Çözümler',
+    metaDescription: 'Yurt içi ve yurt dışı kongre, sempozyum, kurumsal seyahat, klinik preceptorship ve yapay zeka destekli dijital sağlık çözümleri.',
+    keywords: 'alexander troy, mice, kongre, sempozyum, kurumsal seyahat, preceptorship, medikal ceviri, yapay zeka',
+    favicon: '/logo.png',
+    ogImage: '/hero-slide-1.jpg',
+    googleAnalyticsId: ''
   },
   menus: [
     {

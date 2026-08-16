@@ -36,7 +36,18 @@ export const ContentProvider = ({ children }) => {
           const merged = {
             ...defaultContent,
             ...json.data,
-            general: { ...defaultContent.general, ...(json.data.general || {}) },
+            general: { 
+              ...defaultContent.general, 
+              ...(json.data.general || {}),
+              floatingButtons: {
+                ...defaultContent.general.floatingButtons,
+                ...(json.data.general?.floatingButtons || {})
+              }
+            },
+            seo: {
+              ...defaultContent.seo,
+              ...(json.data.seo || {})
+            },
             about: { ...defaultContent.about, ...(json.data.about || {}) },
             contact: { ...defaultContent.contact, ...(json.data.contact || {}) },
             hero: { ...defaultContent.hero, ...(json.data.hero || {}) },

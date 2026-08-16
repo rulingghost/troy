@@ -84,7 +84,9 @@ const Header = ({ hasBanner = true }) => {
             <span className="lang-divider">/</span>
             <button className={`lang-btn ${lang === 'EN' ? 'active' : ''}`} onClick={() => setLang('EN')}>EN</button>
           </div>
-          <Link to="/iletisim" className="btn btn-primary contact-btn">Bize Ulaşın</Link>
+          <Link to={content?.general?.headerCtaLink || '/iletisim'} className="btn btn-primary contact-btn">
+            {content?.general?.headerCtaText || 'Bize Ulaşın'}
+          </Link>
           <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

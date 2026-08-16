@@ -245,6 +245,29 @@ const Admin = () => {
     });
   };
 
+  const handleSeoChange = (field, val) => {
+    const currentSeo = content.seo || defaultContent.seo;
+    updateContent({
+      ...content,
+      seo: { ...currentSeo, [field]: val }
+    });
+  };
+
+  const handleFloatingButtonsChange = (field, val) => {
+    const currentGeneral = content.general || defaultContent.general;
+    const currentFloating = currentGeneral.floatingButtons || defaultContent.general.floatingButtons;
+    updateContent({
+      ...content,
+      general: {
+        ...currentGeneral,
+        floatingButtons: {
+          ...currentFloating,
+          [field]: val
+        }
+      }
+    });
+  };
+
   const handleContactChange = (field, val) => {
     updateContent({
       ...content,
@@ -1316,6 +1339,15 @@ const Admin = () => {
               <span>Hero &amp; Slaytlar</span>
             </button>
 
+            <button 
+              type="button"
+              className={`tab-btn ${activeTab === 'seo' ? 'active' : ''}`}
+              onClick={() => setActiveTab('seo')}
+            >
+              <Globe size={18} />
+              <span>🔍 SEO &amp; Meta Etiketleri</span>
+            </button>
+
             <div className="tab-group-label">TÜM SAYFALAR</div>
             <button 
               type="button"
@@ -1512,8 +1544,182 @@ const Admin = () => {
                   placeholder="/logo.png veya https://... URL adresi"
                 />
               </div>
+
+              {/* Header CTA Button Settings */}
+              <div className="admin-card">
+                <h3 className="card-subheading">Header Sağ Üst Buton (CTA)</h3>
+                <div className="grid-2-col">
+                  <div className="input-group">
+                    <label className="admin-label">Buton Metni</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={content.general?.headerCtaText || 'Bize Ulaşın'} 
+                      onChange={(e) => handleGeneralChange('headerCtaText', e.target.value)}
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label className="admin-label">Buton Yönlendirme Linki</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={content.general?.headerCtaLink || '/iletisim'} 
+                      onChange={(e) => handleGeneralChange('headerCtaLink', e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Action Buttons Settings */}
+              <div className="admin-card">
+                <h3 className="card-subheading">💬 Yüzen Canlı Destek &amp; Hızlı Butonlar</h3>
+                <p className="card-hint">Sitenin sağ alt köşesinde sabit duran WhatsApp, Telefon ve Başa Dön butonlarının kontrolü.</p>
+
+                <div className="grid-2-col" style={{ marginTop: '16px' }}>
+                  <div className="input-group">
+                    <label className="admin-checkbox-label">
+                      <input 
+                        type="checkbox" 
+                        checked={content.general?.floatingButtons?.enabled !== false} 
+                        onChange={(e) => handleFloatingButtonsChange('enabled', e.target.checked)}
+                      />
+                      <span>Yüzen Butonlar Çubuğu Aktif</span>
+                    </label>
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-checkbox-label">
+                      <input 
+                        type="checkbox" 
+                        checked={content.general?.floatingButtons?.whatsapp !== false} 
+                        onChange={(e) => handleFloatingButtonsChange('whatsapp', e.target.checked)}
+                      />
+                      <span>WhatsApp Hızlı Sohbet Butonu</span>
+                    </label>
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-checkbox-label">
+                      <input 
+                        type="checkbox" 
+                        checked={content.general?.floatingButtons?.phone !== false} 
+                        onChange={(e) => handleFloatingButtonsChange('phone', e.target.checked)}
+                      />
+                      <span>Doğrudan Telefon Arama Butonu</span>
+                    </label>
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-checkbox-label">
+                      <input 
+                        type="checkbox" 
+                        checked={content.general?.floatingButtons?.scrollTop !== false} 
+                        onChange={(e) => handleFloatingButtonsChange('scrollTop', e.target.checked)}
+                      />
+                      <span>Sayfa Başına Dön (Scroll to Top) Butonu</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="input-group" style={{ marginTop: '16px' }}>
+                  <label className="admin-label">WhatsApp Buton Üstü Karşılama Balonu Metni</label>
+                  <input 
+                    type="text" 
+                    className="admin-input" 
+                    value={content.general?.floatingButtons?.bubbleText || 'Size nasıl yardımcı olabiliriz?'} 
+                    onChange={(e) => handleFloatingButtonsChange('bubbleText', e.target.value)}
+                  />
+                </div>
+              </div>
             </section>
           )}
+
+          {/* TAB: SEO & META SETTINGS */}
+          {activeTab === 'seo' && (() => {
+            const seo = content.seo || defaultContent.seo;
+            return (
+              <section className="admin-section">
+                <div className="section-header">
+                  <div>
+                    <h2 className="section-heading">SEO, Meta Etiketleri &amp; Paylaşım Ayarları</h2>
+                    <p className="section-desc">
+                      Google arama sonuçlarında, tarayıcı sekmelerinde ve sosyal medya paylaşımlarında (WhatsApp, LinkedIn, Twitter) görünecek site başlık, açıklama ve görsellerini yapılandırın.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="admin-card">
+                  <h3 className="card-subheading">Arama Motoru (Google) Optimizasyonu</h3>
+
+                  <div className="input-group">
+                    <label className="admin-label">SEO Meta Başlığı (Meta Title)</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={seo.metaTitle || ''} 
+                      onChange={(e) => handleSeoChange('metaTitle', e.target.value)}
+                      placeholder="Alexander Troy | MICE, Preceptorship & Medikal Çözümler"
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-label">SEO Meta Açıklaması (Meta Description)</label>
+                    <textarea 
+                      className="admin-textarea" 
+                      rows={3}
+                      value={seo.metaDescription || ''} 
+                      onChange={(e) => handleSeoChange('metaDescription', e.target.value)}
+                      placeholder="Sitenizi tanıtan 150-160 karakterlik özet açıklama..."
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label className="admin-label">Anahtar Kelimeler (Keywords)</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={seo.keywords || ''} 
+                      onChange={(e) => handleSeoChange('keywords', e.target.value)}
+                      placeholder="alexander troy, mice, kongre, medikal, preceptorship"
+                    />
+                  </div>
+                </div>
+
+                <div className="admin-card">
+                  <h3 className="card-subheading">Görsel &amp; Paylaşım Ayarları</h3>
+                  <div className="grid-2-col">
+                    <ImageUploader 
+                      label="Favicon / Sekme İkonu"
+                      value={seo.favicon || ''} 
+                      onChange={(url) => handleSeoChange('favicon', url)}
+                      placeholder="/logo.png veya ikon URL'si"
+                    />
+
+                    <ImageUploader 
+                      label="Sosyal Medya Paylaşım Görseli (OG:Image)"
+                      value={seo.ogImage || ''} 
+                      onChange={(url) => handleSeoChange('ogImage', url)}
+                      placeholder="Sosyal medyada paylaşılınca çıkacak görsel URL'si"
+                    />
+                  </div>
+                </div>
+
+                <div className="admin-card">
+                  <h3 className="card-subheading">Analitik &amp; Takip Kodları</h3>
+                  <div className="input-group">
+                    <label className="admin-label">Google Analytics Ölçüm Kimliği (Measurement ID)</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      value={seo.googleAnalyticsId || ''} 
+                      onChange={(e) => handleSeoChange('googleAnalyticsId', e.target.value)}
+                      placeholder="Örn: G-XXXXXXXXXX"
+                    />
+                  </div>
+                </div>
+              </section>
+            );
+          })()}
 
           {/* TAB 1: MENU MANAGEMENT */}
           {activeTab === 'menu' && (
