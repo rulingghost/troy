@@ -32,6 +32,7 @@ export const ContentProvider = ({ children }) => {
         const json = await res.json();
         if (json.success && json.data) {
           // Deep merge with defaultContent to guarantee newly added schema fields are present
+          const incomingPages = json.data.pages || {};
           const merged = {
             ...defaultContent,
             ...json.data,
@@ -45,6 +46,21 @@ export const ContentProvider = ({ children }) => {
             references: { ...defaultContent.references, ...(json.data.references || {}) },
             security: { ...defaultContent.security, ...(json.data.security || {}) },
             menus: json.data.menus && json.data.menus.length > 0 ? json.data.menus : defaultContent.menus,
+            pages: {
+              corporate: {
+                about: { ...defaultContent.pages.corporate.about, ...(incomingPages.corporate?.about || {}) },
+                vision: { ...defaultContent.pages.corporate.vision, ...(incomingPages.corporate?.vision || {}) },
+                mission: { ...defaultContent.pages.corporate.mission, ...(incomingPages.corporate?.mission || {}) },
+              },
+              categoryOverviews: {
+                ...defaultContent.pages.categoryOverviews,
+                ...(incomingPages.categoryOverviews || {})
+              },
+              contactPage: {
+                ...defaultContent.pages.contactPage,
+                ...(incomingPages.contactPage || {})
+              }
+            }
           };
           setContent(merged);
 

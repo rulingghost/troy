@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useContent } from '../context/ContentContext';
+import { defaultContent } from '../data/defaultContent';
 import PathSelector from '../components/PathSelector';
 import { 
   Save, 
@@ -35,7 +36,12 @@ import {
   Sliders,
   Download,
   UploadCloud,
-  Database
+  Database,
+  Globe,
+  Target,
+  Award,
+  Building2,
+  MapPin
 } from 'lucide-react';
 import './Admin.css';
 
@@ -146,6 +152,9 @@ const Admin = () => {
 
   // Active Tab
   const [activeTab, setActiveTab] = useState('general');
+  const [corporateSubTab, setCorporateSubTab] = useState('about');
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState('kurumsal');
+  const [contactSubTab, setContactSubTab] = useState('info');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [blobQuickUrl, setBlobQuickUrl] = useState('');
 
@@ -245,6 +254,230 @@ const Admin = () => {
       ...content,
       about: { ...content.about, [field]: val }
     });
+  };
+
+  // --- CORPORATE PAGES (HAKKIMIZDA, VİZYON, MİSYON) HANDLERS ---
+  const handleCorporateChange = (section, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCorporate = currentPages.corporate || defaultContent.pages.corporate;
+    const targetSection = currentCorporate[section] || defaultContent.pages.corporate[section];
+
+    updateContent({
+      ...content,
+      pages: {
+        ...currentPages,
+        corporate: {
+          ...currentCorporate,
+          [section]: {
+            ...targetSection,
+            [field]: val
+          }
+        }
+      }
+    });
+  };
+
+  const handleCorporateBulletChange = (section, index, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCorporate = currentPages.corporate || defaultContent.pages.corporate;
+    const targetSection = currentCorporate[section] || defaultContent.pages.corporate[section];
+    const bulletsField = section === 'about' ? 'statsBullets' : 'bullets';
+    const currentBullets = [...(targetSection[bulletsField] || [])];
+    currentBullets[index] = val;
+
+    handleCorporateChange(section, bulletsField, currentBullets);
+  };
+
+  const handleAddCorporateBullet = (section) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCorporate = currentPages.corporate || defaultContent.pages.corporate;
+    const targetSection = currentCorporate[section] || defaultContent.pages.corporate[section];
+    const bulletsField = section === 'about' ? 'statsBullets' : 'bullets';
+    const currentBullets = [...(targetSection[bulletsField] || []), 'Yeni madde metnini buraya giriniz...'];
+
+    handleCorporateChange(section, bulletsField, currentBullets);
+  };
+
+  const handleDeleteCorporateBullet = (section, index) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCorporate = currentPages.corporate || defaultContent.pages.corporate;
+    const targetSection = currentCorporate[section] || defaultContent.pages.corporate[section];
+    const bulletsField = section === 'about' ? 'statsBullets' : 'bullets';
+    const currentBullets = (targetSection[bulletsField] || []).filter((_, i) => i !== index);
+
+    handleCorporateChange(section, bulletsField, currentBullets);
+  };
+
+  // Capabilities in About
+  const handleCapabilityChange = (index, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentAbout = currentPages.corporate?.about || defaultContent.pages.corporate.about;
+    const currentCaps = [...(currentAbout.capabilities || [])];
+    currentCaps[index] = { ...currentCaps[index], [field]: val };
+    handleCorporateChange('about', 'capabilities', currentCaps);
+  };
+
+  const handleAddCapability = () => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentAbout = currentPages.corporate?.about || defaultContent.pages.corporate.about;
+    const currentCaps = [
+      ...(currentAbout.capabilities || []),
+      { icon: '⭐', title: 'Yeni Hizmet Yeteneği', desc: 'Açıklama metnini giriniz.' }
+    ];
+    handleCorporateChange('about', 'capabilities', currentCaps);
+  };
+
+  const handleDeleteCapability = (index) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentAbout = currentPages.corporate?.about || defaultContent.pages.corporate.about;
+    const currentCaps = (currentAbout.capabilities || []).filter((_, i) => i !== index);
+    handleCorporateChange('about', 'capabilities', currentCaps);
+  };
+
+  // --- CATEGORY OVERVIEWS HANDLERS ---
+  const handleCategoryOverviewChange = (catKey, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+
+    updateContent({
+      ...content,
+      pages: {
+        ...currentPages,
+        categoryOverviews: {
+          ...currentCategories,
+          [catKey]: {
+            ...targetCat,
+            [field]: val
+          }
+        }
+      }
+    });
+  };
+
+  const handleCategoryStatChange = (catKey, statIdx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedStats = [...(targetCat.stats || [])];
+    updatedStats[statIdx] = { ...updatedStats[statIdx], [field]: val };
+    handleCategoryOverviewChange(catKey, 'stats', updatedStats);
+  };
+
+  const handleAddCategoryStat = (catKey) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedStats = [...(targetCat.stats || []), { value: '100+', label: 'Yeni İstatistik' }];
+    handleCategoryOverviewChange(catKey, 'stats', updatedStats);
+  };
+
+  const handleDeleteCategoryStat = (catKey, statIdx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedStats = (targetCat.stats || []).filter((_, i) => i !== statIdx);
+    handleCategoryOverviewChange(catKey, 'stats', updatedStats);
+  };
+
+  // Category Groups & Items
+  const handleCategoryGroupTitleChange = (catKey, gIdx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedGroups = [...(targetCat.groups || [])];
+    updatedGroups[gIdx] = { ...updatedGroups[gIdx], [field]: val };
+    handleCategoryOverviewChange(catKey, 'groups', updatedGroups);
+  };
+
+  const handleCategoryItemChange = (catKey, gIdx, itemIdx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedGroups = [...(targetCat.groups || [])];
+    const groupItems = [...(updatedGroups[gIdx]?.items || [])];
+    groupItems[itemIdx] = { ...groupItems[itemIdx], [field]: val };
+    updatedGroups[gIdx] = { ...updatedGroups[gIdx], items: groupItems };
+    handleCategoryOverviewChange(catKey, 'groups', updatedGroups);
+  };
+
+  const handleCategoryItemHighlightChange = (catKey, gIdx, itemIdx, hIdx, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedGroups = [...(targetCat.groups || [])];
+    const groupItems = [...(updatedGroups[gIdx]?.items || [])];
+    const highlights = [...(groupItems[itemIdx]?.highlights || [])];
+    highlights[hIdx] = val;
+    groupItems[itemIdx] = { ...groupItems[itemIdx], highlights };
+    updatedGroups[gIdx] = { ...updatedGroups[gIdx], items: groupItems };
+    handleCategoryOverviewChange(catKey, 'groups', updatedGroups);
+  };
+
+  const handleAddCategoryItemHighlight = (catKey, gIdx, itemIdx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedGroups = [...(targetCat.groups || [])];
+    const groupItems = [...(updatedGroups[gIdx]?.items || [])];
+    const highlights = [...(groupItems[itemIdx]?.highlights || []), 'Yeni özellik maddesi'];
+    groupItems[itemIdx] = { ...groupItems[itemIdx], highlights };
+    updatedGroups[gIdx] = { ...updatedGroups[gIdx], items: groupItems };
+    handleCategoryOverviewChange(catKey, 'groups', updatedGroups);
+  };
+
+  const handleDeleteCategoryItemHighlight = (catKey, gIdx, itemIdx, hIdx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedGroups = [...(targetCat.groups || [])];
+    const groupItems = [...(updatedGroups[gIdx]?.items || [])];
+    const highlights = (groupItems[itemIdx]?.highlights || []).filter((_, i) => i !== hIdx);
+    groupItems[itemIdx] = { ...groupItems[itemIdx], highlights };
+    updatedGroups[gIdx] = { ...updatedGroups[gIdx], items: groupItems };
+    handleCategoryOverviewChange(catKey, 'groups', updatedGroups);
+  };
+
+  // --- CONTACT PAGE & FAQ HANDLERS ---
+  const handleContactPageChange = (field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentContactPage = currentPages.contactPage || defaultContent.pages.contactPage;
+
+    updateContent({
+      ...content,
+      pages: {
+        ...currentPages,
+        contactPage: {
+          ...currentContactPage,
+          [field]: val
+        }
+      }
+    });
+  };
+
+  const handleFaqChange = (index, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentContactPage = currentPages.contactPage || defaultContent.pages.contactPage;
+    const updatedFaqs = [...(currentContactPage.faqs || [])];
+    updatedFaqs[index] = { ...updatedFaqs[index], [field]: val };
+    handleContactPageChange('faqs', updatedFaqs);
+  };
+
+  const handleAddFaq = () => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentContactPage = currentPages.contactPage || defaultContent.pages.contactPage;
+    const updatedFaqs = [
+      ...(currentContactPage.faqs || []),
+      { q: 'Yeni Sıkça Sorulan Soru', a: 'Cevap metnini buraya giriniz.' }
+    ];
+    handleContactPageChange('faqs', updatedFaqs);
+  };
+
+  const handleDeleteFaq = (index) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentContactPage = currentPages.contactPage || defaultContent.pages.contactPage;
+    const updatedFaqs = (currentContactPage.faqs || []).filter((_, i) => i !== index);
+    handleContactPageChange('faqs', updatedFaqs);
   };
 
   // --- MENU MANAGEMENT HANDLERS ---
@@ -721,6 +954,7 @@ const Admin = () => {
         {/* Navigation Tabs Sidebar */}
         <aside className="admin-tabs-sidebar">
           <nav className="admin-nav-tabs">
+            <div className="tab-group-label">GENEL &amp; NAVİGASYON</div>
             <button 
               type="button"
               className={`tab-btn ${activeTab === 'general' ? 'active' : ''}`}
@@ -748,13 +982,42 @@ const Admin = () => {
               <span>Hero &amp; Slaytlar</span>
             </button>
 
+            <div className="tab-group-label">TÜM SAYFALAR</div>
+            <button 
+              type="button"
+              className={`tab-btn ${activeTab === 'corporate' ? 'active' : ''}`}
+              onClick={() => setActiveTab('corporate')}
+            >
+              <FileText size={18} />
+              <span>🏢 Kurumsal Sayfaları</span>
+            </button>
+
+            <button 
+              type="button"
+              className={`tab-btn ${activeTab === 'categories' ? 'active' : ''}`}
+              onClick={() => setActiveTab('categories')}
+            >
+              <Globe size={18} />
+              <span>🌐 Kategori Sayfaları</span>
+            </button>
+
+            <button 
+              type="button"
+              className={`tab-btn ${activeTab === 'contact' ? 'active' : ''}`}
+              onClick={() => setActiveTab('contact')}
+            >
+              <PhoneCall size={18} />
+              <span>📞 İletişim, Harita &amp; SSS</span>
+            </button>
+
+            <div className="tab-group-label">ANA SAYFA BÖLÜMLERİ</div>
             <button 
               type="button"
               className={`tab-btn ${activeTab === 'about' ? 'active' : ''}`}
               onClick={() => setActiveTab('about')}
             >
               <FileText size={18} />
-              <span>Hakkımızda &amp; Tanıtım</span>
+              <span>Tanıtım Önizleme</span>
             </button>
 
             <button 
@@ -793,15 +1056,7 @@ const Admin = () => {
               <span>Çözüm Ortakları</span>
             </button>
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'contact' ? 'active' : ''}`}
-              onClick={() => setActiveTab('contact')}
-            >
-              <PhoneCall size={18} />
-              <span>İletişim &amp; Altbilgi</span>
-            </button>
-
+            <div className="tab-group-label">SİSTEM &amp; GÜVENLİK</div>
             <button 
               type="button"
               className={`tab-btn ${activeTab === 'media' ? 'active' : ''}`}
@@ -1245,6 +1500,643 @@ const Admin = () => {
               </div>
             </section>
           )}
+
+          {/* TAB: CORPORATE PAGES (HAKKIMIZDA, VİZYON, MİSYON) */}
+          {activeTab === 'corporate' && (
+            <section className="admin-section">
+              <div className="section-header">
+                <div>
+                  <h2 className="section-heading">🏢 Kurumsal Sayfaları Yönetimi</h2>
+                  <p className="section-desc">
+                    Hakkımızda, Vizyon ve Misyon sayfalarının tüm başlıklarını, paragraflarını, &quot;Enjoy Your Journey&quot; mottolarını, maddelerini ve yetenek kartlarını düzenleyin.
+                  </p>
+                </div>
+                <div className="section-header-actions">
+                  <a 
+                    href={`/kurumsal/${corporateSubTab === 'about' ? 'hakkimizda' : corporateSubTab === 'vision' ? 'vizyon' : 'misyon'}`} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="btn-preview-link"
+                  >
+                    <span>Canlı Sayfayı Gör</span>
+                    <ExternalLink size={14} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Sub Navigation for Corporate Pages */}
+              <div className="page-subtabs-nav">
+                <button 
+                  type="button" 
+                  className={`page-subtab-btn ${corporateSubTab === 'about' ? 'active' : ''}`}
+                  onClick={() => setCorporateSubTab('about')}
+                >
+                  <FileText size={16} />
+                  <span>Hakkımızda Sayfası (/kurumsal/hakkimizda)</span>
+                </button>
+                <button 
+                  type="button" 
+                  className={`page-subtab-btn ${corporateSubTab === 'vision' ? 'active' : ''}`}
+                  onClick={() => setCorporateSubTab('vision')}
+                >
+                  <Target size={16} />
+                  <span>Vizyon Sayfası (/kurumsal/vizyon)</span>
+                </button>
+                <button 
+                  type="button" 
+                  className={`page-subtab-btn ${corporateSubTab === 'mission' ? 'active' : ''}`}
+                  onClick={() => setCorporateSubTab('mission')}
+                >
+                  <Award size={16} />
+                  <span>Misyon Sayfası (/kurumsal/misyon)</span>
+                </button>
+              </div>
+
+              {/* Sub-tab 1: Hakkımızda */}
+              {corporateSubTab === 'about' && (() => {
+                const aboutData = content.pages?.corporate?.about || defaultContent.pages.corporate.about;
+                return (
+                  <div className="page-editor-container">
+                    <div className="admin-card">
+                      <h3 className="card-subheading">Hakkımızda Ana Başlık &amp; Giriş Metinleri</h3>
+                      <div className="input-group">
+                        <label className="admin-label">Sayfa Ana Başlığı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={aboutData.title || ''}
+                          onChange={(e) => handleCorporateChange('about', 'title', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Vurgulu Giriş Paragrafı (Lead Text)</label>
+                        <textarea 
+                          className="admin-textarea"
+                          rows={3}
+                          value={aboutData.lead || ''}
+                          onChange={(e) => handleCorporateChange('about', 'lead', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Detaylı Açıklama Paragrafı</label>
+                        <textarea 
+                          className="admin-textarea"
+                          rows={3}
+                          value={aboutData.desc1 || ''}
+                          onChange={(e) => handleCorporateChange('about', 'desc1', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Motto Alıntısı</label>
+                          <input 
+                            type="text" 
+                            className="admin-input"
+                            value={aboutData.mottoQuote || ''}
+                            onChange={(e) => handleCorporateChange('about', 'mottoQuote', e.target.value)}
+                            placeholder="Enjoy Your Journey"
+                          />
+                        </div>
+                        <div className="input-group">
+                          <label className="admin-label">Motto Devam Cümlesi</label>
+                          <input 
+                            type="text" 
+                            className="admin-input"
+                            value={aboutData.mottoDesc || ''}
+                            onChange={(e) => handleCorporateChange('about', 'mottoDesc', e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">&quot;Peki Biz Kim miyiz?&quot; Vurgulu Maddeleri</h3>
+                        <button type="button" className="btn-add-secondary" onClick={() => handleAddCorporateBullet('about')}>
+                          <Plus size={14} /> Yeni Madde Ekle
+                        </button>
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Bölüm Başlığı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={aboutData.statsTitle || ''}
+                          onChange={(e) => handleCorporateChange('about', 'statsTitle', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="dynamic-list-container">
+                        {(aboutData.statsBullets || []).map((bullet, bIdx) => (
+                          <div key={bIdx} className="dynamic-list-row">
+                            <span className="row-num">{bIdx + 1}.</span>
+                            <input 
+                              type="text" 
+                              className="admin-input"
+                              value={bullet}
+                              onChange={(e) => handleCorporateBulletChange('about', bIdx, e.target.value)}
+                            />
+                            <button 
+                              type="button" 
+                              className="btn-row-del" 
+                              onClick={() => handleDeleteCorporateBullet('about', bIdx)}
+                              title="Maddeyi Sil"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">&quot;Sizin İçin Neler Yapabiliriz?&quot; Yetenek Kartları</h3>
+                        <button type="button" className="btn-add-secondary" onClick={handleAddCapability}>
+                          <Plus size={14} /> Yeni Yetenek Kartı Ekle
+                        </button>
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Bölüm Başlığı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={aboutData.capabilitiesTitle || ''}
+                          onChange={(e) => handleCorporateChange('about', 'capabilitiesTitle', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="capabilities-editor-grid">
+                        {(aboutData.capabilities || []).map((cap, cIdx) => (
+                          <div key={cIdx} className="capability-edit-card nested-box">
+                            <div className="card-header-bar">
+                              <span className="cap-badge">Kart #{cIdx + 1}</span>
+                              <button 
+                                type="button" 
+                                className="btn-icon btn-danger" 
+                                onClick={() => handleDeleteCapability(cIdx)}
+                                title="Kartı Sil"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+
+                            <div className="grid-2-col">
+                              <div className="input-group">
+                                <label className="admin-label">İkon / Emoji</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={cap.icon || ''}
+                                  onChange={(e) => handleCapabilityChange(cIdx, 'icon', e.target.value)}
+                                  placeholder="💻, ✈️, 🩺, 🤖..."
+                                />
+                              </div>
+                              <div className="input-group">
+                                <label className="admin-label">Kart Başlığı</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={cap.title || ''}
+                                  onChange={(e) => handleCapabilityChange(cIdx, 'title', e.target.value)}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Açıklama</label>
+                              <textarea 
+                                className="admin-textarea"
+                                rows={2}
+                                value={cap.desc || ''}
+                                onChange={(e) => handleCapabilityChange(cIdx, 'desc', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Sub-tab 2: Vizyon */}
+              {corporateSubTab === 'vision' && (() => {
+                const visionData = content.pages?.corporate?.vision || defaultContent.pages.corporate.vision;
+                return (
+                  <div className="page-editor-container">
+                    <div className="admin-card">
+                      <h3 className="card-subheading">Vizyon Sayfası Başlık &amp; Alıntı</h3>
+                      <div className="input-group">
+                        <label className="admin-label">Sayfa Başlığı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={visionData.title || ''}
+                          onChange={(e) => handleCorporateChange('vision', 'title', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Vurgulu Vizyon Mottosu / Alıntı</label>
+                        <textarea 
+                          className="admin-textarea"
+                          rows={3}
+                          value={visionData.quote || ''}
+                          onChange={(e) => handleCorporateChange('vision', 'quote', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Detaylı Açıklama Metni</label>
+                        <textarea 
+                          className="admin-textarea"
+                          rows={4}
+                          value={visionData.desc || ''}
+                          onChange={(e) => handleCorporateChange('vision', 'desc', e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">Vizyon Maddeleri &amp; Temel İlkeler</h3>
+                        <button type="button" className="btn-add-secondary" onClick={() => handleAddCorporateBullet('vision')}>
+                          <Plus size={14} /> Yeni Madde Ekle
+                        </button>
+                      </div>
+
+                      <div className="dynamic-list-container">
+                        {(visionData.bullets || []).map((bullet, bIdx) => (
+                          <div key={bIdx} className="dynamic-list-row">
+                            <span className="row-num">{bIdx + 1}.</span>
+                            <input 
+                              type="text" 
+                              className="admin-input"
+                              value={bullet}
+                              onChange={(e) => handleCorporateBulletChange('vision', bIdx, e.target.value)}
+                            />
+                            <button 
+                              type="button" 
+                              className="btn-row-del" 
+                              onClick={() => handleDeleteCorporateBullet('vision', bIdx)}
+                              title="Maddeyi Sil"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Sub-tab 3: Misyon */}
+              {corporateSubTab === 'mission' && (() => {
+                const missionData = content.pages?.corporate?.mission || defaultContent.pages.corporate.mission;
+                return (
+                  <div className="page-editor-container">
+                    <div className="admin-card">
+                      <h3 className="card-subheading">Misyon Sayfası Başlık &amp; Alıntı</h3>
+                      <div className="input-group">
+                        <label className="admin-label">Sayfa Başlığı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={missionData.title || ''}
+                          onChange={(e) => handleCorporateChange('mission', 'title', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Vurgulu Misyon Mottosu / Alıntı</label>
+                        <textarea 
+                          className="admin-textarea"
+                          rows={3}
+                          value={missionData.quote || ''}
+                          onChange={(e) => handleCorporateChange('mission', 'quote', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Detaylı Açıklama Metni</label>
+                        <textarea 
+                          className="admin-textarea"
+                          rows={4}
+                          value={missionData.desc || ''}
+                          onChange={(e) => handleCorporateChange('mission', 'desc', e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">Misyon Maddeleri &amp; Temel İlkeler</h3>
+                        <button type="button" className="btn-add-secondary" onClick={() => handleAddCorporateBullet('mission')}>
+                          <Plus size={14} /> Yeni Madde Ekle
+                        </button>
+                      </div>
+
+                      <div className="dynamic-list-container">
+                        {(missionData.bullets || []).map((bullet, bIdx) => (
+                          <div key={bIdx} className="dynamic-list-row">
+                            <span className="row-num">{bIdx + 1}.</span>
+                            <input 
+                              type="text" 
+                              className="admin-input"
+                              value={bullet}
+                              onChange={(e) => handleCorporateBulletChange('mission', bIdx, e.target.value)}
+                            />
+                            <button 
+                              type="button" 
+                              className="btn-row-del" 
+                              onClick={() => handleDeleteCorporateBullet('mission', bIdx)}
+                              title="Maddeyi Sil"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+            </section>
+          )}
+
+          {/* TAB: CATEGORY OVERVIEW PAGES */}
+          {activeTab === 'categories' && (() => {
+            const currentCatKey = selectedCategoryKey || 'kurumsal';
+            const catOverviews = content.pages?.categoryOverviews || defaultContent.pages.categoryOverviews;
+            const currentCatData = catOverviews[currentCatKey] || defaultContent.pages.categoryOverviews[currentCatKey] || {};
+
+            const categoryList = [
+              { key: 'kurumsal', label: '🏢 Kurumsal', path: '/kurumsal' },
+              { key: 'alx-mice', label: '🎪 Alx MICE', path: '/alx-mice' },
+              { key: 'alx-4-you', label: '🌟 Alx 4 You', path: '/alx-4-you' },
+              { key: 'alx-digi', label: '💻 Alx Digi', path: '/alx-digi' },
+              { key: 'alx-need', label: '🎯 Alx Need', path: '/alx-need' }
+            ];
+
+            return (
+              <section className="admin-section">
+                <div className="section-header">
+                  <div>
+                    <h2 className="section-heading">🌐 Kategori Genel Sayfaları Yönetimi</h2>
+                    <p className="section-desc">
+                      Tüm ana kategori genel sayfalarının (/kurumsal, /alx-mice, /alx-4-you, /alx-digi, /alx-need) hero banner, istatistik ve alt başlık kartlarını tek merkezden yönetin.
+                    </p>
+                  </div>
+                  <div className="section-header-actions">
+                    <a 
+                      href={`/${currentCatKey}`} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="btn-preview-link"
+                    >
+                      <span>Canlı Sayfayı Gör (/{currentCatKey})</span>
+                      <ExternalLink size={14} />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Category selector subtabs */}
+                <div className="page-subtabs-nav">
+                  {categoryList.map((cat) => (
+                    <button 
+                      key={cat.key}
+                      type="button" 
+                      className={`page-subtab-btn ${currentCatKey === cat.key ? 'active' : ''}`}
+                      onClick={() => setSelectedCategoryKey(cat.key)}
+                    >
+                      <span>{cat.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="page-editor-container">
+                  {/* Hero & Banner */}
+                  <div className="admin-card">
+                    <h3 className="card-subheading">{currentCatData.title || currentCatKey} Hero &amp; Tanıtım Alanı</h3>
+                    
+                    <div className="grid-2-col">
+                      <div className="input-group">
+                        <label className="admin-label">Sayfa Ana Başlığı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={currentCatData.title || ''}
+                          onChange={(e) => handleCategoryOverviewChange(currentCatKey, 'title', e.target.value)}
+                        />
+                      </div>
+                      <div className="input-group">
+                        <label className="admin-label">Üst Rozet / Etiket</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={currentCatData.badge || ''}
+                          onChange={(e) => handleCategoryOverviewChange(currentCatKey, 'badge', e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="input-group">
+                      <label className="admin-label">Slogan / Tagline</label>
+                      <input 
+                        type="text" 
+                        className="admin-input"
+                        value={currentCatData.tagline || ''}
+                        onChange={(e) => handleCategoryOverviewChange(currentCatKey, 'tagline', e.target.value)}
+                        placeholder="Enjoy Your Journey"
+                      />
+                    </div>
+
+                    <div className="input-group">
+                      <label className="admin-label">Detaylı Açıklama Metni</label>
+                      <textarea 
+                        className="admin-textarea"
+                        rows={3}
+                        value={currentCatData.description || ''}
+                        onChange={(e) => handleCategoryOverviewChange(currentCatKey, 'description', e.target.value)}
+                      />
+                    </div>
+
+                    <ImageUploader 
+                      label="Hero Arka Plan Görseli"
+                      value={currentCatData.heroImage || ''}
+                      onChange={(url) => handleCategoryOverviewChange(currentCatKey, 'heroImage', url)}
+                    />
+                  </div>
+
+                  {/* Stats Bar */}
+                  <div className="admin-card">
+                    <div className="card-header-bar">
+                      <h3 className="card-subheading">İstatistik &amp; Rakam Sayaçları (Stats Bar)</h3>
+                      <button type="button" className="btn-add-secondary" onClick={() => handleAddCategoryStat(currentCatKey)}>
+                        <Plus size={14} /> Yeni İstatistik Ekle
+                      </button>
+                    </div>
+
+                    <div className="stats-editor-grid">
+                      {(currentCatData.stats || []).map((st, sIdx) => (
+                        <div key={sIdx} className="nested-box stat-edit-box">
+                          <div className="card-header-bar">
+                            <span className="cap-badge">İstatistik #{sIdx + 1}</span>
+                            <button 
+                              type="button" 
+                              className="btn-icon btn-danger" 
+                              onClick={() => handleDeleteCategoryStat(currentCatKey, sIdx)}
+                              title="Sil"
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Vurgulu Değer (Örn: 500+, %100, AI)</label>
+                            <input 
+                              type="text" 
+                              className="admin-input"
+                              value={st.value || ''}
+                              onChange={(e) => handleCategoryStatChange(currentCatKey, sIdx, 'value', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Açıklama Etiketi (Örn: Kongre & Etkinlik)</label>
+                            <input 
+                              type="text" 
+                              className="admin-input"
+                              value={st.label || ''}
+                              onChange={(e) => handleCategoryStatChange(currentCatKey, sIdx, 'label', e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Groups and Sub-service cards */}
+                  {(currentCatData.groups || []).map((group, gIdx) => (
+                    <div key={gIdx} className="admin-card">
+                      <h3 className="card-subheading">Alt Başlık Grubu #{gIdx + 1}</h3>
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Grup Başlığı</label>
+                          <input 
+                            type="text" 
+                            className="admin-input"
+                            value={group.groupTitle || ''}
+                            onChange={(e) => handleCategoryGroupTitleChange(currentCatKey, gIdx, 'groupTitle', e.target.value)}
+                          />
+                        </div>
+                        <div className="input-group">
+                          <label className="admin-label">Grup Açıklaması</label>
+                          <input 
+                            type="text" 
+                            className="admin-input"
+                            value={group.groupDesc || ''}
+                            onChange={(e) => handleCategoryGroupTitleChange(currentCatKey, gIdx, 'groupDesc', e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="group-items-list">
+                        {(group.items || []).map((item, itmIdx) => (
+                          <div key={itmIdx} className="nested-box item-sub-card">
+                            <div className="card-header-bar">
+                              <h4 className="nested-title">📌 {item.name || 'Hizmet Kartı'}</h4>
+                              <span className="cap-badge">{item.tag || 'Alt Sayfa'}</span>
+                            </div>
+
+                            <div className="grid-3-col">
+                              <div className="input-group">
+                                <label className="admin-label">Başlık / İsim</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={item.name || ''}
+                                  onChange={(e) => handleCategoryItemChange(currentCatKey, gIdx, itmIdx, 'name', e.target.value)}
+                                />
+                              </div>
+                              <div className="input-group">
+                                <label className="admin-label">Etiket / Rozet</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={item.tag || ''}
+                                  onChange={(e) => handleCategoryItemChange(currentCatKey, gIdx, itmIdx, 'tag', e.target.value)}
+                                />
+                              </div>
+                              <div className="input-group">
+                                <PathSelector 
+                                  label="Yönlendirme Yolu (Path)"
+                                  value={item.path || ''}
+                                  onChange={(url) => handleCategoryItemChange(currentCatKey, gIdx, itmIdx, 'path', url)}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Kısa Açıklama Metni</label>
+                              <textarea 
+                                className="admin-textarea"
+                                rows={2}
+                                value={item.shortDesc || ''}
+                                onChange={(e) => handleCategoryItemChange(currentCatKey, gIdx, itmIdx, 'shortDesc', e.target.value)}
+                              />
+                            </div>
+
+                            {/* Highlights bullets */}
+                            <div className="highlights-editor-box">
+                              <div className="card-header-bar">
+                                <label className="admin-label" style={{ margin: 0 }}>Öne Çıkan Maddeler</label>
+                                <button 
+                                  type="button" 
+                                  className="btn-add-secondary"
+                                  onClick={() => handleAddCategoryItemHighlight(currentCatKey, gIdx, itmIdx)}
+                                >
+                                  <Plus size={13} /> Madde Ekle
+                                </button>
+                              </div>
+                              <div className="dynamic-list-container">
+                                {(item.highlights || []).map((high, hIdx) => (
+                                  <div key={hIdx} className="dynamic-list-row">
+                                    <span className="row-num">•</span>
+                                    <input 
+                                      type="text" 
+                                      className="admin-input"
+                                      value={high}
+                                      onChange={(e) => handleCategoryItemHighlightChange(currentCatKey, gIdx, itmIdx, hIdx, e.target.value)}
+                                    />
+                                    <button 
+                                      type="button" 
+                                      className="btn-row-del"
+                                      onClick={() => handleDeleteCategoryItemHighlight(currentCatKey, gIdx, itmIdx, hIdx)}
+                                      title="Maddeyi Sil"
+                                    >
+                                      <Trash2 size={15} />
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
 
           {/* TAB 3: ABOUT */}
           {activeTab === 'about' && (
@@ -1701,163 +2593,275 @@ const Admin = () => {
             </section>
           )}
 
-          {/* TAB 8: CONTACT & GENERAL */}
-          {activeTab === 'contact' && (
-            <section className="admin-section">
-              <div className="section-header">
-                <div>
-                  <h2 className="section-heading">İletişim & Genel Ayarlar (Footer/Header)</h2>
-                  <p className="section-desc">
-                    Telefon, WhatsApp, E-posta, Adres, Sosyal Medya ve Üst Bant (Top Banner) ayarlarını yönetin.
-                  </p>
-                </div>
-              </div>
+          {/* TAB: CONTACT & GENERAL & FAQ */}
+          {activeTab === 'contact' && (() => {
+            const currentContactPage = content.pages?.contactPage || defaultContent.pages.contactPage || {};
 
-              {/* General & Banner Box */}
-              <div className="admin-card">
-                <h3 className="card-subheading">Üst Başlık & Üst Banner</h3>
-                
-                <div className="grid-2-col">
-                  <div className="input-group">
-                    <label className="admin-label">Site Başlığı / Marka Adı</label>
-                    <input 
-                      type="text" 
-                      className="admin-input" 
-                      value={content.general?.siteTitle || ''} 
-                      onChange={(e) => handleGeneralChange('siteTitle', e.target.value)}
-                    />
+            return (
+              <section className="admin-section">
+                <div className="section-header">
+                  <div>
+                    <h2 className="section-heading">📞 İletişim, Harita &amp; SSS Yönetimi</h2>
+                    <p className="section-desc">
+                      İletişim bilgilerini, /iletisim sayfasının hero başlıklarını, Google Maps harita bağlantısını ve Sıkça Sorulan Soruları (SSS) yönetin.
+                    </p>
                   </div>
-
-                  <div className="input-group">
-                    <label className="admin-label">En Üst Kayan Banner Sloganı</label>
-                    <input 
-                      type="text" 
-                      className="admin-input" 
-                      value={content.general?.topBannerText || ''} 
-                      onChange={(e) => handleGeneralChange('topBannerText', e.target.value)}
-                    />
+                  <div className="section-header-actions">
+                    <a 
+                      href="/iletisim" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="btn-preview-link"
+                    >
+                      <span>Canlı İletişim Sayfasını Gör (/iletisim)</span>
+                      <ExternalLink size={14} />
+                    </a>
                   </div>
                 </div>
 
-                <div className="banner-toggle-row">
-                  <label className="toggle-label">
-                    <input 
-                      type="checkbox" 
-                      checked={content.general?.topBannerEnabled !== false} 
-                      onChange={(e) => handleGeneralChange('topBannerEnabled', e.target.checked)}
-                    />
-                    <span>Üst Duyuru Bannerını Aktif Et</span>
-                  </label>
+                {/* Sub Navigation */}
+                <div className="page-subtabs-nav">
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${contactSubTab === 'info' ? 'active' : ''}`}
+                    onClick={() => setContactSubTab('info')}
+                  >
+                    <PhoneCall size={16} />
+                    <span>Genel İletişim Bilgileri &amp; Footer</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${contactSubTab === 'page' ? 'active' : ''}`}
+                    onClick={() => setContactSubTab('page')}
+                  >
+                    <MapPin size={16} />
+                    <span>/iletisim Sayfası &amp; Harita</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${contactSubTab === 'faq' ? 'active' : ''}`}
+                    onClick={() => setContactSubTab('faq')}
+                  >
+                    <HelpCircle size={16} />
+                    <span>Sıkça Sorulan Sorular (SSS - {(currentContactPage.faqs || []).length})</span>
+                  </button>
                 </div>
 
-                <ImageUploader 
-                  label="Site Ana Logosu" 
-                  value={content.general?.logo} 
-                  onChange={(url) => handleGeneralChange('logo', url)}
-                />
-              </div>
+                {/* Sub-tab 1: Genel İletişim */}
+                {contactSubTab === 'info' && (
+                  <div className="page-editor-container">
+                    <div className="admin-card">
+                      <h3 className="card-subheading">Temel İletişim Kanalları</h3>
 
-              {/* Direct Contact Info */}
-              <div className="admin-card">
-                <h3 className="card-subheading">İletişim Bilgileri</h3>
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Telefon Numarası</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={content.contact?.phone || ''} 
+                            onChange={(e) => handleContactChange('phone', e.target.value)}
+                            placeholder="+90 (212) 555 01 23"
+                          />
+                        </div>
 
-                <div className="grid-2-col">
-                  <div className="input-group">
-                    <label className="admin-label">Telefon Numarası</label>
-                    <input 
-                      type="text" 
-                      className="admin-input" 
-                      value={content.contact.phone || ''} 
-                      onChange={(e) => handleContactChange('phone', e.target.value)}
-                      placeholder="+90 (212) 555 01 23"
-                    />
+                        <div className="input-group">
+                          <label className="admin-label">WhatsApp Numarası</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={content.contact?.whatsapp || ''} 
+                            onChange={(e) => handleContactChange('whatsapp', e.target.value)}
+                            placeholder="+90 (555) 012 34 56"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">E-posta Adresi</label>
+                          <input 
+                            type="email" 
+                            className="admin-input" 
+                            value={content.contact?.email || ''} 
+                            onChange={(e) => handleContactChange('email', e.target.value)}
+                            placeholder="info@alx.com.tr"
+                          />
+                        </div>
+
+                        <div className="input-group">
+                          <label className="admin-label">Fiziki Adres (Merkez)</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={content.contact?.address || ''} 
+                            onChange={(e) => handleContactChange('address', e.target.value)}
+                            placeholder="Levent, Büyükdere Cd. No:195, Şişli / İstanbul"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">WhatsApp Hazır Karşılama Mesajı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input" 
+                          value={content.contact?.whatsappText || ''} 
+                          onChange={(e) => handleContactChange('whatsappText', e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-card">
+                      <h3 className="card-subheading">Sosyal Medya ve Footer Telif Metni</h3>
+
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Instagram Linki</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={content.contact?.instagram || ''} 
+                            onChange={(e) => handleContactChange('instagram', e.target.value)}
+                          />
+                        </div>
+
+                        <div className="input-group">
+                          <label className="admin-label">WeChat Linki / Kimliği</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={content.contact?.wechat || ''} 
+                            onChange={(e) => handleContactChange('wechat', e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Telif Hakkı (Copyright) Metni</label>
+                        <input 
+                          type="text" 
+                          className="admin-input" 
+                          value={content.contact?.copyright || ''} 
+                          onChange={(e) => handleContactChange('copyright', e.target.value)}
+                        />
+                      </div>
+                    </div>
                   </div>
+                )}
 
-                  <div className="input-group">
-                    <label className="admin-label">WhatsApp Numarası</label>
-                    <input 
-                      type="text" 
-                      className="admin-input" 
-                      value={content.contact.whatsapp || ''} 
-                      onChange={(e) => handleContactChange('whatsapp', e.target.value)}
-                      placeholder="+90 (555) 012 34 56"
-                    />
+                {/* Sub-tab 2: /iletisim Sayfası & Harita */}
+                {contactSubTab === 'page' && (
+                  <div className="page-editor-container">
+                    <div className="admin-card">
+                      <h3 className="card-subheading">/iletisim Sayfası Hero Başlık &amp; Tanıtımı</h3>
+
+                      <div className="grid-2-col">
+                        <div className="input-group">
+                          <label className="admin-label">Hero Başlığı</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={currentContactPage.heroTitle || ''} 
+                            onChange={(e) => handleContactPageChange('heroTitle', e.target.value)}
+                          />
+                        </div>
+                        <div className="input-group">
+                          <label className="admin-label">Hero Üst Rozeti</label>
+                          <input 
+                            type="text" 
+                            className="admin-input" 
+                            value={currentContactPage.heroBadge || ''} 
+                            onChange={(e) => handleContactPageChange('heroBadge', e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Hero Giriş Açıklaması (Lead)</label>
+                        <textarea 
+                          className="admin-textarea"
+                          rows={3}
+                          value={currentContactPage.heroLead || ''}
+                          onChange={(e) => handleContactPageChange('heroLead', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Google Maps Harita Yönlendirme Linki</label>
+                        <input 
+                          type="text" 
+                          className="admin-input" 
+                          value={currentContactPage.mapUrl || ''} 
+                          onChange={(e) => handleContactPageChange('mapUrl', e.target.value)}
+                          placeholder="https://maps.google.com/?q=..."
+                        />
+                        <span className="card-hint">Boş bırakılırsa genel merkez adresinden otomatik Google Maps URL üretilir.</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
 
-                <div className="grid-2-col">
-                  <div className="input-group">
-                    <label className="admin-label">E-posta Adresi</label>
-                    <input 
-                      type="email" 
-                      className="admin-input" 
-                      value={content.contact.email || ''} 
-                      onChange={(e) => handleContactChange('email', e.target.value)}
-                      placeholder="info@alx.com.tr"
-                    />
+                {/* Sub-tab 3: SSS (FAQs) */}
+                {contactSubTab === 'faq' && (
+                  <div className="page-editor-container">
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <div>
+                          <h3 className="card-subheading">Sıkça Sorulan Sorular (FAQ) Yönetimi</h3>
+                          <p className="card-hint">
+                            İletişim sayfasında yer alan akordeon SSS sorularını ve yanıtlarını ekleyin veya düzenleyin.
+                          </p>
+                        </div>
+                        <button type="button" className="btn-add-primary" onClick={handleAddFaq}>
+                          <Plus size={16} />
+                          <span>Yeni Soru &amp; Cevap Ekle</span>
+                        </button>
+                      </div>
+
+                      <div className="faqs-admin-list">
+                        {(currentContactPage.faqs || []).map((faq, fIdx) => (
+                          <div key={fIdx} className="nested-box faq-item-edit-box">
+                            <div className="card-header-bar">
+                              <span className="cap-badge">Soru #{fIdx + 1}</span>
+                              <button 
+                                type="button" 
+                                className="btn-icon btn-danger" 
+                                onClick={() => handleDeleteFaq(fIdx)}
+                                title="Soruyu Sil"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Soru Metni</label>
+                              <input 
+                                type="text" 
+                                className="admin-input" 
+                                value={faq.q || ''} 
+                                onChange={(e) => handleFaqChange(fIdx, 'q', e.target.value)}
+                              />
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Cevap / Açıklama Metni</label>
+                              <textarea 
+                                className="admin-textarea" 
+                                rows={3} 
+                                value={faq.a || ''} 
+                                onChange={(e) => handleFaqChange(fIdx, 'a', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="input-group">
-                    <label className="admin-label">Fiziki Adres</label>
-                    <input 
-                      type="text" 
-                      className="admin-input" 
-                      value={content.contact.address || ''} 
-                      onChange={(e) => handleContactChange('address', e.target.value)}
-                      placeholder="Levent, Büyükdere Cd. No:195, Şişli / İstanbul"
-                    />
-                  </div>
-                </div>
-
-                <div className="input-group">
-                  <label className="admin-label">WhatsApp Hazır Karşılama Mesajı</label>
-                  <input 
-                    type="text" 
-                    className="admin-input" 
-                    value={content.contact.whatsappText || ''} 
-                    onChange={(e) => handleContactChange('whatsappText', e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Social Media & Footer */}
-              <div className="admin-card">
-                <h3 className="card-subheading">Sosyal Medya ve Footer Telif Metni</h3>
-
-                <div className="grid-2-col">
-                  <div className="input-group">
-                    <label className="admin-label">Instagram Linki</label>
-                    <input 
-                      type="text" 
-                      className="admin-input" 
-                      value={content.contact.instagram || ''} 
-                      onChange={(e) => handleContactChange('instagram', e.target.value)}
-                    />
-                  </div>
-
-                  <div className="input-group">
-                    <label className="admin-label">WeChat Linki / Kimliği</label>
-                    <input 
-                      type="text" 
-                      className="admin-input" 
-                      value={content.contact.wechat || ''} 
-                      onChange={(e) => handleContactChange('wechat', e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="input-group">
-                  <label className="admin-label">Telif Hakkı (Copyright) Metni</label>
-                  <input 
-                    type="text" 
-                    className="admin-input" 
-                    value={content.contact.copyright || ''} 
-                    onChange={(e) => handleContactChange('copyright', e.target.value)}
-                  />
-                </div>
-              </div>
-            </section>
-          )}
+                )}
+              </section>
+            );
+          })()}
 
           {/* TAB 9: VERCEL BLOB MEDIA TOOL */}
           {activeTab === 'media' && (

@@ -21,6 +21,7 @@ import {
   Tv,
   ExternalLink
 } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 import './CategoryOverviewPage.css';
 
 const categoryOverviewData = {
@@ -413,8 +414,17 @@ const categoryOverviewData = {
 
 const CategoryOverviewPage = () => {
   const { category } = useParams();
+  const { content } = useContent();
   const catKey = (category || '').toLowerCase();
-  const catData = categoryOverviewData[catKey] || categoryOverviewData['kurumsal'];
+  const dynamicOverviews = content?.pages?.categoryOverviews || {};
+  const defaultData = categoryOverviewData[catKey] || categoryOverviewData['kurumsal'];
+  const catData = {
+    ...defaultData,
+    ...(dynamicOverviews[catKey] || {}),
+    stats: dynamicOverviews[catKey]?.stats || defaultData.stats,
+    groups: dynamicOverviews[catKey]?.groups || defaultData.groups,
+    features: dynamicOverviews[catKey]?.features || defaultData.features
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -491,7 +501,7 @@ const CategoryOverviewPage = () => {
 
               <div className="cat-items-grid">
                 {group.items.map((item, itemIdx) => {
-                  const ItemIcon = item.icon;
+                  const ItemIcon = typeof item.icon === 'function' ? item.icon : Building2;
                   return (
                     <div key={itemIdx} className="cat-item-card">
                       <div className="cat-card-top">
@@ -512,7 +522,7 @@ const CategoryOverviewPage = () => {
                       <p className="cat-item-short">{item.shortDesc}</p>
 
                       <ul className="cat-item-highlights">
-                        {item.highlights.map((high, hIdx) => (
+                        {(item.highlights || []).map((high, hIdx) => (
                           <li key={hIdx}>
                             <CheckCircle2 size={15} className="high-check" />
                             <span>{high}</span>
@@ -551,8 +561,8 @@ const CategoryOverviewPage = () => {
       <section className="cat-features-section">
         <div className="container">
           <div className="cat-features-grid">
-            {catData.features.map((feat, fIdx) => {
-              const FeatIcon = feat.icon;
+            {(catData.features || []).map((feat, fIdx) => {
+              const FeatIcon = typeof feat.icon === 'function' ? feat.icon : Sparkles;
               return (
                 <div key={fIdx} className="cat-feature-card">
                   <div className="feat-icon-wrapper">

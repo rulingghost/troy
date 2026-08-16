@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, ArrowRight, ExternalLink, MapPin, Globe, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../context/ContentContext';
 import OrganizationContactForm from '../components/OrganizationContactForm';
 import './ServiceSubPage.css';
 
@@ -237,8 +238,17 @@ const incentiveData = [
 ];
 
 const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
+  const { content } = useContent();
   const catKey = (category || '').toLowerCase();
-  const catInfo = categoryData[catKey] || categoryData['alx-mice'];
+  const dynamicOverviews = content?.pages?.categoryOverviews || {};
+  const baseInfo = categoryData[catKey] || categoryData['alx-mice'];
+  const catInfo = {
+    ...baseInfo,
+    ...(dynamicOverviews[catKey] || {}),
+    desc: dynamicOverviews[catKey]?.description || baseInfo.desc,
+    heroImage: dynamicOverviews[catKey]?.heroImage || baseInfo.heroImage,
+    stats: dynamicOverviews[catKey]?.stats || baseInfo.stats
+  };
   const activeSlug = (slug || '').toLowerCase();
 
   // Filter congress events if applicable

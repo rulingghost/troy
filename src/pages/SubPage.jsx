@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Target, Award, CheckCircle } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 import ServiceSubPage from './ServiceSubPage';
 import './SubPage.css';
 
 const SubPage = () => {
   const { category, slug } = useParams();
+  const { content } = useContent();
 
   // Scroll to top on mount
   useEffect(() => {
@@ -48,104 +50,112 @@ const SubPage = () => {
     }
   };
 
+  const corporateData = content?.pages?.corporate || {};
+
   const renderContent = () => {
     const normalizedSlug = (slug || '').toLowerCase();
 
     if (normalizedSlug === 'vizyon') {
+      const vision = corporateData.vision || {};
       return (
         <div className="corporate-vision-box">
-          <h2 className="vision-header">Stratejik Vizyonumuz</h2>
+          <h2 className="vision-header">{vision.title || 'Stratejik Vizyonumuz'}</h2>
           <div className="highlight-quote-box">
             <div className="quote-icon-badge"><Target size={28} /></div>
             <p className="highlight-text">
-              &ldquo;Sağlık sektörünün var olan veya farkında olmadığı ihtiyaçlarını öngörerek çözüm üreten &amp; fark yaratan stratejik iş ortağı olmak&rdquo;
+              &ldquo;{vision.quote || 'Sağlık sektörünün var olan veya farkında olmadığı ihtiyaçlarını öngörerek çözüm üreten & fark yaratan stratejik iş ortağı olmak'}&rdquo;
             </p>
           </div>
           <div className="vision-details">
             <p>
-              Alx Troy olarak, sağlık ve kurumsal etkinlik sektörlerinde yenilikçi, dinamik ve geleceğe yön veren bir vizyon benimsiyoruz. Yalnızca mevcut talepleri karşılamakla kalmayıp, sektörün henüz fark edilmemiş ihtiyaçlarını önceden tespit ederek proaktif çözümler geliştiriyoruz.
+              {vision.desc || 'Alx Troy olarak, sağlık ve kurumsal etkinlik sektörlerinde yenilikçi, dinamik ve geleceğe yön veren bir vizyon benimsiyoruz. Yalnızca mevcut talepleri karşılamakla kalmayıp, sektörün henüz fark edilmemiş ihtiyaçlarını önceden tespit ederek proaktif çözümler geliştiriyoruz.'}
             </p>
-            <ul className="subpage-feature-list">
-              <li>Geleceğin sağlık &amp; MICE teknolojilerini bugünden kurgulama</li>
-              <li>Stratejik vizyon ile katma değer yaratan ortaklık anlayışı</li>
-              <li>Bilimsel ve yenilikçi metotlarla sektöre öncülük etme</li>
-            </ul>
+            {vision.bullets && vision.bullets.length > 0 && (
+              <ul className="subpage-feature-list">
+                {vision.bullets.map((bullet, idx) => (
+                  <li key={idx}>{bullet}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       );
     }
 
     if (normalizedSlug === 'misyon') {
+      const mission = corporateData.mission || {};
       return (
         <div className="corporate-mission-box">
-          <h2 className="mission-header">Misyonumuz</h2>
+          <h2 className="mission-header">{mission.title || 'Misyonumuz'}</h2>
           <div className="highlight-quote-box mission-theme">
             <div className="quote-icon-badge"><Award size={28} /></div>
             <p className="highlight-text">
-              &ldquo;Lokal &amp; global çerçevede sunduğu bilimsel temelli butik çözümleriyle, sürdürülebilir &amp; güvenilir bir paydaştır.&rdquo;
+              &ldquo;{mission.quote || 'Lokal & global çerçevede sunduğu bilimsel temelli butik çözümleriyle, sürdürülebilir & güvenilir bir paydaştır.'}&rdquo;
             </p>
           </div>
           <div className="mission-details">
             <p>
-              Her kurumun ve projenin özgün dinamiklerini merkeze alarak, ulusal ve uluslararası ölçekte bilimsel, sürdürülebilir ve yüksek kalite standartlarında hizmet sunmayı misyon ediniyoruz.
+              {mission.desc || 'Her kurumun ve projenin özgün dinamiklerini merkeze alarak, ulusal ve uluslararası ölçekte bilimsel, sürdürülebilir ve yüksek kalite standartlarında hizmet sunmayı misyon ediniyoruz.'}
             </p>
-            <ul className="subpage-feature-list">
-              <li>Lokal ve global pazarlarda sürdürülebilir iş paydaşlığı</li>
-              <li>Her projeye özel butik ve bilimsel temelli yaklaşım</li>
-              <li>Güvenilirlik ve operasyonel mükemmellik</li>
-            </ul>
+            {mission.bullets && mission.bullets.length > 0 && (
+              <ul className="subpage-feature-list">
+                {mission.bullets.map((bullet, idx) => (
+                  <li key={idx}>{bullet}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       );
     }
 
     if (normalizedSlug === 'hakkimizda') {
+      const about = corporateData.about || {};
       return (
         <div className="corporate-about-box">
-          <h2>Hakkımızda</h2>
+          <h2>{about.title || 'Hakkımızda'}</h2>
           <p className="lead-paragraph">
-            <strong>Alx Troy</strong> olarak; kurumsal etkinliklerin sadece bir organizasyon olmanın ötesinde, şirket kültürünüzü besleyen ve hedeflerinize hizmet eden &ldquo;stratejik birer yolculuk&rdquo; olduğuna inanıyoruz.
+            {about.lead || 'Alx Troy olarak; kurumsal etkinliklerin sadece bir organizasyon olmanın ötesinde, şirket kültürünüzü besleyen ve hedeflerinize hizmet eden "stratejik birer yolculuk" olduğuna inanıyoruz.'}
           </p>
           <p className="about-text-p">
-            Biz; her kurumun kendine özgü dinamiklerine odaklanan, projelere bilimsel ve butik-kreatif çözümlerle yaklaşan yeni nesil bir MICE partneriyiz.
+            {about.desc1 || 'Biz; her kurumun kendine özgü dinamiklerine odaklanan, projelere bilimsel ve butik-kreatif çözümlerle yaklaşan yeni nesil bir MICE partneriyiz.'}
           </p>
           <p className="about-text-p">
-            Bu doğrultuda <strong><em>&ldquo;Enjoy Your Journey&rdquo;</em></strong> mottomuzla, planlama aşamasından etkinlik sonrasına kadar tüm süreci sizin için keyifli bir deneyime dönüştürüyoruz. Ve sadece bir tedarikçi değil, taleplerinize katma değer sağlayan stratejik bir ortak vizyonuyla yaklaşıyoruz.
+            Bu doğrultuda <strong><em>&ldquo;{about.mottoQuote || 'Enjoy Your Journey'}&rdquo;</em></strong> {about.mottoDesc || 'mottomuzla, planlama aşamasından etkinlik sonrasına kadar tüm süreci sizin için keyifli bir deneyime dönüştürüyoruz. Ve sadece bir tedarikçi değil, taleplerinize katma değer sağlayan stratejik bir ortak vizyonuyla yaklaşıyoruz.'}
           </p>
 
           <div className="about-stats-card">
-            <h3>Peki Biz Kim miyiz?</h3>
+            <h3>{about.statsTitle || 'Peki Biz Kim miyiz?'}</h3>
             <ul className="about-bullet-list">
-              <li><CheckCircle size={18} className="bullet-icon" /> <strong>25 yıldır,</strong></li>
-              <li><CheckCircle size={18} className="bullet-icon" /> <strong>Ulusal ve Uluslararası çerçevede,</strong></li>
-              <li><CheckCircle size={18} className="bullet-icon" /> <strong>Güvenilir &amp; Sürdürülebilir iş paydaşı sorumluluğuyla hareket eden,</strong></li>
-              <li><CheckCircle size={18} className="bullet-icon" /> <strong>Amerika merkezli bir organizasyon...</strong></li>
+              {(about.statsBullets || [
+                '25 yıldır,',
+                'Ulusal ve Uluslararası çerçevede,',
+                'Güvenilir & Sürdürülebilir iş paydaşı sorumluluğuyla hareket eden,',
+                'Amerika merkezli bir organizasyon...'
+              ]).map((bullet, idx) => (
+                <li key={idx}>
+                  <CheckCircle size={18} className="bullet-icon" /> <strong>{bullet}</strong>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="about-capabilities">
-            <h3>Sizin için neler mi yapabiliriz?</h3>
+            <h3>{about.capabilitiesTitle || 'Sizin için neler mi yapabiliriz?'}</h3>
             <div className="capabilities-grid">
-              <div className="capability-card">
-                <div className="cap-icon">💻</div>
-                <h4>Dijital Çözümler</h4>
-                <p>Hedef kitlenizin ihtiyaçlarına özgü üretilen Dijital &amp; AI destekli çözümler</p>
-              </div>
-              <div className="capability-card">
-                <div className="cap-icon">✈️</div>
-                <h4>MICE</h4>
-                <p>Size özel planlanan yurt içi, yurt dışı toplantı, event, kongre, sempozyum hizmetleri (Ulaşım (Uçak bileti), konaklama, organizasyon süresince alınacak yemekler, tur programları, profesyonel rehberlik hizmetleri)</p>
-              </div>
-              <div className="capability-card">
-                <div className="cap-icon">🎓</div>
-                <h4>Uygulamalı Öğrenim Modeli</h4>
-                <p>Paydaşlarınız için gelişimi interaktif ve keyifli hale getiren eğitim, kurs ve içerikler</p>
-              </div>
-              <div className="capability-card">
-                <div className="cap-icon">🔄</div>
-                <h4>Uçtan Uca Yönetim</h4>
-                <p>Projelerinizin tek bir elden yönetilmesine imkan sağlayan uçtan uca destek</p>
-              </div>
+              {(about.capabilities || [
+                { icon: '💻', title: 'MICE & Kongre Hizmetleri', desc: 'Ulaşım, konaklama, transfer, salon & teknik altyapı, gala ve profesyonel rehberlik.' },
+                { icon: '✈️', title: 'Own Event & Özel Destinasyonlar', desc: 'Yurtiçi ve yurtdışı butik organizasyonlar.' },
+                { icon: '🩺', title: 'Preceptorship & Eğitimler', desc: 'Klinik gözlem programları ve uygulamalı kurslar.' },
+                { icon: '🤖', title: 'AI Destekli Sağlık & Yayın', desc: 'Online sağlık danışmanlığı, tele-tıp, giyilebilir teknoloji ve canlı yayın platformları.' },
+                { icon: '📊', title: 'Medikal & Omnichannel Yönetimi', desc: 'Medikal yazım, biyo-istatistik, tıbbi çeviri ve omnichannel iletişim stratejileri.' }
+              ]).map((cap, idx) => (
+                <div key={idx} className="capability-card">
+                  <div className="cap-icon">{cap.icon || '✨'}</div>
+                  <h4>{cap.title}</h4>
+                  <p>{cap.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

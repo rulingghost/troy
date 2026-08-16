@@ -16,10 +16,15 @@ import {
   Headphones
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContent } from '../context/ContentContext';
 import OrganizationContactForm from '../components/OrganizationContactForm';
 import './ContactPage.css';
 
 const ContactPage = () => {
+  const { content } = useContent();
+  const contact = content?.contact || {};
+  const contactPageData = content?.pages?.contactPage || {};
+
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [formData, setFormData] = useState({
@@ -69,7 +74,7 @@ const ContactPage = () => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const faqs = [
+  const defaultFaqs = [
     {
       q: "Alexander Troy temsilcisiyle ne zaman iletişime geçebilirim?",
       a: "Hafta içi 09:00 - 18:00 saatleri arasında telefon ve e-posta kanallarımız aktiftir. WhatsApp canlı destek hattımız üzerinden 7/24 mesaj iletebilirsiniz."
@@ -88,6 +93,11 @@ const ContactPage = () => {
     }
   ];
 
+  const faqs = contactPageData.faqs && contactPageData.faqs.length > 0 ? contactPageData.faqs : defaultFaqs;
+  const rawWaPhone = (contact.whatsapp || '+905550123456').replace(/[^0-9]/g, '');
+  const waLink = `https://wa.me/${rawWaPhone}?text=${encodeURIComponent(contact.whatsappText || 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.')}`;
+  const mapLink = contactPageData.mapUrl || `https://maps.google.com/?q=${encodeURIComponent(contact.address || 'Levent Büyükdere Cd. No:195 Şişli İstanbul')}`;
+
   return (
     <div className="contact-page-wrapper">
       {/* Hero Banner */}
@@ -102,15 +112,15 @@ const ContactPage = () => {
           
           <div className="contact-hero-badge">
             <Sparkles size={16} />
-            <span>Bize Ulaşın</span>
+            <span>{contactPageData.heroBadge || 'Bize Ulaşın'}</span>
           </div>
 
           <h1 className="contact-page-title">
-            Geleceğin Çözümleri İçin <span className="gradient-text">İletişime Geçin</span>
+            {contactPageData.heroTitle || 'Geleceğin Çözümleri İçin'} <span className="gradient-text">İletişime Geçin</span>
           </h1>
 
           <p className="contact-page-lead">
-            Alexander Troy; MICE, 4 You, Digi ve Need çözümleri ile iş ortaklarına uçtan uca hizmet sunar. Sorularınız ve proje talepleriniz için bize ulaşın.
+            {contactPageData.heroLead || contact.desc || 'Alexander Troy; MICE, 4 You, Digi ve Need çözümleri ile iş ortaklarına uçtan uca hizmet sunar. Sorularınız ve proje talepleriniz için bize ulaşın.'}
           </p>
 
           <div className="hero-quick-badges">
@@ -120,11 +130,11 @@ const ContactPage = () => {
             </div>
             <div className="quick-badge">
               <Building2 size={18} />
-              <span>Levent / İstanbul Headquarters</span>
+              <span>{contact.address || 'Levent / İstanbul Headquarters'}</span>
             </div>
             <div className="quick-badge">
               <ShieldCheck size={18} />
-              <span>Gizlilik & Kalite Garantisi</span>
+              <span>Gizlilik &amp; Kalite Garantisi</span>
             </div>
           </div>
         </div>
@@ -139,9 +149,9 @@ const ContactPage = () => {
               <MapPin size={26} />
             </div>
             <h3>Genel Merkez</h3>
-            <p>Levent, Büyükdere Cd. No:195, 34394 Şişli / İstanbul</p>
+            <p>{contact.address || 'Levent, Büyükdere Cd. No:195, 34394 Şişli / İstanbul'}</p>
             <a 
-              href="https://maps.google.com/?q=Levent+Büyükdere+Cd.+No:195+Şişli+İstanbul" 
+              href={mapLink} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="card-link"
@@ -154,10 +164,10 @@ const ContactPage = () => {
             <div className="contact-card-icon phone-icon">
               <Phone size={26} />
             </div>
-            <h3>Telefon & Santral</h3>
+            <h3>Telefon &amp; Santral</h3>
             <p>Tüm soru ve talepleriniz için doğrudan bize ulaşın.</p>
-            <a href="tel:+902125550123" className="card-highlight-link">
-              +90 (212) 555 01 23
+            <a href={`tel:${(contact.phone || '+902125550123').replace(/[^0-9+]/g, '')}`} className="card-highlight-link">
+              {contact.phone || '+90 (212) 555 01 23'}
             </a>
           </div>
 
@@ -168,7 +178,7 @@ const ContactPage = () => {
             <h3>WhatsApp Canlı Destek</h3>
             <p>Hızlı ve anlık müşteri hizmetleri temsilcisi ile görüşün.</p>
             <a 
-              href="https://wa.me/905550123456?text=Merhaba,%20Alexander%20Troy%20hizmetleri%20hakkinda%20bilgi%20almak%20istiyorum." 
+              href={waLink} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="card-highlight-link wa-link"
@@ -183,8 +193,8 @@ const ContactPage = () => {
             </div>
             <h3>E-posta İletişim</h3>
             <p>Teklif ve kurumsal iş birlikleri için e-posta gönderin.</p>
-            <a href="mailto:info@alx.com.tr" className="card-highlight-link">
-              info@alx.com.tr
+            <a href={`mailto:${contact.email || 'info@alx.com.tr'}`} className="card-highlight-link">
+              {contact.email || 'info@alx.com.tr'}
             </a>
           </div>
         </div>
