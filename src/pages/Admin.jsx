@@ -155,6 +155,7 @@ const Admin = () => {
   const [corporateSubTab, setCorporateSubTab] = useState('about');
   const [selectedCategoryKey, setSelectedCategoryKey] = useState('kurumsal');
   const [contactSubTab, setContactSubTab] = useState('info');
+  const [subservicesSubTab, setSubservicesSubTab] = useState('congress');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [blobQuickUrl, setBlobQuickUrl] = useState('');
 
@@ -478,6 +479,179 @@ const Admin = () => {
     const currentContactPage = currentPages.contactPage || defaultContent.pages.contactPage;
     const updatedFaqs = (currentContactPage.faqs || []).filter((_, i) => i !== index);
     handleContactPageChange('faqs', updatedFaqs);
+  };
+
+  // --- SUB-SERVICES & EVENTS DATA HANDLERS ---
+  const handleSubServicesDataChange = (field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+
+    updateContent({
+      ...content,
+      pages: {
+        ...currentPages,
+        subServicesData: {
+          ...currentSubData,
+          [field]: val
+        }
+      }
+    });
+  };
+
+  // Congress events
+  const handleCongressEventChange = (idx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = [...(currentSubData.congressEvents || [])];
+    updated[idx] = { ...updated[idx], [field]: val };
+    handleSubServicesDataChange('congressEvents', updated);
+  };
+
+  const handleAddCongressEvent = () => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = [
+      ...(currentSubData.congressEvents || []),
+      { category: 'yurtici-kongre', title: 'Yeni Kongre / Sempozyum', org: 'Organizasyon Kurumu', desc: 'Etkinlik açıklaması...', link: 'https://...', badge: 'Yurtiçi Kongre' }
+    ];
+    handleSubServicesDataChange('congressEvents', updated);
+  };
+
+  const handleDeleteCongressEvent = (idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = (currentSubData.congressEvents || []).filter((_, i) => i !== idx);
+    handleSubServicesDataChange('congressEvents', updated);
+  };
+
+  // Destinations
+  const handleDestinationChange = (type, idx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const destObj = { ...(currentSubData.destinations || defaultContent.pages.subServicesData.destinations) };
+    const list = [...(destObj[type] || [])];
+    list[idx] = { ...list[idx], [field]: val };
+    destObj[type] = list;
+    handleSubServicesDataChange('destinations', destObj);
+  };
+
+  const handleAddDestination = (type) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const destObj = { ...(currentSubData.destinations || defaultContent.pages.subServicesData.destinations) };
+    const list = [...(destObj[type] || []), { name: 'Yeni Destinasyon', landmark: 'Simge Mekan / Konsept', image: '', icon: type === 'yurtdisi' ? '✈️' : '🎈' }];
+    destObj[type] = list;
+    handleSubServicesDataChange('destinations', destObj);
+  };
+
+  const handleDeleteDestination = (type, idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const destObj = { ...(currentSubData.destinations || defaultContent.pages.subServicesData.destinations) };
+    destObj[type] = (destObj[type] || []).filter((_, i) => i !== idx);
+    handleSubServicesDataChange('destinations', destObj);
+  };
+
+  // Preceptorship
+  const handlePreceptorshipChange = (type, idx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const precepObj = { ...(currentSubData.preceptorship || defaultContent.pages.subServicesData.preceptorship) };
+    const list = [...(precepObj[type] || [])];
+    list[idx] = { ...list[idx], [field]: val };
+    precepObj[type] = list;
+    handleSubServicesDataChange('preceptorship', precepObj);
+  };
+
+  const handleAddPreceptorship = (type) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const precepObj = { ...(currentSubData.preceptorship || defaultContent.pages.subServicesData.preceptorship) };
+    const list = [...(precepObj[type] || []), { title: 'Yeni Preceptorship Programı', desc: 'Klinik gözlem ve prosedür eğitimi...', image: '', badge: type === 'yurtdisi' ? 'Yurtdışı Preceptorship' : 'Yurtiçi Preceptorship' }];
+    precepObj[type] = list;
+    handleSubServicesDataChange('preceptorship', precepObj);
+  };
+
+  const handleDeletePreceptorship = (type, idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const precepObj = { ...(currentSubData.preceptorship || defaultContent.pages.subServicesData.preceptorship) };
+    precepObj[type] = (precepObj[type] || []).filter((_, i) => i !== idx);
+    handleSubServicesDataChange('preceptorship', precepObj);
+  };
+
+  // Partner Platforms
+  const handlePartnerPlatformChange = (catKey, idx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const platObj = { ...(currentSubData.partnerPlatforms || defaultContent.pages.subServicesData.partnerPlatforms) };
+    const list = [...(platObj[catKey] || [])];
+    list[idx] = { ...list[idx], [field]: val };
+    platObj[catKey] = list;
+    handleSubServicesDataChange('partnerPlatforms', platObj);
+  };
+
+  const handleAddPartnerPlatform = (catKey) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const platObj = { ...(currentSubData.partnerPlatforms || defaultContent.pages.subServicesData.partnerPlatforms) };
+    const list = [...(platObj[catKey] || []), { title: 'Yeni Çözüm Platformu', brand: 'Platform Adı', link: 'https://...', desc: 'Açıklama...', icon: '🤝', slug: 'yeni-platform' }];
+    platObj[catKey] = list;
+    handleSubServicesDataChange('partnerPlatforms', platObj);
+  };
+
+  const handleDeletePartnerPlatform = (catKey, idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const platObj = { ...(currentSubData.partnerPlatforms || defaultContent.pages.subServicesData.partnerPlatforms) };
+    platObj[catKey] = (platObj[catKey] || []).filter((_, i) => i !== idx);
+    handleSubServicesDataChange('partnerPlatforms', platObj);
+  };
+
+  // Courses
+  const handleCourseChange = (idx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = [...(currentSubData.courses || [])];
+    updated[idx] = { ...updated[idx], [field]: val };
+    handleSubServicesDataChange('courses', updated);
+  };
+
+  const handleAddCourse = () => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = [...(currentSubData.courses || []), { title: 'Yeni Eğitim / Kurs', desc: 'Açıklama...', icon: '🎓', badge: 'Eğitim Modülü' }];
+    handleSubServicesDataChange('courses', updated);
+  };
+
+  const handleDeleteCourse = (idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = (currentSubData.courses || []).filter((_, i) => i !== idx);
+    handleSubServicesDataChange('courses', updated);
+  };
+
+  // Incentive
+  const handleIncentiveChange = (idx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = [...(currentSubData.incentive || [])];
+    updated[idx] = { ...updated[idx], [field]: val };
+    handleSubServicesDataChange('incentive', updated);
+  };
+
+  const handleAddIncentive = () => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = [...(currentSubData.incentive || []), { title: 'Yeni Motivasyon Etkinliği', desc: 'Açıklama...', icon: '⚡', badge: 'Kurumsal Etkinlik' }];
+    handleSubServicesDataChange('incentive', updated);
+  };
+
+  const handleDeleteIncentive = (idx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentSubData = currentPages.subServicesData || defaultContent.pages.subServicesData;
+    const updated = (currentSubData.incentive || []).filter((_, i) => i !== idx);
+    handleSubServicesDataChange('incentive', updated);
   };
 
   // --- MENU MANAGEMENT HANDLERS ---
@@ -999,6 +1173,15 @@ const Admin = () => {
             >
               <Globe size={18} />
               <span>🌐 Kategori Sayfaları</span>
+            </button>
+
+            <button 
+              type="button"
+              className={`tab-btn ${activeTab === 'subservices' ? 'active' : ''}`}
+              onClick={() => setActiveTab('subservices')}
+            >
+              <Sparkles size={18} />
+              <span>🎯 Alt Hizmet &amp; Destinasyonlar</span>
             </button>
 
             <button 
@@ -2133,6 +2316,741 @@ const Admin = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* TAB: SUB-SERVICES & DETAILED CONTENT */}
+          {activeTab === 'subservices' && (() => {
+            const subData = content.pages?.subServicesData || defaultContent.pages.subServicesData || {};
+            const congressList = subData.congressEvents || defaultContent.pages.subServicesData.congressEvents || [];
+            const destList = subData.destinations || defaultContent.pages.subServicesData.destinations || {};
+            const precepList = subData.preceptorship || defaultContent.pages.subServicesData.preceptorship || {};
+            const partnerList = subData.partnerPlatforms || defaultContent.pages.subServicesData.partnerPlatforms || {};
+            const courseList = subData.courses || defaultContent.pages.subServicesData.courses || [];
+            const incList = subData.incentive || defaultContent.pages.subServicesData.incentive || [];
+
+            return (
+              <section className="admin-section">
+                <div className="section-header">
+                  <div>
+                    <h2 className="section-heading">🎯 Alt Hizmet, Etkinlik &amp; Destinasyonlar</h2>
+                    <p className="section-desc">
+                      Tüm kongre/sempozyum bağlantılarını, Kapadokya/İtalya vb. destinasyon kartlarını, Preceptorship gözlem programlarını, Doktorum Yanımda/Beynex/Niceye partner kartlarını ve kursları düzenleyin.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Sub Navigation */}
+                <div className="page-subtabs-nav">
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${subservicesSubTab === 'congress' ? 'active' : ''}`}
+                    onClick={() => setSubservicesSubTab('congress')}
+                  >
+                    <Globe size={16} />
+                    <span>🏛️ Kongre &amp; Sempozyumlar ({congressList.length})</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${subservicesSubTab === 'destinations' ? 'active' : ''}`}
+                    onClick={() => setSubservicesSubTab('destinations')}
+                  >
+                    <MapPin size={16} />
+                    <span>✈️ Own Event Destinasyonları</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${subservicesSubTab === 'preceptorship' ? 'active' : ''}`}
+                    onClick={() => setSubservicesSubTab('preceptorship')}
+                  >
+                    <Award size={16} />
+                    <span>🩺 Preceptorship Programları</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${subservicesSubTab === 'platforms' ? 'active' : ''}`}
+                    onClick={() => setSubservicesSubTab('platforms')}
+                  >
+                    <Users size={16} />
+                    <span>🤝 Çözüm Platformları (Alx Digi / Need)</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${subservicesSubTab === 'courses' ? 'active' : ''}`}
+                    onClick={() => setSubservicesSubTab('courses')}
+                  >
+                    <FileText size={16} />
+                    <span>🎓 Kurs &amp; Eğitimler</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`page-subtab-btn ${subservicesSubTab === 'incentive' ? 'active' : ''}`}
+                    onClick={() => setSubservicesSubTab('incentive')}
+                  >
+                    <Sparkles size={16} />
+                    <span>⚡ Incentive &amp; Motivasyon</span>
+                  </button>
+                </div>
+
+                <div className="page-editor-container">
+                  {/* SUBTAB 1: CONGRESS & SYMPOSIUMS */}
+                  {subservicesSubTab === 'congress' && (
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <div>
+                          <h3 className="card-subheading">Öne Çıkan Kongre ve Sempozyum Kartları</h3>
+                          <p className="card-hint">
+                            Yurtiçi ve yurtdışı kongre/sempozyum sayfalarında gösterilen resmi etkinlik bağlantılarını ekleyin veya güncelleyin.
+                          </p>
+                        </div>
+                        <button type="button" className="btn-add-primary" onClick={handleAddCongressEvent}>
+                          <Plus size={16} /> Yeni Etkinlik Ekle
+                        </button>
+                      </div>
+
+                      <div className="cards-stack">
+                        {congressList.map((ev, evIdx) => (
+                          <div key={evIdx} className="nested-box">
+                            <div className="card-header-bar">
+                              <span className="cap-badge">Etkinlik #{evIdx + 1} ({ev.badge || 'Etkinlik'})</span>
+                              <button 
+                                type="button" 
+                                className="btn-icon btn-danger" 
+                                onClick={() => handleDeleteCongressEvent(evIdx)}
+                                title="Etkinliği Sil"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+
+                            <div className="grid-3-col">
+                              <div className="input-group">
+                                <label className="admin-label">Etkinlik Başlığı</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={ev.title || ''}
+                                  onChange={(e) => handleCongressEventChange(evIdx, 'title', e.target.value)}
+                                  placeholder="Örn: 42. Ulusal Kardiyoloji Kongresi"
+                                />
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Düzenleyen Kurum / Dernek</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={ev.org || ''}
+                                  onChange={(e) => handleCongressEventChange(evIdx, 'org', e.target.value)}
+                                  placeholder="Örn: Türk Kardiyoloji Derneği"
+                                />
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Hangi Sayfada Gösterilsin? (Slug)</label>
+                                <select 
+                                  className="admin-select"
+                                  value={ev.category || 'yurtici-kongre'}
+                                  onChange={(e) => handleCongressEventChange(evIdx, 'category', e.target.value)}
+                                >
+                                  <option value="yurtici-kongre">Yurtiçi Kongre (/alx-mice/yurtici-kongre)</option>
+                                  <option value="yurtdisi-kongre">Yurtdışı Kongre (/alx-mice/yurtdisi-kongre)</option>
+                                  <option value="yurtici-sempozyum">Yurtiçi Sempozyum (/alx-mice/yurtici-sempozyum)</option>
+                                  <option value="yurtdisi-sempozyum">Yurtdışı Sempozyum (/alx-mice/yurtdisi-sempozyum)</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div className="grid-2-col">
+                              <div className="input-group">
+                                <label className="admin-label">Üst Rozet Metni</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={ev.badge || ''}
+                                  onChange={(e) => handleCongressEventChange(evIdx, 'badge', e.target.value)}
+                                />
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Resmi Web Sitesi Bağlantısı (URL)</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={ev.link || ''}
+                                  onChange={(e) => handleCongressEventChange(evIdx, 'link', e.target.value)}
+                                  placeholder="https://..."
+                                />
+                              </div>
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Kısa Açıklama</label>
+                              <textarea 
+                                className="admin-textarea"
+                                rows={2}
+                                value={ev.desc || ''}
+                                onChange={(e) => handleCongressEventChange(evIdx, 'desc', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUBTAB 2: DESTINATIONS */}
+                  {subservicesSubTab === 'destinations' && (
+                    <div className="page-editor-container">
+                      {/* Yurtiçi */}
+                      <div className="admin-card">
+                        <div className="card-header-bar">
+                          <h3 className="card-subheading">🇹🇷 Yurtiçi Destinasyonları (Own Event)</h3>
+                          <button type="button" className="btn-add-secondary" onClick={() => handleAddDestination('yurtici')}>
+                            <Plus size={14} /> Yeni Yurtiçi Destinasyon Ekle
+                          </button>
+                        </div>
+
+                        <div className="capabilities-editor-grid">
+                          {(destList.yurtici || []).map((dest, dIdx) => (
+                            <div key={dIdx} className="nested-box">
+                              <div className="card-header-bar">
+                                <span className="cap-badge">#{dIdx + 1} {dest.name}</span>
+                                <button 
+                                  type="button" 
+                                  className="btn-icon btn-danger" 
+                                  onClick={() => handleDeleteDestination('yurtici', dIdx)}
+                                  title="Sil"
+                                >
+                                  <Trash2 size={15} />
+                                </button>
+                              </div>
+
+                              <div className="grid-2-col">
+                                <div className="input-group">
+                                  <label className="admin-label">İkon / Emoji</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={dest.icon || ''}
+                                    onChange={(e) => handleDestinationChange('yurtici', dIdx, 'icon', e.target.value)}
+                                  />
+                                </div>
+                                <div className="input-group">
+                                  <label className="admin-label">Şehir / Bölge İsmi</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={dest.name || ''}
+                                    onChange={(e) => handleDestinationChange('yurtici', dIdx, 'name', e.target.value)}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Simge Yapı / Mekan Açıklaması</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={dest.landmark || ''}
+                                  onChange={(e) => handleDestinationChange('yurtici', dIdx, 'landmark', e.target.value)}
+                                />
+                              </div>
+
+                              <ImageUploader 
+                                label="Destinasyon Fotoğrafı"
+                                value={dest.image || ''}
+                                onChange={(url) => handleDestinationChange('yurtici', dIdx, 'image', url)}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Yurtdışı */}
+                      <div className="admin-card">
+                        <div className="card-header-bar">
+                          <h3 className="card-subheading">🌐 Yurtdışı Destinasyonları (Own Event)</h3>
+                          <button type="button" className="btn-add-secondary" onClick={() => handleAddDestination('yurtdisi')}>
+                            <Plus size={14} /> Yeni Yurtdışı Destinasyon Ekle
+                          </button>
+                        </div>
+
+                        <div className="capabilities-editor-grid">
+                          {(destList.yurtdisi || []).map((dest, dIdx) => (
+                            <div key={dIdx} className="nested-box">
+                              <div className="card-header-bar">
+                                <span className="cap-badge">#{dIdx + 1} {dest.name}</span>
+                                <button 
+                                  type="button" 
+                                  className="btn-icon btn-danger" 
+                                  onClick={() => handleDeleteDestination('yurtdisi', dIdx)}
+                                  title="Sil"
+                                >
+                                  <Trash2 size={15} />
+                                </button>
+                              </div>
+
+                              <div className="grid-2-col">
+                                <div className="input-group">
+                                  <label className="admin-label">Bayrak / Emoji</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={dest.icon || ''}
+                                    onChange={(e) => handleDestinationChange('yurtdisi', dIdx, 'icon', e.target.value)}
+                                  />
+                                </div>
+                                <div className="input-group">
+                                  <label className="admin-label">Ülke / Şehir İsmi</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={dest.name || ''}
+                                    onChange={(e) => handleDestinationChange('yurtdisi', dIdx, 'name', e.target.value)}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Simge Yapı / Mekan Açıklaması</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={dest.landmark || ''}
+                                  onChange={(e) => handleDestinationChange('yurtdisi', dIdx, 'landmark', e.target.value)}
+                                />
+                              </div>
+
+                              <ImageUploader 
+                                label="Destinasyon Fotoğrafı"
+                                value={dest.image || ''}
+                                onChange={(url) => handleDestinationChange('yurtdisi', dIdx, 'image', url)}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUBTAB 3: PRECEPTORSHIP */}
+                  {subservicesSubTab === 'preceptorship' && (
+                    <div className="page-editor-container">
+                      {/* Yurtiçi */}
+                      <div className="admin-card">
+                        <div className="card-header-bar">
+                          <h3 className="card-subheading">🩺 Yurtiçi Preceptorship Programları</h3>
+                          <button type="button" className="btn-add-secondary" onClick={() => handleAddPreceptorship('yurtici')}>
+                            <Plus size={14} /> Yeni Program Ekle
+                          </button>
+                        </div>
+
+                        <div className="capabilities-editor-grid">
+                          {(precepList.yurtici || []).map((item, pIdx) => (
+                            <div key={pIdx} className="nested-box">
+                              <div className="card-header-bar">
+                                <span className="cap-badge">#{pIdx + 1} {item.title}</span>
+                                <button 
+                                  type="button" 
+                                  className="btn-icon btn-danger" 
+                                  onClick={() => handleDeletePreceptorship('yurtici', pIdx)}
+                                  title="Sil"
+                                >
+                                  <Trash2 size={15} />
+                                </button>
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Program Başlığı</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={item.title || ''}
+                                  onChange={(e) => handlePreceptorshipChange('yurtici', pIdx, 'title', e.target.value)}
+                                />
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Açıklama</label>
+                                <textarea 
+                                  className="admin-textarea"
+                                  rows={2}
+                                  value={item.desc || ''}
+                                  onChange={(e) => handlePreceptorshipChange('yurtici', pIdx, 'desc', e.target.value)}
+                                />
+                              </div>
+
+                              <ImageUploader 
+                                label="Program Görseli"
+                                value={item.image || ''}
+                                onChange={(url) => handlePreceptorshipChange('yurtici', pIdx, 'image', url)}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Yurtdışı */}
+                      <div className="admin-card">
+                        <div className="card-header-bar">
+                          <h3 className="card-subheading">🌍 Yurtdışı Preceptorship Programları</h3>
+                          <button type="button" className="btn-add-secondary" onClick={() => handleAddPreceptorship('yurtdisi')}>
+                            <Plus size={14} /> Yeni Program Ekle
+                          </button>
+                        </div>
+
+                        <div className="capabilities-editor-grid">
+                          {(precepList.yurtdisi || []).map((item, pIdx) => (
+                            <div key={pIdx} className="nested-box">
+                              <div className="card-header-bar">
+                                <span className="cap-badge">#{pIdx + 1} {item.title}</span>
+                                <button 
+                                  type="button" 
+                                  className="btn-icon btn-danger" 
+                                  onClick={() => handleDeletePreceptorship('yurtdisi', pIdx)}
+                                  title="Sil"
+                                >
+                                  <Trash2 size={15} />
+                                </button>
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Program Başlığı</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={item.title || ''}
+                                  onChange={(e) => handlePreceptorshipChange('yurtdisi', pIdx, 'title', e.target.value)}
+                                />
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Açıklama</label>
+                                <textarea 
+                                  className="admin-textarea"
+                                  rows={2}
+                                  value={item.desc || ''}
+                                  onChange={(e) => handlePreceptorshipChange('yurtdisi', pIdx, 'desc', e.target.value)}
+                                />
+                              </div>
+
+                              <ImageUploader 
+                                label="Program Görseli"
+                                value={item.image || ''}
+                                onChange={(url) => handlePreceptorshipChange('yurtdisi', pIdx, 'image', url)}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUBTAB 4: PARTNER PLATFORMS */}
+                  {subservicesSubTab === 'platforms' && (
+                    <div className="page-editor-container">
+                      {/* Alx Digi Partners */}
+                      <div className="admin-card">
+                        <div className="card-header-bar">
+                          <h3 className="card-subheading">💻 Alx Digi Çözüm Platformları (Doktorum Yanımda, Beynex, Niceye)</h3>
+                          <button type="button" className="btn-add-secondary" onClick={() => handleAddPartnerPlatform('alx-digi')}>
+                            <Plus size={14} /> Yeni Digi Platform Ekle
+                          </button>
+                        </div>
+
+                        <div className="cards-stack">
+                          {(partnerList['alx-digi'] || []).map((plat, plIdx) => (
+                            <div key={plIdx} className="nested-box">
+                              <div className="card-header-bar">
+                                <span className="cap-badge">#{plIdx + 1} {plat.brand} ({plat.title})</span>
+                                <button 
+                                  type="button" 
+                                  className="btn-icon btn-danger" 
+                                  onClick={() => handleDeletePartnerPlatform('alx-digi', plIdx)}
+                                  title="Sil"
+                                >
+                                  <Trash2 size={15} />
+                                </button>
+                              </div>
+
+                              <div className="grid-3-col">
+                                <div className="input-group">
+                                  <label className="admin-label">Hizmet Başlığı</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={plat.title || ''}
+                                    onChange={(e) => handlePartnerPlatformChange('alx-digi', plIdx, 'title', e.target.value)}
+                                  />
+                                </div>
+                                <div className="input-group">
+                                  <label className="admin-label">Partner / Marka Adı</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={plat.brand || ''}
+                                    onChange={(e) => handlePartnerPlatformChange('alx-digi', plIdx, 'brand', e.target.value)}
+                                  />
+                                </div>
+                                <div className="input-group">
+                                  <label className="admin-label">İkon / Emoji</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={plat.icon || ''}
+                                    onChange={(e) => handlePartnerPlatformChange('alx-digi', plIdx, 'icon', e.target.value)}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Resmi Web Sitesi Linki (URL)</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={plat.link || ''}
+                                  onChange={(e) => handlePartnerPlatformChange('alx-digi', plIdx, 'link', e.target.value)}
+                                />
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Açıklama</label>
+                                <textarea 
+                                  className="admin-textarea"
+                                  rows={2}
+                                  value={plat.desc || ''}
+                                  onChange={(e) => handlePartnerPlatformChange('alx-digi', plIdx, 'desc', e.target.value)}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Alx Need Partners */}
+                      <div className="admin-card">
+                        <div className="card-header-bar">
+                          <h3 className="card-subheading">🎯 Alx Need Stratejik Ortakları (Gama CRO, Niceye IT)</h3>
+                          <button type="button" className="btn-add-secondary" onClick={() => handleAddPartnerPlatform('alx-need')}>
+                            <Plus size={14} /> Yeni Need Platform Ekle
+                          </button>
+                        </div>
+
+                        <div className="cards-stack">
+                          {(partnerList['alx-need'] || []).map((plat, plIdx) => (
+                            <div key={plIdx} className="nested-box">
+                              <div className="card-header-bar">
+                                <span className="cap-badge">#{plIdx + 1} {plat.brand} ({plat.title})</span>
+                                <button 
+                                  type="button" 
+                                  className="btn-icon btn-danger" 
+                                  onClick={() => handleDeletePartnerPlatform('alx-need', plIdx)}
+                                  title="Sil"
+                                >
+                                  <Trash2 size={15} />
+                                </button>
+                              </div>
+
+                              <div className="grid-3-col">
+                                <div className="input-group">
+                                  <label className="admin-label">Hizmet Başlığı</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={plat.title || ''}
+                                    onChange={(e) => handlePartnerPlatformChange('alx-need', plIdx, 'title', e.target.value)}
+                                  />
+                                </div>
+                                <div className="input-group">
+                                  <label className="admin-label">Partner / Marka Adı</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={plat.brand || ''}
+                                    onChange={(e) => handlePartnerPlatformChange('alx-need', plIdx, 'brand', e.target.value)}
+                                  />
+                                </div>
+                                <div className="input-group">
+                                  <label className="admin-label">İkon / Emoji</label>
+                                  <input 
+                                    type="text" 
+                                    className="admin-input"
+                                    value={plat.icon || ''}
+                                    onChange={(e) => handlePartnerPlatformChange('alx-need', plIdx, 'icon', e.target.value)}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Resmi Web Sitesi Linki (URL)</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={plat.link || ''}
+                                  onChange={(e) => handlePartnerPlatformChange('alx-need', plIdx, 'link', e.target.value)}
+                                />
+                              </div>
+
+                              <div className="input-group">
+                                <label className="admin-label">Açıklama</label>
+                                <textarea 
+                                  className="admin-textarea"
+                                  rows={2}
+                                  value={plat.desc || ''}
+                                  onChange={(e) => handlePartnerPlatformChange('alx-need', plIdx, 'desc', e.target.value)}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUBTAB 5: COURSES */}
+                  {subservicesSubTab === 'courses' && (
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">🎓 Kurs &amp; Eğitim Programları</h3>
+                        <button type="button" className="btn-add-primary" onClick={handleAddCourse}>
+                          <Plus size={16} /> Yeni Kurs Ekle
+                        </button>
+                      </div>
+
+                      <div className="capabilities-editor-grid">
+                        {courseList.map((course, crIdx) => (
+                          <div key={crIdx} className="nested-box">
+                            <div className="card-header-bar">
+                              <span className="cap-badge">#{crIdx + 1} {course.title}</span>
+                              <button 
+                                type="button" 
+                                className="btn-icon btn-danger" 
+                                onClick={() => handleDeleteCourse(crIdx)}
+                                title="Sil"
+                              >
+                                <Trash2 size={15} />
+                              </button>
+                            </div>
+
+                            <div className="grid-2-col">
+                              <div className="input-group">
+                                <label className="admin-label">İkon / Emoji</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={course.icon || ''}
+                                  onChange={(e) => handleCourseChange(crIdx, 'icon', e.target.value)}
+                                />
+                              </div>
+                              <div className="input-group">
+                                <label className="admin-label">Rozet</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={course.badge || ''}
+                                  onChange={(e) => handleCourseChange(crIdx, 'badge', e.target.value)}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Kurs Başlığı</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={course.title || ''}
+                                onChange={(e) => handleCourseChange(crIdx, 'title', e.target.value)}
+                              />
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Açıklama</label>
+                              <textarea 
+                                className="admin-textarea"
+                                rows={3}
+                                value={course.desc || ''}
+                                onChange={(e) => handleCourseChange(crIdx, 'desc', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUBTAB 6: INCENTIVE */}
+                  {subservicesSubTab === 'incentive' && (
+                    <div className="admin-card">
+                      <div className="card-header-bar">
+                        <h3 className="card-subheading">⚡ Incentive &amp; Motivasyon Etkinlikleri</h3>
+                        <button type="button" className="btn-add-primary" onClick={handleAddIncentive}>
+                          <Plus size={16} /> Yeni Etkinlik Ekle
+                        </button>
+                      </div>
+
+                      <div className="capabilities-editor-grid">
+                        {incList.map((inc, incIdx) => (
+                          <div key={incIdx} className="nested-box">
+                            <div className="card-header-bar">
+                              <span className="cap-badge">#{incIdx + 1} {inc.title}</span>
+                              <button 
+                                type="button" 
+                                className="btn-icon btn-danger" 
+                                onClick={() => handleDeleteIncentive(incIdx)}
+                                title="Sil"
+                              >
+                                <Trash2 size={15} />
+                              </button>
+                            </div>
+
+                            <div className="grid-2-col">
+                              <div className="input-group">
+                                <label className="admin-label">İkon / Emoji</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={inc.icon || ''}
+                                  onChange={(e) => handleIncentiveChange(incIdx, 'icon', e.target.value)}
+                                />
+                              </div>
+                              <div className="input-group">
+                                <label className="admin-label">Rozet</label>
+                                <input 
+                                  type="text" 
+                                  className="admin-input"
+                                  value={inc.badge || ''}
+                                  onChange={(e) => handleIncentiveChange(incIdx, 'badge', e.target.value)}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Etkinlik Başlığı</label>
+                              <input 
+                                type="text" 
+                                className="admin-input"
+                                value={inc.title || ''}
+                                onChange={(e) => handleIncentiveChange(incIdx, 'title', e.target.value)}
+                              />
+                            </div>
+
+                            <div className="input-group">
+                              <label className="admin-label">Açıklama</label>
+                              <textarea 
+                                className="admin-textarea"
+                                rows={3}
+                                value={inc.desc || ''}
+                                onChange={(e) => handleIncentiveChange(incIdx, 'desc', e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
             );

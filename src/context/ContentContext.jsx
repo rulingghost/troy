@@ -59,6 +59,23 @@ export const ContentProvider = ({ children }) => {
               contactPage: {
                 ...defaultContent.pages.contactPage,
                 ...(incomingPages.contactPage || {})
+              },
+              subServicesData: {
+                congressEvents: incomingPages.subServicesData?.congressEvents || defaultContent.pages.subServicesData.congressEvents,
+                destinations: {
+                  yurtici: incomingPages.subServicesData?.destinations?.yurtici || defaultContent.pages.subServicesData.destinations.yurtici,
+                  yurtdisi: incomingPages.subServicesData?.destinations?.yurtdisi || defaultContent.pages.subServicesData.destinations.yurtdisi
+                },
+                preceptorship: {
+                  yurtici: incomingPages.subServicesData?.preceptorship?.yurtici || defaultContent.pages.subServicesData.preceptorship.yurtici,
+                  yurtdisi: incomingPages.subServicesData?.preceptorship?.yurtdisi || defaultContent.pages.subServicesData.preceptorship.yurtdisi
+                },
+                partnerPlatforms: {
+                  'alx-digi': incomingPages.subServicesData?.partnerPlatforms?.['alx-digi'] || defaultContent.pages.subServicesData.partnerPlatforms['alx-digi'],
+                  'alx-need': incomingPages.subServicesData?.partnerPlatforms?.['alx-need'] || defaultContent.pages.subServicesData.partnerPlatforms['alx-need']
+                },
+                courses: incomingPages.subServicesData?.courses || defaultContent.pages.subServicesData.courses,
+                incentive: incomingPages.subServicesData?.incentive || defaultContent.pages.subServicesData.incentive
               }
             }
           };

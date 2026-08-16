@@ -695,6 +695,158 @@ export const defaultContent = {
           a: "Evet, sizleri en iyi şekilde ağırlayabilmek ve ilgili departman sorumlularımızla buluşturabilmek için önceden randevu oluşturmanızı rica ederiz."
         }
       ]
+    },
+
+    // 4. Alt Hizmet Sayfaları Özel Verileri (Kongreler, Destinasyonlar, Partnerler, Preceptorship, Kurslar)
+    subServicesData: {
+      congressEvents: [
+        {
+          category: 'yurtici-kongre',
+          title: '42. Ulusal Kardiyoloji Kongresi',
+          org: 'Türk Kardiyoloji Derneği (TKD)',
+          desc: 'Ulusal alanda kardiyoloji alanındaki en güncel bilimsel gelişmeler, vakalar ve uzman panelleri.',
+          link: 'https://tkd.org.tr/2026kongre/',
+          badge: 'Yurtiçi Kongre'
+        },
+        {
+          category: 'yurtdisi-kongre',
+          title: 'European Society of Cardiology (ESC Congress)',
+          org: 'European Society of Cardiology',
+          desc: 'Dünyanın en prestijli uluslararası kardiyoloji kongrelerinden biri olan ESC Congress buluşması.',
+          link: 'https://www.escardio.org/events/congresses/esc-congress/',
+          badge: 'Yurtdışı Kongre'
+        },
+        {
+          category: 'yurtici-sempozyum',
+          title: '3. Nörobilim Sempozyumu',
+          org: 'Türkiye Nöroloji Derneği',
+          desc: 'Beyin araştırmaları ve klinik nörobilim alanındaki yenilikçi çalışmalar ve akademisyen buluşmaları.',
+          link: 'https://www.tndnorobilim.org/',
+          badge: 'Yurtiçi Sempozyum'
+        },
+        {
+          category: 'yurtici-sempozyum',
+          title: '11. Solunum Zirvesi',
+          org: 'Türkiye Solunum Araştırmaları Derneği',
+          desc: 'Göğüs hastalıkları ve solunum sağlığındaki güncel yaklaşımlar ve akademik sunumlar.',
+          link: 'https://www.solunumzirvesi.org/',
+          badge: 'Yurtiçi Sempozyum'
+        },
+        {
+          category: 'yurtdisi-sempozyum',
+          title: 'World Conference on Lung Health',
+          org: 'The Union',
+          desc: 'Akciğer sağlığı ve küresel tıp alanındaki en büyük uluslararası sempozyum ve konferans.',
+          link: 'https://worldlunghealth.org/symposia/',
+          badge: 'Yurtdışı Sempozyum'
+        }
+      ],
+      destinations: {
+        yurtdisi: [
+          { name: 'İspanya', landmark: 'Sagrada Familia & Madrid Plaza', image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&q=80&w=600', icon: '🇪🇸' },
+          { name: 'İtalya', landmark: 'Kolezyum & Venedik Kanalları', image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=80&w=600', icon: '🇮🇹' },
+          { name: 'Cezayir', landmark: 'Şehitler Anıtı & Kasbah Sokakları', image: 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?auto=format&fit=crop&q=80&w=600', icon: '🇩🇿' },
+          { name: 'Mısır', landmark: 'Gize Piramitleri & Kahire Müzesi', image: 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=600', icon: '🇪🇬' },
+          { name: 'Arnavutluk', landmark: 'Tiran İskender Bey Meydanı & Berat', image: 'https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?auto=format&fit=crop&q=80&w=600', icon: '🇦🇱' },
+          { name: 'Kosova', landmark: 'Prizren Taş Köprü & Priştine', image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&q=80&w=600', icon: '🇽🇰' },
+          { name: 'Makedonya', landmark: 'Üsküp Taş Köprü & Ohrid Gölü', image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&q=80&w=600', icon: '🇲🇰' },
+          { name: 'Azerbaycan', landmark: 'Haydar Aliyev Merkezi & Bakü Kuleleri', image: 'https://images.unsplash.com/photo-1609856878074-cf31e21ccb6b?auto=format&fit=crop&q=80&w=600', icon: '🇦🇿' }
+        ],
+        yurtici: [
+          { name: 'Kapadokya', landmark: 'Peri Bacaları & Sıcak Hava Balonları', image: 'https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?auto=format&fit=crop&q=80&w=600', icon: '🎈' },
+          { name: 'Kars', landmark: 'Ani Harabeleri & Çıldır Gölü', image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600', icon: '❄️' },
+          { name: 'Trabzon - Rize', landmark: 'Uzungöl, Ayder Yaylası & Fırtına Deresi', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=600', icon: '🌲' },
+          { name: 'Gaziantep', landmark: 'Zeugma Mozaik Müzesi & Tarihi Çarşı', image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=600', icon: '🏛️' },
+          { name: 'Hatay', landmark: 'Medeniyetler Şehri & Antakya Mozaik', image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=600', icon: '🕌' },
+          { name: 'Çanakkale', landmark: 'Truva Atı & Şehitler Abidesi', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=600', icon: '⚔️' }
+        ]
+      },
+      preceptorship: {
+        yurtici: [
+          { title: 'Bronkoskopi Preceptorship', desc: 'Uygulamalı bronkoskopik girişimler ve vaka çalışmaları.', image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600', badge: 'Yurtiçi Preceptorship' },
+          { title: 'TAVİ Preceptorship', desc: 'Transkateter Aort Kapak İmplantasyonu prosedür eğitimi ve simülasyonu.', image: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=600', badge: 'Yurtiçi Preceptorship' },
+          { title: 'Bifürkasyon Preceptorship', desc: 'Kompleks koroner bifurkasyon vakalarında güncel teknikler.', image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600', badge: 'Yurtiçi Preceptorship' },
+          { title: 'Parkinson Pil Cerrahisi', desc: 'Derin Beyin Stimülasyonu (DBS) ameliyat öncesi ve sonrası yönetimi.', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=600', badge: 'Yurtiçi Preceptorship' }
+        ],
+        yurtdisi: [
+          { title: 'Bronkoskopi Preceptorship', desc: 'Uluslararası merkezlerde ileri düzey bronkoskopi eğitimi.', image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600', badge: 'Yurtdışı Preceptorship' },
+          { title: 'EBUS Preceptorship', desc: 'Endobronşiyal Ultrasonografi (EBUS) klinik gözlem programı.', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=600', badge: 'Yurtdışı Preceptorship' },
+          { title: 'TAVİ Preceptorship', desc: 'Global MICE ve sağlık merkezlerinde TAVİ uzmanlaşma eğitimi.', image: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=600', badge: 'Yurtdışı Preceptorship' },
+          { title: 'Bifürkasyon Preceptorship', desc: 'Uluslararası girişimsel kardiyoloji merkezlerinde vaka analizi.', image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600', badge: 'Yurtdışı Preceptorship' }
+        ]
+      },
+      partnerPlatforms: {
+        'alx-digi': [
+          {
+            title: 'Online Sağlık Danışmanlık',
+            brand: 'Doktorum Yanımda',
+            link: 'https://doktorumyanimda.net/',
+            desc: 'Doktorum Yanımda altyapısı ile hastaların hekimlerle 7/24 online görüntülü danışmanlık yapabildiği şifreli ve güvenli sağlık platformu.',
+            icon: '🩺',
+            slug: 'online-saglik-danismanlik'
+          },
+          {
+            title: 'Online Sağlık Asistan',
+            brand: 'Beynex',
+            link: 'https://www.beynex.com/tr/',
+            desc: 'Beynex platformu ile beyin sağlığı takibi, dijital asistan çözümleri ve kişiselleştirilmiş zihinsel egzersiz modülleri.',
+            icon: '🤖',
+            slug: 'online-saglik-asistan'
+          },
+          {
+            title: 'AI Sağlık Hizmetleri',
+            brand: 'Niceye',
+            link: 'https://niceye.com/vidizayn',
+            desc: 'Niceye Vidizayn ile yapay zeka destekli medikal içerik tasarımı, tanı yardım algoritmaları ve yenilikçi sağlık aplikasyonları.',
+            icon: '⚡',
+            slug: 'ai-saglik-hizmetleri'
+          },
+          {
+            title: 'Giyilebilir Teknoloji & Canlı Yayın',
+            brand: 'Niceye',
+            link: 'https://niceye.com/vistream',
+            desc: 'Niceye Vistream altyapısı ile giyilebilir sensör entegrasyonu ve ameliyathanelerden HD kalitesinde kesintisiz canlı yayın imkanı.',
+            icon: '📡',
+            slug: 'giyilebilir-teknoloji-online-canli-yayin'
+          }
+        ],
+        'alx-need': [
+          {
+            title: 'Medikal & Bilimsel',
+            brand: 'Gama CRO',
+            link: 'https://gamacro.com/medical-writing/',
+            desc: 'Gama CRO Medical Writing altyapısı ile uluslararası standartlarda medikal metin yazımı, bilimsel yayınlar ve literatür özetleri.',
+            icon: '🔬',
+            slug: 'medikal-bilimsel'
+          },
+          {
+            title: 'İstatistik & Çeviri',
+            brand: 'Gama CRO',
+            link: 'https://gamacro.com/bioinformatics-and-data-analysis/',
+            desc: 'Gama CRO Bioinformatics & Data Analysis ile biyomedikal veri analizi, biyo-istatistiksel raporlama ve medikal çeviri.',
+            icon: '📊',
+            slug: 'istatistik-ceviri'
+          },
+          {
+            title: 'Omnichannel Marka Yönetimi',
+            brand: 'Niceye',
+            link: 'https://niceye.com/niceyeit',
+            desc: 'Niceye IT altyapısıyla fiziksel ve dijital tüm kanallarda bütünleşik omnichannel medikal marka yönetimi ve iletişim kurguları.',
+            icon: '🔄',
+            slug: 'omnichannel'
+          }
+        ]
+      },
+      courses: [
+        { title: 'Uygulamalı Kurslar', desc: 'Paydaşlarınız için gelişimi interaktif, pratik ve keyifli hale getiren fiziksel & medikal atölyeler.', icon: '🩺', badge: 'Uygulamalı Eğitim' },
+        { title: 'AI Destekli Kurslar', desc: 'Yapay zeka algoritmaları, kişiselleştirilmiş öğrenme modülleri ve akıllı klinik senaryolar.', icon: '🤖', badge: 'AI Destekli' },
+        { title: 'VR Destekli Deneyimsel Öğrenme', desc: 'Sanal gerçeklik gözlükleri ve simülatörlerle ameliyathane ve klinik ortam deneyimi.', icon: '🥽', badge: 'VR Deneyimsel' }
+      ],
+      incentive: [
+        { title: 'Indoor & Outdoor Motivasyonel Faaliyetler', desc: 'Takım ruhunu pekiştiren, enerjiyi yükselten iç ve dış mekan motivasyon aktiviteleri.', icon: '⚡', badge: 'Motivasyon Etkinliği' },
+        { title: 'İç ve Dış Paydaş Lansman Toplantıları', desc: 'Yeni ürün, hizmet veya stratejilerinizin kurumsal lansman organizasyonları.', icon: '🎤', badge: 'Lansman Toplantısı' },
+        { title: 'Şirket Piknikleri ve Özel Etkinlikler', desc: 'Çalışan aileleri ve ekibiniz için unutulmaz açık alan konsept piknik organizasyonları.', icon: '🎪', badge: 'Kurumsal Etkinlik' }
+      ]
     }
   }
 };

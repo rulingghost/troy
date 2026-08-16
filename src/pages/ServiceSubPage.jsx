@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpRight, ArrowRight, ExternalLink, MapPin, Globe, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useContent } from '../context/ContentContext';
+import { defaultContent } from '../data/defaultContent';
 import OrganizationContactForm from '../components/OrganizationContactForm';
 import './ServiceSubPage.css';
 
@@ -251,8 +252,16 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
   };
   const activeSlug = (slug || '').toLowerCase();
 
+  const subData = content?.pages?.subServicesData || defaultContent.pages?.subServicesData || {};
+  const currentEvents = subData.congressEvents || congressEvents;
+  const currentDestinations = subData.destinations || destinationItems;
+  const currentPreceptorship = subData.preceptorship || preceptorshipItems;
+  const currentPartners = subData.partnerPlatforms || partnerPlatforms;
+  const currentCourses = subData.courses || coursesData;
+  const currentIncentive = subData.incentive || incentiveData;
+
   // Filter congress events if applicable
-  const filteredEvents = congressEvents.filter(ev => ev.category === activeSlug);
+  const filteredEvents = (currentEvents || []).filter(ev => ev.category === activeSlug);
   const showEventsSection = filteredEvents.length > 0 || (catKey === 'alx-mice' && activeSlug.includes('kongre')) || activeSlug.includes('sempozyum');
 
   // Check destination display for Alx 4 You / Own Event
@@ -318,7 +327,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         <section className="service-services-section">
           <h2 className="service-section-title">{catInfo.title} Hizmet Başlıkları</h2>
           <div className="service-services-grid">
-            {catInfo.subServices.map((sub, idx) => (
+            {(catInfo.subServices || []).map((sub, idx) => (
               <Link 
                 to={`/${catKey}/${sub.slug}`} 
                 key={idx} 
@@ -342,13 +351,13 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         </section>
 
         {/* Dynamic Section: Partner Platforms (Alx Digi & Alx Need) */}
-        {(catKey === 'alx-digi' || catKey === 'alx-need') && partnerPlatforms[catKey] && (
+        {(catKey === 'alx-digi' || catKey === 'alx-need') && currentPartners?.[catKey] && (
           <section className="events-links-section">
             <h2 className="service-section-title">
               {catKey === 'alx-digi' ? 'Öne Çıkan Dijital & AI Sağlık Platformları' : 'Stratejik Medikal & Bilimsel Çözüm Ortakları'}
             </h2>
             <div className="events-grid">
-              {partnerPlatforms[catKey].map((plat, idx) => (
+              {(currentPartners[catKey] || []).map((plat, idx) => (
                 <div key={idx} className={`event-card ${activeSlug === plat.slug ? 'active-partner-card' : ''}`}>
                   <div className="event-header">
                     <span className="event-badge">{plat.brand}</span>
@@ -381,7 +390,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
               * Not: Görsellerinizi sisteme yüklediğinizde kartlar otomatik güncellenecektir.
             </p>
             <div className="preceptorship-grid">
-              {((isPrecepYurtdisi ? preceptorshipItems.yurtdisi : preceptorshipItems.yurtici)).map((item, idx) => (
+              {(((isPrecepYurtdisi ? currentPreceptorship?.yurtdisi : currentPreceptorship?.yurtici) || [])).map((item, idx) => (
                 <div key={idx} className="preceptor-card">
                   <div className="preceptor-image-wrapper">
                     <img src={item.image} alt={item.title} />
@@ -405,7 +414,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           <section className="events-links-section">
             <h2 className="service-section-title">Kurs &amp; Eğitim Programlarımız</h2>
             <div className="courses-grid">
-              {coursesData.map((course, idx) => (
+              {(currentCourses || []).map((course, idx) => (
                 <div key={idx} className="course-card">
                   <div className="course-top">
                     <span className="course-emoji">{course.icon}</span>
@@ -427,7 +436,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           <section className="events-links-section">
             <h2 className="service-section-title">Incentive &amp; Motivasyon Etkinliklerimiz</h2>
             <div className="incentive-grid">
-              {incentiveData.map((inc, idx) => (
+              {(currentIncentive || []).map((inc, idx) => (
                 <div key={idx} className="incentive-card">
                   <div className="incentive-top">
                     <span className="incentive-emoji">{inc.icon}</span>
@@ -451,7 +460,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
               {activeSlug.includes('sempozyum') ? 'Öne Çıkan Sempozyumlar' : 'Öne Çıkan Kongreler'}
             </h2>
             <div className="events-grid">
-              {(filteredEvents.length > 0 ? filteredEvents : congressEvents).map((ev, idx) => (
+              {((filteredEvents.length > 0 ? filteredEvents : currentEvents) || []).map((ev, idx) => (
                 <div key={idx} className="event-card">
                   <div className="event-header">
                     <span className="event-badge">{ev.badge}</span>
@@ -477,11 +486,11 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         {/* Dynamic Section: Own Event Destinations */}
         {showDestinations && (
           <section className="destinations-section">
-            {!isOwnEventYurtici && (
+            {!isOwnEventYurtici && currentDestinations?.yurtdisi && (
               <div className="destination-block">
                 <h2 className="service-section-title">Yurtdışı Destinasyonları &amp; Simge Yapıları</h2>
                 <div className="destinations-grid">
-                  {destinationItems.yurtdisi.map((dest, idx) => (
+                  {(currentDestinations.yurtdisi || []).map((dest, idx) => (
                     <div key={idx} className="destination-card">
                       <div className="dest-image-wrapper">
                         <img 
@@ -504,11 +513,11 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
               </div>
             )}
 
-            {!isOwnEventYurtdisi && (
+            {!isOwnEventYurtdisi && currentDestinations?.yurtici && (
               <div className="destination-block" style={{ marginTop: '60px' }}>
                 <h2 className="service-section-title">Yurtiçi Destinasyonları &amp; Simge İkonları</h2>
                 <div className="destinations-grid">
-                  {destinationItems.yurtici.map((dest, idx) => (
+                  {(currentDestinations.yurtici || []).map((dest, idx) => (
                     <div key={idx} className="destination-card">
                       <div className="dest-image-wrapper">
                         <img 
