@@ -464,6 +464,31 @@ const Admin = () => {
     handleCategoryOverviewChange(catKey, 'groups', updatedGroups);
   };
 
+  const handleCategoryFeatureChange = (catKey, fIdx, field, val) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedFeatures = [...(targetCat.features || [])];
+    updatedFeatures[fIdx] = { ...updatedFeatures[fIdx], [field]: val };
+    handleCategoryOverviewChange(catKey, 'features', updatedFeatures);
+  };
+
+  const handleAddCategoryFeature = (catKey) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedFeatures = [...(targetCat.features || []), { title: 'Yeni Özellik', desc: 'Açıklama...' }];
+    handleCategoryOverviewChange(catKey, 'features', updatedFeatures);
+  };
+
+  const handleDeleteCategoryFeature = (catKey, fIdx) => {
+    const currentPages = content.pages || defaultContent.pages;
+    const currentCategories = currentPages.categoryOverviews || defaultContent.pages.categoryOverviews;
+    const targetCat = currentCategories[catKey] || defaultContent.pages.categoryOverviews[catKey] || {};
+    const updatedFeatures = (targetCat.features || []).filter((_, i) => i !== fIdx);
+    handleCategoryOverviewChange(catKey, 'features', updatedFeatures);
+  };
+
   // --- CONTACT PAGE & FAQ HANDLERS ---
   const handleContactPageChange = (field, val) => {
     const currentPages = content.pages || defaultContent.pages;
@@ -2700,6 +2725,106 @@ const Admin = () => {
                       </div>
                     </div>
                   ))}
+
+                  {/* Category Features (3 Core Pillars) */}
+                  <div className="admin-card">
+                    <div className="card-header-bar">
+                      <div>
+                        <h3 className="card-subheading">⭐ Sayfa Altı 3'lü Özellik &amp; Değer Kartları</h3>
+                        <p className="card-hint">Sayfa altındaki 3 sütunlu yetkinlik ve değer kartlarını düzenleyin.</p>
+                      </div>
+                      <button type="button" className="btn-add-secondary" onClick={() => handleAddCategoryFeature(currentCatKey)}>
+                        <Plus size={14} /> Kart Ekle
+                      </button>
+                    </div>
+
+                    <div className="capabilities-editor-grid">
+                      {(currentCatData.features || []).map((feat, fIdx) => (
+                        <div key={fIdx} className="nested-box">
+                          <div className="card-header-bar">
+                            <span className="cap-badge">Özellik #{fIdx + 1}</span>
+                            <button 
+                              type="button" 
+                              className="btn-icon btn-danger" 
+                              onClick={() => handleDeleteCategoryFeature(currentCatKey, fIdx)}
+                              title="Sil"
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Başlık</label>
+                            <input 
+                              type="text" 
+                              className="admin-input"
+                              value={feat.title || ''}
+                              onChange={(e) => handleCategoryFeatureChange(currentCatKey, fIdx, 'title', e.target.value)}
+                            />
+                          </div>
+
+                          <div className="input-group">
+                            <label className="admin-label">Açıklama</label>
+                            <textarea 
+                              className="admin-textarea"
+                              rows={2}
+                              value={feat.desc || ''}
+                              onChange={(e) => handleCategoryFeatureChange(currentCatKey, fIdx, 'desc', e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Category Bottom CTA Banner */}
+                  <div className="admin-card">
+                    <h3 className="card-subheading">📢 Sayfa Sonu İletişim / Teklif Çağrı Şeridi (CTA)</h3>
+                    <div className="grid-2-col">
+                      <div className="input-group">
+                        <label className="admin-label">Çağrı Başlığı</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={currentCatData.ctaTitle || ''}
+                          onChange={(e) => handleCategoryOverviewChange(currentCatKey, 'ctaTitle', e.target.value)}
+                          placeholder={`${currentCatData.title} Hizmetlerimiz Hakkında Sorularınız mı Var?`}
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <label className="admin-label">Buton Metni</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={currentCatData.ctaButtonText || ''}
+                          onChange={(e) => handleCategoryOverviewChange(currentCatKey, 'ctaButtonText', e.target.value)}
+                          placeholder="Bize Ulaşın"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid-2-col">
+                      <div className="input-group">
+                        <label className="admin-label">Açıklama Metni</label>
+                        <input 
+                          type="text" 
+                          className="admin-input"
+                          value={currentCatData.ctaDesc || ''}
+                          onChange={(e) => handleCategoryOverviewChange(currentCatKey, 'ctaDesc', e.target.value)}
+                          placeholder="Projenize özel çözümler için uzman ekibimizle anında iletişime geçin."
+                        />
+                      </div>
+
+                      <div className="input-group">
+                        <PathSelector 
+                          label="Buton Yönlendirme Linki"
+                          value={currentCatData.ctaButtonLink || '/iletisim'}
+                          onChange={(url) => handleCategoryOverviewChange(currentCatKey, 'ctaButtonLink', url)}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </section>
             );

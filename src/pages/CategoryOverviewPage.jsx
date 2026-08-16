@@ -582,14 +582,14 @@ const CategoryOverviewPage = () => {
         <div className="container">
           <div className="cat-cta-box glass-panel">
             <div className="cat-cta-text">
-              <h2>{catData.title} Hizmetlerimiz Hakkında Sorularınız mı Var?</h2>
+              <h2>{catData.ctaTitle || `${catData.title} Hizmetlerimiz Hakkında Sorularınız mı Var?`}</h2>
               <p>
-                Projenize özel çözümler, kongre organizasyonları ve medikal teknoloji süreçleri için uzman ekibimizle anında iletişime geçin.
+                {catData.ctaDesc || 'Projenize özel çözümler, kongre organizasyonları ve medikal teknoloji süreçleri için uzman ekibimizle anında iletişime geçin.'}
               </p>
             </div>
             <div className="cat-cta-button">
-              <Link to="/iletisim" className="btn btn-primary cta-action-btn">
-                Bize Ulaşın <ArrowRight size={20} style={{ marginLeft: '10px' }} />
+              <Link to={catData.ctaButtonLink || '/iletisim'} className="btn btn-primary cta-action-btn">
+                {catData.ctaButtonText || 'Bize Ulaşın'} <ArrowRight size={20} style={{ marginLeft: '10px' }} />
               </Link>
             </div>
           </div>
