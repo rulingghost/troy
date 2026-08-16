@@ -5,16 +5,19 @@ import { useContent } from '../context/ContentContext';
 import './Contact.css';
 
 const Contact = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const contact = content?.contact || {};
 
-  const title = contact.title || 'Bizimle İletişime Geçin';
-  const subtitle = contact.subtitle || 'İletişim & Destek';
-  const desc = contact.desc || 'Etkinlik, kongre, medikal çeviri ve yapay zeka dijital çözümlerimiz için bize dilediğiniz kanaldan ulaşabilirsiniz.';
+  const title = contact.title || (isEn ? 'Get in Touch with Us' : 'Bizimle İletişime Geçin');
+  const subtitle = contact.subtitle || (isEn ? 'Contact & Support' : 'İletişim & Destek');
+  const desc = contact.desc || (isEn 
+    ? 'Feel free to reach out to us via any channel for your events, congresses, medical translations, and AI digital solutions.' 
+    : 'Etkinlik, kongre, medikal çeviri ve yapay zeka dijital çözümlerimiz için bize dilediğiniz kanaldan ulaşabilirsiniz.');
   const phone = contact.phone || '+90 (212) 555 01 23';
   const rawPhone = (contact.whatsapp || '+90 (555) 012 34 56').replace(/[^0-9]/g, '');
   const whatsapp = contact.whatsapp || '+90 (555) 012 34 56';
-  const whatsappText = contact.whatsappText || 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.';
+  const whatsappText = contact.whatsappText || (isEn ? 'Hello, I would like to get information about Alexander Troy services.' : 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.');
   const email = contact.email || 'info@alx.com.tr';
   const address = contact.address || 'Levent, Büyükdere Cd. No:195, Şişli / İstanbul';
   const instagram = contact.instagram || 'https://instagram.com';
@@ -31,7 +34,7 @@ const Contact = () => {
           <p className="contact-header-desc">{desc}</p>
           <div className="contact-header-actions">
             <Link to="/iletisim" className="btn btn-outline dedicated-contact-btn">
-              Detaylı İletişim & Harita Sayfası <ArrowRight size={16} style={{ marginLeft: '6px' }} />
+              {isEn ? 'Detailed Contact & Location Page' : 'Detaylı İletişim & Harita Sayfası'} <ArrowRight size={16} style={{ marginLeft: '6px' }} />
             </Link>
           </div>
         </div>
@@ -39,9 +42,11 @@ const Contact = () => {
         <div className="contact-wrapper glass-panel">
           {/* Left Column: Direct Contact & Social Action Cards */}
           <div className="contact-info">
-            <h3 className="contact-info-title">Direkt İletişim Kanalları</h3>
+            <h3 className="contact-info-title">{isEn ? 'Direct Contact Channels' : 'Direkt İletişim Kanalları'}</h3>
             <p className="contact-desc">
-              Telefon, WhatsApp veya sosyal medya hesaplarımız üzerinden hızlıca temsilcilerimizle görüşün.
+              {isEn 
+                ? 'Connect promptly with our representatives via phone, WhatsApp, or official channels.' 
+                : 'Telefon, WhatsApp veya sosyal medya hesaplarımız üzerinden hızlıca temsilcilerimizle görüşün.'}
             </p>
 
             {/* Quick Action Badges */}
@@ -56,7 +61,7 @@ const Contact = () => {
                   <MessageSquare size={22} />
                 </div>
                 <div className="card-body">
-                  <strong>WhatsApp Canlı Destek</strong>
+                  <strong>{isEn ? 'WhatsApp Live Support' : 'WhatsApp Canlı Destek'}</strong>
                   <span>{whatsapp}</span>
                 </div>
                 <ExternalLink size={16} className="card-arrow" />
@@ -67,7 +72,7 @@ const Contact = () => {
                   <Phone size={22} />
                 </div>
                 <div className="card-body">
-                  <strong>Telefon İletişim</strong>
+                  <strong>{isEn ? 'Phone Inquiry' : 'Telefon İletişim'}</strong>
                   <span>{phone}</span>
                 </div>
                 <ExternalLink size={16} className="card-arrow" />
@@ -78,14 +83,14 @@ const Contact = () => {
               <li>
                 <div className="info-icon"><MapPin size={22} /></div>
                 <div>
-                  <strong>Adres:</strong>
+                  <strong>{isEn ? 'Address:' : 'Adres:'}</strong>
                   <p>{address}</p>
                 </div>
               </li>
               <li>
                 <div className="info-icon"><Mail size={22} /></div>
                 <div>
-                  <strong>E-posta:</strong>
+                  <strong>{isEn ? 'Email:' : 'E-posta:'}</strong>
                   <p><a href={`mailto:${email}`}>{email}</a></p>
                 </div>
               </li>
@@ -93,7 +98,7 @@ const Contact = () => {
 
             {/* Social Media & Instant Messaging Hub */}
             <div className="social-channel-hub">
-              <h4>Sosyal Medya & Diğer Kanallar</h4>
+              <h4>{isEn ? 'Social Channels & Messaging' : 'Sosyal Medya & Diğer Kanallar'}</h4>
               <div className="social-buttons-grid">
                 <a 
                   href={waLink} 
@@ -109,10 +114,10 @@ const Contact = () => {
                 <a 
                   href={`tel:${phone.replace(/[^0-9+]/g, '')}`} 
                   className="social-btn phone-btn"
-                  title="Telefon"
+                  title={isEn ? 'Phone' : 'Telefon'}
                 >
                   <Phone size={18} />
-                  <span>Telefon</span>
+                  <span>{isEn ? 'Phone' : 'Telefon'}</span>
                 </a>
 
                 <a 
@@ -148,57 +153,57 @@ const Contact = () => {
           
           {/* Right Column: Interactive Form */}
           <div className="contact-form-container">
-            <h3 className="form-title">Mesaj Gönderin</h3>
+            <h3 className="form-title">{isEn ? 'Send Us a Message' : 'Mesaj Gönderin'}</h3>
             <form className="contact-form" onSubmit={(e) => {
               e.preventDefault();
-              alert('Mesajınız başarıyla iletildi! En kısa sürede sizinle iletişime geçeceğiz.');
+              alert(isEn ? 'Your message has been sent successfully! We will get back to you shortly.' : 'Mesajınız başarıyla iletildi! En kısa sürede sizinle iletişime geçeceğiz.');
             }}>
               <div className="form-group">
-                <label htmlFor="name">Adınız Soyadınız</label>
-                <input type="text" id="name" placeholder="Adınız Soyadınız" required />
+                <label htmlFor="name">{isEn ? 'Full Name' : 'Adınız Soyadınız'}</label>
+                <input type="text" id="name" placeholder={isEn ? 'Your Full Name' : 'Adınız Soyadınız'} required />
               </div>
               <div className="form-group">
-                <label htmlFor="email">E-posta Adresiniz</label>
-                <input type="email" id="email" placeholder="ornek@sirket.com" required />
+                <label htmlFor="email">{isEn ? 'Email Address' : 'E-posta Adresiniz'}</label>
+                <input type="email" id="email" placeholder={isEn ? 'name@company.com' : 'ornek@sirket.com'} required />
               </div>
               <div className="form-group">
-                <label htmlFor="phone">Telefon Numaranız</label>
+                <label htmlFor="phone">{isEn ? 'Phone Number' : 'Telefon Numaranız'}</label>
                 <input type="tel" id="phone" placeholder="+90 (5XX) XXX XX XX" />
               </div>
               <div className="form-group">
-                <label htmlFor="subject">Konu</label>
+                <label htmlFor="subject">{isEn ? 'Subject' : 'Konu'}</label>
                 <select id="subject" defaultValue="">
-                  <option value="" disabled>Lütfen bir konu seçiniz</option>
-                  <option value="mice">Alx MICE (Etkinlik/Kongre)</option>
-                  <option value="4you">Alx 4 You (Eğitim)</option>
-                  <option value="digi">Alx Digi (Dijital/Sağlık/AI)</option>
-                  <option value="need">Alx Need (Danışmanlık/Çeviri)</option>
+                  <option value="" disabled>{isEn ? 'Please select a topic' : 'Lütfen bir konu seçiniz'}</option>
+                  <option value="mice">{isEn ? 'Alx MICE (Events / Congresses)' : 'Alx MICE (Etkinlik/Kongre)'}</option>
+                  <option value="4you">{isEn ? 'Alx 4 You (Education / Preceptorship)' : 'Alx 4 You (Eğitim)'}</option>
+                  <option value="digi">{isEn ? 'Alx Digi (Digital / Health / AI)' : 'Alx Digi (Dijital/Sağlık/AI)'}</option>
+                  <option value="need">{isEn ? 'Alx Need (Consulting / Medical Writing)' : 'Alx Need (Danışmanlık/Çeviri)'}</option>
                 </select>
               </div>
               <div className="form-group">
-                <label htmlFor="message">Mesajınız</label>
-                <textarea id="message" rows="4" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                <label htmlFor="message">{isEn ? 'Your Message' : 'Mesajınız'}</label>
+                <textarea id="message" rows="4" placeholder={isEn ? 'Type your message here...' : 'Mesajınızı buraya yazın...'} required></textarea>
               </div>
 
               {/* Captcha Box */}
               <div className="captcha-container">
                 <div className="captcha-checkbox-wrap">
                   <input type="checkbox" id="robot-check" required className="captcha-checkbox" />
-                  <label htmlFor="robot-check" className="captcha-label">Ben robot değilim</label>
+                  <label htmlFor="robot-check" className="captcha-label">{isEn ? 'I am not a robot' : 'Ben robot değilim'}</label>
                 </div>
                 <div className="captcha-logo-wrap">
                   <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" />
                   <div className="captcha-texts">
                     <span className="captcha-title">reCAPTCHA</span>
                     <div className="captcha-links">
-                      <a href="#">Gizlilik</a> - <a href="#">Şartlar</a>
+                      <a href="#" onClick={(e) => e.preventDefault()}>{isEn ? 'Privacy' : 'Gizlilik'}</a> - <a href="#" onClick={(e) => e.preventDefault()}>{isEn ? 'Terms' : 'Şartlar'}</a>
                     </div>
                   </div>
                 </div>
               </div>
               
               <button type="submit" className="btn btn-primary submit-btn">
-                Gönder <Send size={18} style={{ marginLeft: '8px' }} />
+                {isEn ? 'Send Message' : 'Gönder'} <Send size={18} style={{ marginLeft: '8px' }} />
               </button>
             </form>
           </div>

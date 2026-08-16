@@ -14,15 +14,15 @@ import {
   Clock, 
   DollarSign, 
   MessageSquare, 
-  Sparkles,
-  Paperclip,
-  X
+  Sparkles, 
+  Paperclip, 
+  X 
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { defaultContent } from '../data/defaultContent';
 import './OrganizationContactForm.css';
 
-const DEFAULT_ORG_TYPES = [
+const DEFAULT_ORG_TYPES_TR = [
   'Toplantı / Seminer',
   'Kongre / Sempozyum',
   'Eğitim Organizasyonu',
@@ -34,7 +34,19 @@ const DEFAULT_ORG_TYPES = [
   'Diğer'
 ];
 
-const DEFAULT_SERVICES_LIST = [
+const DEFAULT_ORG_TYPES_EN = [
+  'Meeting / Seminar',
+  'Congress / Symposium',
+  'Training Program',
+  'Dealer / Distributor Gathering',
+  'Product Launch / Promotion',
+  'Motivation / Incentive',
+  'Corporate Travel',
+  'Exhibition / Fair',
+  'Other'
+];
+
+const DEFAULT_SERVICES_LIST_TR = [
   'Uçak / Ulaşım',
   'Otel / Konaklama',
   'Havalimanı ve Şehir İçi Transfer',
@@ -46,11 +58,25 @@ const DEFAULT_SERVICES_LIST = [
   'Diğer'
 ];
 
+const DEFAULT_SERVICES_LIST_EN = [
+  'Flights / Transportation',
+  'Hotel / Accommodation',
+  'Airport & City Transfers',
+  'Meeting / Event Venue',
+  'Technical Equipment & Production',
+  'Dining / Banquet Services',
+  'Social Programs & Activities',
+  'Tour Guiding Services',
+  'Other'
+];
+
 const OrganizationContactForm = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
+
   const formConfig = content?.pages?.orgFormConfig || defaultContent.pages.orgFormConfig || {};
-  const currentOrgTypes = formConfig.orgTypes || DEFAULT_ORG_TYPES;
-  const currentServicesList = formConfig.servicesList || DEFAULT_SERVICES_LIST;
+  const currentOrgTypes = formConfig.orgTypes || (isEn ? DEFAULT_ORG_TYPES_EN : DEFAULT_ORG_TYPES_TR);
+  const currentServicesList = formConfig.servicesList || (isEn ? DEFAULT_SERVICES_LIST_EN : DEFAULT_SERVICES_LIST_TR);
 
   const [formData, setFormData] = useState({
     firmaAdi: '',
@@ -117,14 +143,20 @@ const OrganizationContactForm = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.firmaAdi.trim()) newErrors.firmaAdi = 'Firma Adı alanı zorunludur.';
-    if (!formData.yetkiliAdSoyad.trim()) newErrors.yetkiliAdSoyad = 'Yetkili Ad Soyad alanı zorunludur.';
-    if (!formData.eposta.trim()) {
-      newErrors.eposta = 'E-posta Adresi alanı zorunludur.';
-    } else if (!/\S+@\S+\.\S+/.test(formData.eposta)) {
-      newErrors.eposta = 'Geçerli bir e-posta adresi giriniz.';
+    if (!formData.firmaAdi.trim()) {
+      newErrors.firmaAdi = isEn ? 'Company Name is required.' : 'Firma Adı alanı zorunludur.';
     }
-    if (!formData.telefon.trim()) newErrors.telefon = 'Telefon Numarası alanı zorunludur.';
+    if (!formData.yetkiliAdSoyad.trim()) {
+      newErrors.yetkiliAdSoyad = isEn ? 'Contact Person Name is required.' : 'Yetkili Ad Soyad alanı zorunludur.';
+    }
+    if (!formData.eposta.trim()) {
+      newErrors.eposta = isEn ? 'Email Address is required.' : 'E-posta Adresi alanı zorunludur.';
+    } else if (!/\S+@\S+\.\S+/.test(formData.eposta)) {
+      newErrors.eposta = isEn ? 'Please enter a valid email address.' : 'Geçerli bir e-posta adresi giriniz.';
+    }
+    if (!formData.telefon.trim()) {
+      newErrors.telefon = isEn ? 'Phone Number is required.' : 'Telefon Numarası alanı zorunludur.';
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -179,10 +211,16 @@ const OrganizationContactForm = () => {
               <Sparkles size={16} />
               <span><em>{formConfig.badge || 'Enjoy Your Journey'}</em></span>
             </div>
-            <h2 className="org-form-title">{formConfig.title || 'Hayalinizdeki Organizasyonu Birlikte Planlayalım'}</h2>
-            <p className="org-form-tagline">&ldquo;{formConfig.subtitle || 'Siz hayal edin, biz tüm detayları planlayalım.'}&rdquo;</p>
+            <h2 className="org-form-title">
+              {formConfig.title || (isEn ? 'Let’s Plan Your Dream Organization Together' : 'Hayalinizdeki Organizasyonu Birlikte Planlayalım')}
+            </h2>
+            <p className="org-form-tagline">
+              &ldquo;{formConfig.subtitle || (isEn ? 'You envision it, we manage every detail.' : 'Siz hayal edin, biz tüm detayları planlayalım.')}&rdquo;
+            </p>
             <p className="org-form-desc">
-              {formConfig.desc || 'Yurt içinde veya dünyanın herhangi bir noktasında gerçekleştirmek istediğiniz kurumsal organizasyonunuzu bize anlatın. Toplantı, kongre, sempozyum, bayi organizasyonu, lansman, eğitim, motivasyon gezisi, kurumsal seyahat veya özel etkinlikleriniz için ihtiyaçlarınıza uygun çözümleri birlikte oluşturalım.'}
+              {formConfig.desc || (isEn 
+                ? 'Tell us about your corporate event or travel goals in Turkey or across the globe. Let us craft bespoke solutions tailored to your meetings, congresses, symposiums, dealer summits, launches, or incentive trips.' 
+                : 'Yurt içinde veya dünyanın herhangi bir noktasında gerçekleştirmek istediğiniz kurumsal organizasyonunuzu bize anlatın. Toplantı, kongre, sempozyum, bayi organizasyonu, lansman, eğitim, motivasyon gezisi, kurumsal seyahat veya özel etkinlikleriniz için ihtiyaçlarınıza uygun çözümleri birlikte oluşturalım.')}
             </p>
           </div>
 
@@ -191,39 +229,45 @@ const OrganizationContactForm = () => {
               <div className="success-icon-wrapper">
                 <CheckCircle2 size={60} />
               </div>
-              <h3>{formConfig.successTitle || 'Organizasyon Talebiniz Başarıyla Alındı!'}</h3>
+              <h3>{formConfig.successTitle || (isEn ? 'Your Request Has Been Received!' : 'Organizasyon Talebiniz Başarıyla Alındı!')}</h3>
               <p>
-                Sayın <strong>{formData.yetkiliAdSoyad}</strong> ({formData.firmaAdi}), talebinizi aldık. {formConfig.successDesc || 'Ekibimiz en kısa sürede sizinle iletişime geçerek detayları birlikte değerlendirecek ve size özel teklif sunacaktır.'}
+                {isEn ? (
+                  <>Dear <strong>{formData.yetkiliAdSoyad}</strong> ({formData.firmaAdi}), we have received your request. {formConfig.successDesc || 'Our team will contact you shortly to review the details and provide a tailored proposal.'}</>
+                ) : (
+                  <>Sayın <strong>{formData.yetkiliAdSoyad}</strong> ({formData.firmaAdi}), talebinizi aldık. {formConfig.successDesc || 'Ekibimiz en kısa sürede sizinle iletişime geçerek detayları birlikte değerlendirecek ve size özel teklif sunacaktır.'}</>
+                )}
               </p>
               <div className="success-quote">
                 <em>&ldquo;Enjoy Your Journey — We Take Care of Every Detail&rdquo;</em>
               </div>
               <button type="button" onClick={resetForm} className="btn btn-primary btn-reset">
-                Yeni Talep Oluştur
+                {isEn ? 'Submit Another Request' : 'Yeni Talep Oluştur'}
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="org-main-form" noValidate>
               
-              {/* Group 1: Organizasyon Bilgileri */}
+              {/* Group 1: Kurumsal / Contact Info */}
               <div className="org-form-group-block">
                 <div className="org-group-title-row">
                   <span className="org-group-number">01</span>
-                  <h3>Organizasyon Bilgileri</h3>
-                  <span className="org-req-info">* Kırmızı işaretli alanlar doldurulması zorunlu alanlardır.</span>
+                  <h3>{isEn ? 'Corporate & Contact Information' : 'Organizasyon Bilgileri'}</h3>
+                  <span className="org-req-info">
+                    {isEn ? '* Marked fields are mandatory.' : '* Kırmızı işaretli alanlar doldurulması zorunlu alanlardır.'}
+                  </span>
                 </div>
 
                 <div className="org-form-grid">
                   <div className={`org-form-field ${errors.firmaAdi ? 'org-input-error' : ''}`}>
                     <label>
-                      <Building2 size={16} /> Firma Adı <span className="req-star">*</span>
+                      <Building2 size={16} /> {isEn ? 'Company Name' : 'Firma Adı'} <span className="req-star">*</span>
                     </label>
                     <input 
                       type="text" 
                       name="firmaAdi" 
                       value={formData.firmaAdi} 
                       onChange={handleInputChange} 
-                      placeholder="Firmanızın adını yazınız."
+                      placeholder={isEn ? 'Enter your company name' : 'Firmanızın adını yazınız.'}
                       required
                     />
                     {errors.firmaAdi && <span className="error-msg">{errors.firmaAdi}</span>}
@@ -231,14 +275,14 @@ const OrganizationContactForm = () => {
 
                   <div className={`org-form-field ${errors.yetkiliAdSoyad ? 'org-input-error' : ''}`}>
                     <label>
-                      <User size={16} /> Yetkili Ad Soyad <span className="req-star">*</span>
+                      <User size={16} /> {isEn ? 'Contact Person Name' : 'Yetkili Ad Soyad'} <span className="req-star">*</span>
                     </label>
                     <input 
                       type="text" 
                       name="yetkiliAdSoyad" 
                       value={formData.yetkiliAdSoyad} 
                       onChange={handleInputChange} 
-                      placeholder="Adınızı ve soyadınızı yazınız."
+                      placeholder={isEn ? 'Enter your full name' : 'Adınızı ve soyadınızı yazınız.'}
                       required
                     />
                     {errors.yetkiliAdSoyad && <span className="error-msg">{errors.yetkiliAdSoyad}</span>}
@@ -246,14 +290,14 @@ const OrganizationContactForm = () => {
 
                   <div className={`org-form-field ${errors.eposta ? 'org-input-error' : ''}`}>
                     <label>
-                      <Mail size={16} /> E-posta Adresi <span className="req-star">*</span>
+                      <Mail size={16} /> {isEn ? 'Email Address' : 'E-posta Adresi'} <span className="req-star">*</span>
                     </label>
                     <input 
                       type="email" 
                       name="eposta" 
                       value={formData.eposta} 
                       onChange={handleInputChange} 
-                      placeholder="Size ulaşabileceğimiz e-posta adresiniz."
+                      placeholder={isEn ? 'Enter your business email' : 'Size ulaşabileceğimiz e-posta adresiniz.'}
                       required
                     />
                     {errors.eposta && <span className="error-msg">{errors.eposta}</span>}
@@ -261,14 +305,14 @@ const OrganizationContactForm = () => {
 
                   <div className={`org-form-field ${errors.telefon ? 'org-input-error' : ''}`}>
                     <label>
-                      <Phone size={16} /> Telefon Numarası <span className="req-star">*</span>
+                      <Phone size={16} /> {isEn ? 'Phone Number' : 'Telefon Numarası'} <span className="req-star">*</span>
                     </label>
                     <input 
                       type="tel" 
                       name="telefon" 
                       value={formData.telefon} 
                       onChange={handleInputChange} 
-                      placeholder="Telefon numaranızı yazınız."
+                      placeholder={isEn ? 'Enter your phone number' : 'Telefon numaranızı yazınız.'}
                       required
                     />
                     {errors.telefon && <span className="error-msg">{errors.telefon}</span>}
@@ -276,15 +320,17 @@ const OrganizationContactForm = () => {
                 </div>
               </div>
 
-              {/* Group 2: Organizasyonunuzu Anlatalım */}
+              {/* Group 2: Event Details */}
               <div className="org-form-group-block">
                 <div className="org-group-title-row">
                   <span className="org-group-number">02</span>
-                  <h3>Organizasyon Detayları</h3>
+                  <h3>{isEn ? 'Organization & Event Details' : 'Organizasyon Detayları'}</h3>
                 </div>
 
                 <div className="org-sub-block">
-                  <label className="org-checkbox-group-label">Organizasyon Türü (İlgili seçenekleri işaretleyiniz)</label>
+                  <label className="org-checkbox-group-label">
+                    {isEn ? 'Organization Type (Select applicable options)' : 'Organizasyon Türü (İlgili seçenekleri işaretleyiniz)'}
+                  </label>
                   <div className="org-checkbox-grid">
                     {currentOrgTypes.map((type, idx) => {
                       const isSelected = formData.orgTurleri.includes(type);
@@ -308,60 +354,62 @@ const OrganizationContactForm = () => {
 
                 <div className="org-form-grid" style={{ marginTop: '24px' }}>
                   <div className="org-form-field">
-                    <label><MapPin size={16} /> Destinasyon</label>
+                    <label><MapPin size={16} /> {isEn ? 'Target Destination' : 'Destinasyon'}</label>
                     <input 
                       type="text" 
                       name="destinasyon" 
                       value={formData.destinasyon} 
                       onChange={handleInputChange} 
-                      placeholder="Şehir, ülke veya tercih ettiğiniz destinasyonu belirtiniz."
+                      placeholder={isEn ? 'City, country, or preferred destination' : 'Şehir, ülke veya tercih ettiğiniz destinasyonu belirtiniz.'}
                     />
                   </div>
 
                   <div className="org-form-field">
-                    <label><Calendar size={16} /> Planlanan Tarih</label>
+                    <label><Calendar size={16} /> {isEn ? 'Planned Date' : 'Planlanan Tarih'}</label>
                     <input 
                       type="text" 
                       name="tarih" 
                       value={formData.tarih} 
                       onChange={handleInputChange} 
-                      placeholder="Kesin tarih veya tahmini tarih aralığını paylaşabilirsiniz."
+                      placeholder={isEn ? 'Exact date or approximate date range' : 'Kesin tarih veya tahmini tarih aralığını paylaşabilirsiniz.'}
                     />
                   </div>
 
                   <div className="org-form-field">
-                    <label><Users size={16} /> Katılımcı Sayısı</label>
+                    <label><Users size={16} /> {isEn ? 'Estimated Attendees' : 'Katılımcı Sayısı'}</label>
                     <input 
                       type="text" 
                       name="katilimciSayisi" 
                       value={formData.katilimciSayisi} 
                       onChange={handleInputChange} 
-                      placeholder="Yaklaşık kişi sayısını belirtiniz."
+                      placeholder={isEn ? 'Approximate number of participants' : 'Yaklaşık kişi sayısını belirtiniz.'}
                     />
                   </div>
 
                   <div className="org-form-field">
-                    <label><Clock size={16} /> Organizasyon Süresi</label>
+                    <label><Clock size={16} /> {isEn ? 'Duration' : 'Organizasyon Süresi'}</label>
                     <input 
                       type="text" 
                       name="orgSuresi" 
                       value={formData.orgSuresi} 
                       onChange={handleInputChange} 
-                      placeholder="Örneğin: 2 gün / 3 gece."
+                      placeholder={isEn ? 'e.g., 2 days / 3 nights' : 'Örneğin: 2 gün / 3 gece.'}
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Group 3: İhtiyaçlarınız */}
+              {/* Group 3: Services */}
               <div className="org-form-group-block">
                 <div className="org-group-title-row">
                   <span className="org-group-number">03</span>
-                  <h3>İhtiyaçlarınız &amp; Hizmet Seçimleri</h3>
+                  <h3>{isEn ? 'Requested Services & Requirements' : 'İhtiyaçlarınız & Hizmet Seçimleri'}</h3>
                 </div>
 
                 <div className="org-sub-block">
-                  <label className="org-checkbox-group-label">Hangi hizmetlere ihtiyacınız var?</label>
+                  <label className="org-checkbox-group-label">
+                    {isEn ? 'Which services do you require?' : 'Hangi hizmetlere ihtiyacınız var?'}
+                  </label>
                   <div className="org-checkbox-grid">
                     {currentServicesList.map((service, idx) => {
                       const isSelected = formData.hizmetler.includes(service);
@@ -384,38 +432,38 @@ const OrganizationContactForm = () => {
                 </div>
 
                 <div className="org-form-field full-width" style={{ marginTop: '24px' }}>
-                  <label><MessageSquare size={16} /> Organizasyonunuz hakkında bize biraz daha bilgi verin.</label>
+                  <label><MessageSquare size={16} /> {isEn ? 'Tell us more about your organization / event expectations.' : 'Organizasyonunuz hakkında bize biraz daha bilgi verin.'}</label>
                   <textarea 
                     name="orgDetay" 
                     rows={4} 
                     value={formData.orgDetay} 
                     onChange={handleInputChange} 
-                    placeholder="Organizasyonunuzun amacı, katılımcı profili, beklentileriniz, özel talepleriniz veya dikkat edilmesini istediğiniz detayları bizimle paylaşabilirsiniz."
+                    placeholder={isEn ? 'Event goals, attendee profile, special requests, or specific details you wish to highlight...' : 'Organizasyonunuzun amacı, katılımcı profili, beklentileriniz, özel talepleriniz veya dikkat edilmesini istediğiniz detayları bizimle paylaşabilirsiniz.'}
                   ></textarea>
                 </div>
               </div>
 
-              {/* Group 4: Bütçe ve Özel Talepler */}
+              {/* Group 4: Budget & Attachments */}
               <div className="org-form-group-block">
                 <div className="org-group-title-row">
                   <span className="org-group-number">04</span>
-                  <h3>Bütçe, Notlar &amp; Dosya Ekleme</h3>
+                  <h3>{isEn ? 'Budget, Notes & File Upload' : 'Bütçe, Notlar & Dosya Ekleme'}</h3>
                 </div>
 
                 <div className="org-form-grid">
                   <div className="org-form-field">
-                    <label><DollarSign size={16} /> Tahmini Bütçe</label>
+                    <label><DollarSign size={16} /> {isEn ? 'Estimated Budget' : 'Tahmini Bütçe'}</label>
                     <input 
                       type="text" 
                       name="butce" 
                       value={formData.butce} 
                       onChange={handleInputChange} 
-                      placeholder="Varsa kişi başı veya toplam bütçenizi paylaşabilirsiniz."
+                      placeholder={isEn ? 'Per person or overall budget if applicable' : 'Varsa kişi başı veya toplam bütçenizi paylaşabilirsiniz.'}
                     />
                   </div>
 
                   <div className="org-form-field file-upload-field">
-                    <label><Paperclip size={16} /> Dosya Ekle (Brief / Katılımcı Listesi / Doküman)</label>
+                    <label><Paperclip size={16} /> {isEn ? 'Attach File (Brief / Document / Guest List)' : 'Dosya Ekle (Brief / Katılımcı Listesi / Doküman)'}</label>
                     <div className="file-upload-box">
                       <input 
                         type="file" 
@@ -425,26 +473,26 @@ const OrganizationContactForm = () => {
                       />
                       <label htmlFor="org-file-input" className="file-upload-label">
                         <Upload size={18} />
-                        <span>{formData.dosya ? formData.dosya.name : 'Dosya seçmek için tıklayın'}</span>
+                        <span>{formData.dosya ? formData.dosya.name : (isEn ? 'Click to select file' : 'Dosya seçmek için tıklayın')}</span>
                       </label>
                       {formData.dosya && (
-                        <button type="button" onClick={removeFile} className="btn-remove-file" title="Dosyayı kaldır">
+                        <button type="button" onClick={removeFile} className="btn-remove-file" title={isEn ? 'Remove file' : 'Dosyayı kaldır'}>
                           <X size={16} />
                         </button>
                       )}
                     </div>
-                    <span className="file-hint">PDF, Word, Excel veya Görsel yükleyebilirsiniz.</span>
+                    <span className="file-hint">{isEn ? 'Upload PDF, Word, Excel, PowerPoint or Images.' : 'PDF, Word, Excel veya Görsel yükleyebilirsiniz.'}</span>
                   </div>
                 </div>
 
                 <div className="org-form-field full-width" style={{ marginTop: '20px' }}>
-                  <label><FileText size={16} /> Eklemek istediğiniz başka bir bilgi var mı?</label>
+                  <label><FileText size={16} /> {isEn ? 'Any additional notes or information?' : 'Eklemek istediğiniz başka bir bilgi var mı?'}</label>
                   <textarea 
                     name="ekBilgi" 
                     rows={3} 
                     value={formData.ekBilgi} 
                     onChange={handleInputChange} 
-                    placeholder="Her türlü özel talebinizi veya notunuzu bizimle paylaşabilirsiniz."
+                    placeholder={isEn ? 'Share any additional requests, preferences or questions...' : 'Her türlü özel talebinizi veya notunuzu bizimle paylaşabilirsiniz.'}
                   ></textarea>
                 </div>
               </div>
@@ -452,20 +500,24 @@ const OrganizationContactForm = () => {
               {/* Submit Action Box */}
               <div className="org-submit-box">
                 <p className="org-submit-info">
-                  Bilgilerinizi aldıktan sonra ekibimiz sizinle iletişime geçerek organizasyonunuzun detaylarını birlikte değerlendirecek ve ihtiyaçlarınıza özel bir çözüm hazırlayacaktır.
+                  {isEn 
+                    ? 'Upon receiving your request, our experienced operations team will review your specifications and prepare a custom proposal.' 
+                    : 'Bilgilerinizi aldıktan sonra ekibimiz sizinle iletişime geçerek organizasyonunuzun detaylarını birlikte değerlendirecek ve ihtiyaçlarınıza özel bir çözüm hazırlayacaktır.'}
                 </p>
                 <button type="submit" disabled={isSubmitting} className="btn btn-primary org-submit-btn">
                   {isSubmitting ? (
-                    <span>Gönderiliyor...</span>
+                    <span>{isEn ? 'Submitting...' : 'Gönderiliyor...'}</span>
                   ) : (
                     <>
-                      <span>{formConfig.submitBtnText || 'ORGANİZASYON TALEBİMİ GÖNDER'}</span>
+                      <span>{formConfig.submitBtnText || (isEn ? 'SUBMIT PROPOSAL REQUEST' : 'ORGANİZASYON TALEBİMİ GÖNDER')}</span>
                       <Send size={18} style={{ marginLeft: '10px' }} />
                     </>
                   )}
                 </button>
                 <p className="org-privacy-note">
-                  🔒 Bilgileriniz yalnızca talebinizi değerlendirmek ve sizinle iletişime geçmek amacıyla kullanılacaktır.
+                  {isEn 
+                    ? '🔒 Your information will be processed confidentially and used solely to evaluate your request.' 
+                    : '🔒 Bilgileriniz yalnızca talebinizi değerlendirmek ve sizinle iletişime geçmek amacıyla kullanılacaktır.'}
                 </p>
               </div>
             </form>

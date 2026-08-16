@@ -21,7 +21,8 @@ import OrganizationContactForm from '../components/OrganizationContactForm';
 import './ContactPage.css';
 
 const ContactPage = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const contact = content?.contact || {};
   const contactPageData = content?.pages?.contactPage || {};
 
@@ -52,7 +53,7 @@ const ContactPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.captcha) {
-      alert('Lütfen "Ben robot değilim" kutusunu işaretleyiniz.');
+      alert(isEn ? 'Please check the "I am not a robot" box.' : 'Lütfen "Ben robot değilim" kutusunu işaretleyiniz.');
       return;
     }
     setFormSubmitted(true);
@@ -74,7 +75,7 @@ const ContactPage = () => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const defaultFaqs = [
+  const defaultFaqsTR = [
     {
       q: "Alexander Troy temsilcisiyle ne zaman iletişime geçebilirim?",
       a: "Hafta içi 09:00 - 18:00 saatleri arasında telefon ve e-posta kanallarımız aktiftir. WhatsApp canlı destek hattımız üzerinden 7/24 mesaj iletebilirsiniz."
@@ -93,9 +94,28 @@ const ContactPage = () => {
     }
   ];
 
-  const faqs = contactPageData.faqs && contactPageData.faqs.length > 0 ? contactPageData.faqs : defaultFaqs;
+  const defaultFaqsEN = [
+    {
+      q: "When can I get in touch with an Alexander Troy representative?",
+      a: "Our phone and email channels are active weekdays from 09:00 to 18:00 (GMT+3). You can also send messages 24/7 via WhatsApp live support."
+    },
+    {
+      q: "How far in advance should we submit MICE and Event requests?",
+      a: "For national and international congress or incentive event planning, we recommend reaching out at least 2-4 weeks prior to your target dates."
+    },
+    {
+      q: "How are medical translation and digital technology projects handled?",
+      a: "Upon receiving your request, our medical & technical team will contact you within 24 hours to conduct a requirements analysis and project scope."
+    },
+    {
+      q: "Is an appointment required to visit your headquarters?",
+      a: "Yes, we kindly request scheduling an appointment in advance so we can ensure the appropriate department leads are available to host you."
+    }
+  ];
+
+  const faqs = contactPageData.faqs && contactPageData.faqs.length > 0 ? contactPageData.faqs : (isEn ? defaultFaqsEN : defaultFaqsTR);
   const rawWaPhone = (contact.whatsapp || '+905550123456').replace(/[^0-9]/g, '');
-  const waLink = `https://wa.me/${rawWaPhone}?text=${encodeURIComponent(contact.whatsappText || 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.')}`;
+  const waLink = `https://wa.me/${rawWaPhone}?text=${encodeURIComponent(contact.whatsappText || (isEn ? 'Hello, I would like to get information about Alexander Troy services.' : 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.'))}`;
   const mapLink = contactPageData.mapUrl || `https://maps.google.com/?q=${encodeURIComponent(contact.address || 'Levent Büyükdere Cd. No:195 Şişli İstanbul')}`;
 
   return (
@@ -105,28 +125,30 @@ const ContactPage = () => {
         <div className="hero-overlay-glow"></div>
         <div className="container contact-hero-content">
           <div className="breadcrumb-nav">
-            <Link to="/" className="breadcrumb-link">Anasayfa</Link>
+            <Link to="/" className="breadcrumb-link">{isEn ? 'Home' : 'Anasayfa'}</Link>
             <span className="breadcrumb-separator">/</span>
-            <span className="breadcrumb-current">İletişim</span>
+            <span className="breadcrumb-current">{isEn ? 'Contact' : 'İletişim'}</span>
           </div>
           
           <div className="contact-hero-badge">
             <Sparkles size={16} />
-            <span>{contactPageData.heroBadge || 'Bize Ulaşın'}</span>
+            <span>{contactPageData.heroBadge || (isEn ? 'Contact Us' : 'Bize Ulaşın')}</span>
           </div>
 
           <h1 className="contact-page-title">
-            {contactPageData.heroTitle || 'Geleceğin Çözümleri İçin'} <span className="gradient-text">İletişime Geçin</span>
+            {contactPageData.heroTitle || (isEn ? 'Future-Ready Solutions' : 'Geleceğin Çözümleri İçin')} <span className="gradient-text">{isEn ? 'Get in Touch' : 'İletişime Geçin'}</span>
           </h1>
 
           <p className="contact-page-lead">
-            {contactPageData.heroLead || contact.desc || 'Alexander Troy; MICE, 4 You, Digi ve Need çözümleri ile iş ortaklarına uçtan uca hizmet sunar. Sorularınız ve proje talepleriniz için bize ulaşın.'}
+            {contactPageData.heroLead || contact.desc || (isEn 
+              ? 'Alexander Troy provides end-to-end solutions with MICE, 4 You, Digi, and Need services. Reach out to us for project inquiries and collaboration.' 
+              : 'Alexander Troy; MICE, 4 You, Digi ve Need çözümleri ile iş ortaklarına uçtan uca hizmet sunar. Sorularınız ve proje talepleriniz için bize ulaşın.')}
           </p>
 
           <div className="hero-quick-badges">
             <div className="quick-badge">
               <Headphones size={18} />
-              <span>Hızlı Destek</span>
+              <span>{isEn ? 'Fast Support' : 'Hızlı Destek'}</span>
             </div>
             <div className="quick-badge">
               <Building2 size={18} />
@@ -134,7 +156,7 @@ const ContactPage = () => {
             </div>
             <div className="quick-badge">
               <ShieldCheck size={18} />
-              <span>Gizlilik &amp; Kalite Garantisi</span>
+              <span>{isEn ? 'Confidentiality & Quality Guaranteed' : 'Gizlilik & Kalite Garantisi'}</span>
             </div>
           </div>
         </div>
@@ -148,7 +170,7 @@ const ContactPage = () => {
             <div className="contact-card-icon map-icon">
               <MapPin size={26} />
             </div>
-            <h3>Genel Merkez</h3>
+            <h3>{isEn ? 'Headquarters' : 'Genel Merkez'}</h3>
             <p>{contact.address || 'Levent, Büyükdere Cd. No:195, 34394 Şişli / İstanbul'}</p>
             <a 
               href={mapLink} 
@@ -156,7 +178,7 @@ const ContactPage = () => {
               rel="noopener noreferrer" 
               className="card-link"
             >
-              Haritada Yol Tarifi Al <ExternalLink size={14} />
+              {isEn ? 'Get Directions on Map' : 'Haritada Yol Tarifi Al'} <ExternalLink size={14} />
             </a>
           </div>
 
@@ -164,8 +186,8 @@ const ContactPage = () => {
             <div className="contact-card-icon phone-icon">
               <Phone size={26} />
             </div>
-            <h3>Telefon &amp; Santral</h3>
-            <p>Tüm soru ve talepleriniz için doğrudan bize ulaşın.</p>
+            <h3>{isEn ? 'Phone & Switchboard' : 'Telefon & Santral'}</h3>
+            <p>{isEn ? 'Contact us directly for all inquiries.' : 'Tüm soru ve talepleriniz için doğrudan bize ulaşın.'}</p>
             <a href={`tel:${(contact.phone || '+902125550123').replace(/[^0-9+]/g, '')}`} className="card-highlight-link">
               {contact.phone || '+90 (212) 555 01 23'}
             </a>
@@ -175,15 +197,15 @@ const ContactPage = () => {
             <div className="contact-card-icon wa-icon">
               <MessageSquare size={26} />
             </div>
-            <h3>WhatsApp Canlı Destek</h3>
-            <p>Hızlı ve anlık müşteri hizmetleri temsilcisi ile görüşün.</p>
+            <h3>{isEn ? 'WhatsApp Live Support' : 'WhatsApp Canlı Destek'}</h3>
+            <p>{isEn ? 'Chat instantly with our customer support team.' : 'Hızlı ve anlık müşteri hizmetleri temsilcisi ile görüşün.'}</p>
             <a 
               href={waLink} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="card-highlight-link wa-link"
             >
-              WhatsApp Sohbet Başlat <ExternalLink size={14} />
+              {isEn ? 'Start WhatsApp Chat' : 'WhatsApp Sohbet Başlat'} <ExternalLink size={14} />
             </a>
           </div>
 
@@ -191,8 +213,8 @@ const ContactPage = () => {
             <div className="contact-card-icon mail-icon">
               <Mail size={26} />
             </div>
-            <h3>E-posta İletişim</h3>
-            <p>Teklif ve kurumsal iş birlikleri için e-posta gönderin.</p>
+            <h3>{isEn ? 'Email Inquiry' : 'E-posta İletişim'}</h3>
+            <p>{isEn ? 'Send an email for RFP and business inquiries.' : 'Teklif ve kurumsal iş birlikleri için e-posta gönderin.'}</p>
             <a href={`mailto:${contact.email || 'info@alx.com.tr'}`} className="card-highlight-link">
               {contact.email || 'info@alx.com.tr'}
             </a>
@@ -204,41 +226,41 @@ const ContactPage = () => {
           {/* Left Form Section */}
           <div className="contact-form-section glass-panel">
             <div className="section-header-sm">
-              <span className="badge-sub">İletişim Formu</span>
-              <h2>Bize Mesaj Gönderin</h2>
-              <p>Formu doldurarak projeniz veya merak ettikleriniz hakkında hemen teklif alabilirsiniz.</p>
+              <span className="badge-sub">{isEn ? 'Contact Form' : 'İletişim Formu'}</span>
+              <h2>{isEn ? 'Send Us a Message' : 'Bize Mesaj Gönderin'}</h2>
+              <p>{isEn ? 'Fill out the form below to receive a swift response or proposal for your project.' : 'Formu doldurarak projeniz veya merak ettikleriniz hakkında hemen teklif alabilirsiniz.'}</p>
             </div>
 
             {formSubmitted ? (
               <div className="form-success-box">
                 <CheckCircle2 size={48} className="success-icon" />
-                <h3>Mesajınız Başarıyla İletildi!</h3>
-                <p>Teşekkür ederiz. Temsilcilerimiz en kısa sürede sizinle iletişime geçecektir.</p>
+                <h3>{isEn ? 'Your Message Has Been Sent!' : 'Mesajınız Başarıyla İletildi!'}</h3>
+                <p>{isEn ? 'Thank you. Our representatives will get in touch with you shortly.' : 'Teşekkür ederiz. Temsilcilerimiz en kısa sürede sizinle iletişime geçecektir.'}</p>
               </div>
             ) : (
               <form className="cp-form" onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-group">
-                    <label htmlFor="cp-name">Adınız Soyadınız *</label>
+                    <label htmlFor="cp-name">{isEn ? 'Full Name *' : 'Adınız Soyadınız *'}</label>
                     <input 
                       type="text" 
                       id="cp-name" 
                       name="name" 
                       value={formData.name} 
                       onChange={handleChange} 
-                      placeholder="Adınız Soyadınız" 
+                      placeholder={isEn ? 'Your Full Name' : 'Adınız Soyadınız'} 
                       required 
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="cp-email">E-posta Adresiniz *</label>
+                    <label htmlFor="cp-email">{isEn ? 'Email Address *' : 'E-posta Adresiniz *'}</label>
                     <input 
                       type="email" 
                       id="cp-email" 
                       name="email" 
                       value={formData.email} 
                       onChange={handleChange} 
-                      placeholder="ornek@sirket.com" 
+                      placeholder={isEn ? 'name@company.com' : 'ornek@sirket.com'} 
                       required 
                     />
                   </div>
@@ -246,7 +268,7 @@ const ContactPage = () => {
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label htmlFor="cp-phone">Telefon Numaranız</label>
+                    <label htmlFor="cp-phone">{isEn ? 'Phone Number' : 'Telefon Numaranız'}</label>
                     <input 
                       type="tel" 
                       id="cp-phone" 
@@ -257,20 +279,20 @@ const ContactPage = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="cp-company">Şirket / Kurum Adı</label>
+                    <label htmlFor="cp-company">{isEn ? 'Company / Organization Name' : 'Şirket / Kurum Adı'}</label>
                     <input 
                       type="text" 
                       id="cp-company" 
                       name="company" 
                       value={formData.company} 
                       onChange={handleChange} 
-                      placeholder="Kurum / Şirket Adı" 
+                      placeholder={isEn ? 'Organization / Company Name' : 'Kurum / Şirket Adı'} 
                     />
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="cp-subject">İletişim Konusu *</label>
+                  <label htmlFor="cp-subject">{isEn ? 'Subject of Inquiry *' : 'İletişim Konusu *'}</label>
                   <select 
                     id="cp-subject" 
                     name="subject" 
@@ -278,24 +300,24 @@ const ContactPage = () => {
                     onChange={handleChange} 
                     required
                   >
-                    <option value="" disabled>Lütfen bir konu seçiniz</option>
-                    <option value="mice">Alx MICE - Toplantı, Kongre & Incentive</option>
-                    <option value="4you">Alx 4 You - Kurs, Eğitim & Preceptorship</option>
-                    <option value="digi">Alx Digi - Yapay Zeka, VR & Tele Sağlık</option>
-                    <option value="need">Alx Need - Medikal Çeviri & İstatistik</option>
-                    <option value="genel">Genel Bilgi & Randevu Talebi</option>
+                    <option value="" disabled>{isEn ? 'Please select a topic' : 'Lütfen bir konu seçiniz'}</option>
+                    <option value="mice">{isEn ? 'Alx MICE - Meetings, Congresses & Incentives' : 'Alx MICE - Toplantı, Kongre & Incentive'}</option>
+                    <option value="4you">{isEn ? 'Alx 4 You - Courses, Training & Preceptorship' : 'Alx 4 You - Kurs, Eğitim & Preceptorship'}</option>
+                    <option value="digi">{isEn ? 'Alx Digi - AI, VR & Telemedicine' : 'Alx Digi - Yapay Zeka, VR & Tele Sağlık'}</option>
+                    <option value="need">{isEn ? 'Alx Need - Medical Translation & Statistics' : 'Alx Need - Medikal Çeviri & İstatistik'}</option>
+                    <option value="genel">{isEn ? 'General Inquiry & Appointment Request' : 'Genel Bilgi & Randevu Talebi'}</option>
                   </select>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="cp-message">Mesajınız *</label>
+                  <label htmlFor="cp-message">{isEn ? 'Your Message *' : 'Mesajınız *'}</label>
                   <textarea 
                     id="cp-message" 
                     name="message" 
                     rows="5" 
                     value={formData.message} 
                     onChange={handleChange} 
-                    placeholder="Projeniz veya sorunuz hakkında detay yazabilirsiniz..." 
+                    placeholder={isEn ? 'Provide details about your inquiry or project...' : 'Projeniz veya sorunuz hakkında detay yazabilirsiniz...'} 
                     required
                   ></textarea>
                 </div>
@@ -310,21 +332,21 @@ const ContactPage = () => {
                       onChange={handleChange} 
                       className="captcha-checkbox" 
                     />
-                    <label htmlFor="cp-robot-check" className="captcha-label">Ben robot değilim</label>
+                    <label htmlFor="cp-robot-check" className="captcha-label">{isEn ? 'I am not a robot' : 'Ben robot değilim'}</label>
                   </div>
                   <div className="captcha-logo-wrap">
                     <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" />
                     <div className="captcha-texts">
                       <span className="captcha-title">reCAPTCHA</span>
                       <div className="captcha-links">
-                        <a href="#" onClick={e => e.preventDefault()}>Gizlilik</a> - <a href="#" onClick={e => e.preventDefault()}>Şartlar</a>
+                        <a href="#" onClick={e => e.preventDefault()}>{isEn ? 'Privacy' : 'Gizlilik'}</a> - <a href="#" onClick={e => e.preventDefault()}>{isEn ? 'Terms' : 'Şartlar'}</a>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <button type="submit" className="btn btn-primary cp-submit-btn">
-                  <span>Gönder</span>
+                  <span>{isEn ? 'Send Message' : 'Gönder'}</span>
                   <Send size={18} />
                 </button>
               </form>
@@ -337,7 +359,7 @@ const ContactPage = () => {
             <div className="map-container-card glass-panel">
               <div className="map-card-header">
                 <MapPin size={20} className="map-header-icon" />
-                <h3>Ofis Konumumuz</h3>
+                <h3>{isEn ? 'Office Location' : 'Ofis Konumumuz'}</h3>
               </div>
               <div className="map-iframe-wrapper">
                 <iframe 
@@ -357,25 +379,25 @@ const ContactPage = () => {
             <div className="working-hours-card glass-panel">
               <div className="wh-header">
                 <Clock size={20} className="wh-icon" />
-                <h3>Çalışma Saatlerimiz</h3>
+                <h3>{isEn ? 'Working Hours' : 'Çalışma Saatlerimiz'}</h3>
               </div>
               <ul className="wh-list">
                 <li>
-                  <span>Pazartesi - Cuma:</span>
+                  <span>{isEn ? 'Monday - Friday:' : 'Pazartesi - Cuma:'}</span>
                   <strong>09:00 - 18:00</strong>
                 </li>
                 <li>
-                  <span>Cumartesi:</span>
+                  <span>{isEn ? 'Saturday:' : 'Cumartesi:'}</span>
                   <strong>10:00 - 15:00</strong>
                 </li>
                 <li>
-                  <span>Pazar:</span>
-                  <span className="closed-badge">Kapalı</span>
+                  <span>{isEn ? 'Sunday:' : 'Pazar:'}</span>
+                  <span className="closed-badge">{isEn ? 'Closed' : 'Kapalı'}</span>
                 </li>
               </ul>
               <div className="wh-note">
                 <Sparkles size={14} />
-                <span>WhatsApp Hattımız Etkinlik Süreçlerinde 7/24 Hizmetinizdedir.</span>
+                <span>{isEn ? 'Our WhatsApp channel is active 24/7 during ongoing events.' : 'WhatsApp Hattımız Etkinlik Süreçlerinde 7/24 Hizmetinizdedir.'}</span>
               </div>
             </div>
           </div>
@@ -387,9 +409,9 @@ const ContactPage = () => {
         {/* FAQ Section */}
         <div className="contact-faq-section glass-panel">
           <div className="faq-header text-center">
-            <span className="contact-subtitle-badge">Sıkça Sorulan Sorular</span>
-            <h2>Merak Edilenler</h2>
-            <p>İletişim süreci ve hizmetlerimizle ilgili en sık sorulan soruların yanıtları.</p>
+            <span className="contact-subtitle-badge">{isEn ? 'Frequently Asked Questions' : 'Sıkça Sorulan Sorular'}</span>
+            <h2>{isEn ? 'FAQ & Inquiries' : 'Merak Edilenler'}</h2>
+            <p>{isEn ? 'Answers to commonly asked questions about our process and services.' : 'İletişim süreci ve hizmetlerimizle ilgili en sık sorulan soruların yanıtları.'}</p>
           </div>
 
           <div className="faq-accordion-list">

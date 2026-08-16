@@ -239,7 +239,8 @@ const incentiveData = [
 ];
 
 const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const catKey = (category || '').toLowerCase();
   const dynamicOverviews = content?.pages?.categoryOverviews || {};
   const baseInfo = categoryData[catKey] || categoryData['alx-mice'];
@@ -298,7 +299,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           </div>
           <div className="service-hero-content">
             <div className="service-breadcrumb">
-              <Link to="/">Anasayfa</Link>
+              <Link to="/">{isEn ? 'Home' : 'Anasayfa'}</Link>
               <ChevronRight size={14} className="bread-icon" />
               <Link to={`/${catKey}`}>{categoryTitle}</Link>
               {pageTitle && (
@@ -321,7 +322,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
               {catInfo.desc}
             </p>
             <Link to="/iletisim" className="service-hero-link">
-              BİZE ULAŞIN
+              {isEn ? 'CONTACT US' : 'BİZE ULAŞIN'}
               <ArrowUpRight size={28} />
             </Link>
           </div>
@@ -329,7 +330,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
 
         {/* Section 2: Sub-Services Menu */}
         <section className="service-services-section">
-          <h2 className="service-section-title">{catInfo.title} Hizmet Başlıkları</h2>
+          <h2 className="service-section-title">{catInfo.title} {isEn ? 'Services & Categories' : 'Hizmet Başlıkları'}</h2>
           <div className="service-services-grid">
             {(catInfo.subServices || []).map((sub, idx) => (
               <Link 
@@ -358,7 +359,9 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         {(catKey === 'alx-digi' || catKey === 'alx-need') && currentPartners?.[catKey] && (
           <section className="events-links-section">
             <h2 className="service-section-title">
-              {catKey === 'alx-digi' ? 'Öne Çıkan Dijital & AI Sağlık Platformları' : 'Stratejik Medikal & Bilimsel Çözüm Ortakları'}
+              {catKey === 'alx-digi' 
+                ? (isEn ? 'Featured Digital & AI Healthcare Platforms' : 'Öne Çıkan Dijital & AI Sağlık Platformları')
+                : (isEn ? 'Strategic Medical & Scientific Solution Partners' : 'Stratejik Medikal & Bilimsel Çözüm Ortakları')}
             </h2>
             <div className="events-grid">
               {(currentPartners[catKey] || []).map((plat, idx) => (
@@ -368,7 +371,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                     <span style={{ fontSize: '1.8rem' }}>{plat.icon}</span>
                   </div>
                   <h3 className="event-title">{plat.title}</h3>
-                  <div className="event-org">Platform / Hizmet: {plat.brand}</div>
+                  <div className="event-org">{isEn ? 'Platform / Service: ' : 'Platform / Hizmet: '}{plat.brand}</div>
                   <p className="event-desc">{plat.desc}</p>
                   <a 
                     href={plat.link} 
@@ -376,7 +379,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                     rel="noopener noreferrer" 
                     className="btn btn-outline event-link-btn"
                   >
-                    Resmi Web Sitesini Ziyaret Et ({plat.brand}) <ExternalLink size={16} style={{ marginLeft: '6px' }} />
+                    {isEn ? `Visit Official Website (${plat.brand})` : `Resmi Web Sitesini Ziyaret Et (${plat.brand})`} <ExternalLink size={16} style={{ marginLeft: '6px' }} />
                   </a>
                 </div>
               ))}
@@ -388,11 +391,10 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         {showPreceptorship && (
           <section className="events-links-section">
             <h2 className="service-section-title">
-              {isPrecepYurtdisi ? 'Yurtdışı Preceptorship Programları' : 'Yurtiçi Preceptorship Programları'}
+              {isPrecepYurtdisi 
+                ? (isEn ? 'International Preceptorship Programs' : 'Yurtdışı Preceptorship Programları') 
+                : (isEn ? 'Domestic Preceptorship Programs' : 'Yurtiçi Preceptorship Programları')}
             </h2>
-            <p className="section-note-text">
-              * Not: Görsellerinizi sisteme yüklediğinizde kartlar otomatik güncellenecektir.
-            </p>
             <div className="preceptorship-grid">
               {(((isPrecepYurtdisi ? currentPreceptorship?.yurtdisi : currentPreceptorship?.yurtici) || [])).map((item, idx) => (
                 <div key={idx} className="preceptor-card">
@@ -404,7 +406,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                     <h3>{item.title}</h3>
                     <p>{item.desc}</p>
                     <Link to="/iletisim" className="btn btn-outline preceptor-btn">
-                      Detaylı Bilgi &amp; Başvuru
+                      {isEn ? 'Details & Application' : 'Detaylı Bilgi & Başvuru'}
                     </Link>
                   </div>
                 </div>
@@ -416,7 +418,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         {/* Dynamic Section: Kurs & Eğitim Cards */}
         {showCourses && (
           <section className="events-links-section">
-            <h2 className="service-section-title">Kurs &amp; Eğitim Programlarımız</h2>
+            <h2 className="service-section-title">{isEn ? 'Courses & Training Programs' : 'Kurs & Eğitim Programlarımız'}</h2>
             <div className="courses-grid">
               {(currentCourses || []).map((course, idx) => (
                 <div key={idx} className="course-card">
@@ -427,7 +429,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                   <h3>{course.title}</h3>
                   <p>{course.desc}</p>
                   <Link to="/iletisim" className="btn btn-primary course-btn">
-                    Eğitim Programına Katıl <ArrowRight size={16} style={{ marginLeft: '6px' }} />
+                    {isEn ? 'Join Training Program' : 'Eğitim Programına Katıl'} <ArrowRight size={16} style={{ marginLeft: '6px' }} />
                   </Link>
                 </div>
               ))}
@@ -438,7 +440,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         {/* Dynamic Section: Incentive Cards */}
         {showIncentive && (
           <section className="events-links-section">
-            <h2 className="service-section-title">Incentive &amp; Motivasyon Etkinliklerimiz</h2>
+            <h2 className="service-section-title">{isEn ? 'Incentive & Motivation Events' : 'Incentive & Motivasyon Etkinliklerimiz'}</h2>
             <div className="incentive-grid">
               {(currentIncentive || []).map((inc, idx) => (
                 <div key={idx} className="incentive-card">
@@ -449,7 +451,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                   <h3>{inc.title}</h3>
                   <p>{inc.desc}</p>
                   <Link to="/iletisim" className="btn btn-outline incentive-btn">
-                    Etkinlik Planla
+                    {isEn ? 'Plan Event' : 'Etkinlik Planla'}
                   </Link>
                 </div>
               ))}
@@ -461,7 +463,9 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
         {showEventsSection && (
           <section className="events-links-section">
             <h2 className="service-section-title">
-              {activeSlug.includes('sempozyum') ? 'Öne Çıkan Sempozyumlar' : 'Öne Çıkan Kongreler'}
+              {activeSlug.includes('sempozyum') 
+                ? (isEn ? 'Featured Symposiums' : 'Öne Çıkan Sempozyumlar') 
+                : (isEn ? 'Featured Congresses' : 'Öne Çıkan Kongreler')}
             </h2>
             <div className="events-grid">
               {((filteredEvents.length > 0 ? filteredEvents : currentEvents) || []).map((ev, idx) => (
@@ -479,7 +483,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                     rel="noopener noreferrer" 
                     className="btn btn-outline event-link-btn"
                   >
-                    Resmi Web Sitesini Ziyaret Et <ExternalLink size={16} style={{ marginLeft: '6px' }} />
+                    {isEn ? 'Visit Official Website' : 'Resmi Web Sitesini Ziyaret Et'} <ExternalLink size={16} style={{ marginLeft: '6px' }} />
                   </a>
                 </div>
               ))}
@@ -492,7 +496,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           <section className="destinations-section">
             {!isOwnEventYurtici && currentDestinations?.yurtdisi && (
               <div className="destination-block">
-                <h2 className="service-section-title">Yurtdışı Destinasyonları &amp; Simge Yapıları</h2>
+                <h2 className="service-section-title">{isEn ? 'International Destinations & Landmarks' : 'Yurtdışı Destinasyonları & Simge Yapıları'}</h2>
                 <div className="destinations-grid">
                   {(currentDestinations.yurtdisi || []).map((dest, idx) => (
                     <div key={idx} className="destination-card">
@@ -519,7 +523,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
 
             {!isOwnEventYurtdisi && currentDestinations?.yurtici && (
               <div className="destination-block" style={{ marginTop: '60px' }}>
-                <h2 className="service-section-title">Yurtiçi Destinasyonları &amp; Simge İkonları</h2>
+                <h2 className="service-section-title">{isEn ? 'Domestic Destinations & Icons' : 'Yurtiçi Destinasyonları & Simge İkonları'}</h2>
                 <div className="destinations-grid">
                   {(currentDestinations.yurtici || []).map((dest, idx) => (
                     <div key={idx} className="destination-card">
@@ -575,17 +579,21 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
 
                   <div className="org-dual-blocks">
                     <div className="org-block-box">
-                      <h4>Kişiye &amp; Kuruma Özel Çözümler</h4>
+                      <h4>{isEn ? 'Tailored Corporate & VIP Solutions' : 'Kişiye & Kuruma Özel Çözümler'}</h4>
                       <p>
-                        İhtiyaçlarınızı önceden öngören, detayları titizlikle planlayan ve her organizasyona özel çözümler geliştiren hizmet anlayışımızla, kurumsal misafirleriniz için yalnızca bir seyahat değil, unutulmaz bir deneyim tasarlıyoruz.
+                        {isEn 
+                          ? 'With our service philosophy that anticipates your needs, plans every detail meticulously, and crafts bespoke solutions for each organization, we design not just a trip, but an unforgettable experience for your corporate guests.'
+                          : 'İhtiyaçlarınızı önceden öngören, detayları titizlikle planlayan ve her organizasyona özel çözümler geliştiren hizmet anlayışımızla, kurumsal misafirleriniz için yalnızca bir seyahat değil, unutulmaz bir deneyim tasarlıyoruz.'}
                       </p>
                     </div>
                     <div className="org-block-box">
-                      <h4>İşiniz Sizin, Misafirleriniz Bizim Sorumluluğumuzda</h4>
+                      <h4>{isEn ? 'Focus on Your Core Business, We Care for Your Guests' : 'İşiniz Sizin, Misafirleriniz Bizim Sorumluluğumuzda'}</h4>
                       <p>
-                        Profesyonel organizasyon, kusursuz planlama ve kişiye özel hizmet anlayışımızla, Türkiye’deki kurumsal seyahat ve ağırlama süreçlerinizi sizin için kolaylaştırıyoruz.
+                        {isEn 
+                          ? 'With our professional organization, flawless planning, and personalized hospitality approach, we streamline your corporate travel and hosting processes in Turkey.'
+                          : 'Profesyonel organizasyon, kusursuz planlama ve kişiye özel hizmet anlayışımızla, Türkiye’deki kurumsal seyahat ve ağırlama süreçlerinizi sizin için kolaylaştırıyoruz.'}
                       </p>
-                      <p className="org-highlight-quote">&ldquo;Siz işinize odaklanın, biz tüm detaylarla ilgilenelim.&rdquo;</p>
+                      <p className="org-highlight-quote">&ldquo;{isEn ? 'You focus on your business goals, we take care of all the details.' : 'Siz işinize odaklanın, biz tüm detaylarla ilgilenelim.'}&rdquo;</p>
                     </div>
                   </div>
                 </div>
@@ -617,14 +625,14 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
 
                   <div className="org-dual-blocks">
                     <div className="org-block-box">
-                      <h4>Baştan Sona Kusursuz Planlama</h4>
-                      <p>Uluslararası organizasyonların beraberinde getirdiği farklı ihtiyaçları ve operasyonel detayları biliyor, her aşamayı önceden planlıyoruz. Uçuş ve transferlerden konaklamaya, toplantı mekanlarından etkinlik programlarına ve sosyal aktivitelere kadar tüm süreci koordineli biçimde yönetiyoruz.</p>
-                      <p>Farklı ülkelerdeki yerel çözüm ortaklarımız ve global organizasyon ağımız sayesinde, dünyanın neresinde olursa olsun kurumunuzun ihtiyaçlarına hızlı ve güvenilir çözümler sunuyoruz.</p>
+                      <h4>{isEn ? 'End-to-End Flawless Planning' : 'Baştan Sona Kusursuz Planlama'}</h4>
+                      <p>{isEn ? 'We understand the unique operational nuances and complex logistics of international events, orchestrating every phase ahead of time—from flight bookings and transfers to venue scouting, AV technology, and bespoke social activities.' : 'Uluslararası organizasyonların beraberinde getirdiği farklı ihtiyaçları ve operasyonel detayları biliyor, her aşamayı önceden planlıyoruz. Uçuş ve transferlerden konaklamaya, toplantı mekanlarından etkinlik programlarına ve sosyal aktivitelere kadar tüm süreci koordineli biçimde yönetiyoruz.'}</p>
+                      <p>{isEn ? 'Leveraging our vetted local partners in diverse destination countries and our global network, we deliver agile and reliable solutions for your enterprise worldwide.' : 'Farklı ülkelerdeki yerel çözüm ortaklarımız ve global organizasyon ağımız sayesinde, dünyanın neresinde olursa olsun kurumunuzun ihtiyaçlarına hızlı ve güvenilir çözümler sunuyoruz.'}</p>
                     </div>
                     <div className="org-block-box">
-                      <h4>Dünyanın Her Yerinde, Aynı Özen</h4>
-                      <p>Her destinasyonun kendine özgü koşullarını dikkate alarak, kurumunuzun beklentilerine uygun programlar oluşturuyoruz. Katılımcı deneyimini, operasyonel kusursuzluğu ve organizasyonun hedeflerini bir arada gözetiyoruz.</p>
-                      <p className="org-highlight-quote">&ldquo;Siz organizasyonunuzun hedefini belirleyin, dünyanın neresinde olursa olsun tüm detaylarını biz planlayalım.&rdquo;</p>
+                      <h4>{isEn ? 'Consistent Excellence Globally' : 'Dünyanın Her Yerinde, Aynı Özen'}</h4>
+                      <p>{isEn ? 'Taking the local environment and distinct character of each destination into account, we curate programs matching your corporate ethos and business goals.' : 'Her destinasyonun kendine özgü koşullarını dikkate alarak, kurumunuzun beklentilerine uygun programlar oluşturuyoruz. Katılımcı deneyimini, operasyonel kusursuzluğu ve organizasyonun hedeflerini bir arada gözetiyoruz.'}</p>
+                      <p className="org-highlight-quote">&ldquo;{isEn ? 'Define the milestone of your event, and let us orchestrate the global execution flawlessly.' : 'Siz organizasyonunuzun hedefini belirleyin, dünyanın neresinde olursa olsun tüm detaylarını biz planlayalım.'}&rdquo;</p>
                     </div>
                   </div>
                 </div>
@@ -654,10 +662,10 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
                   </div>
 
                   <div className="org-single-block">
-                    <h4>Her Kuruma, İhtiyacına Özel Çözüm</h4>
-                    <p>Her kurumun beklentisinin ve organizasyon hedefinin farklı olduğuna inanıyoruz. Bu nedenle hazır paketler yerine, kurumun ihtiyaçlarına ve organizasyonun amacına göre şekillenen çözümler geliştiriyoruz.</p>
-                    <p>Katılımcıların seyahatinden konaklamasına, toplantı alanından etkinlik programına kadar tüm süreci koordineli biçimde yöneterek kurumların organizasyon yükünü üstleniyoruz.</p>
-                    <p className="org-highlight-quote">&ldquo;Siz organizasyonunuzun amacına odaklanın, biz tüm detayları planlayıp yönetelim.&rdquo;</p>
+                    <h4>{isEn ? 'Custom Solutions Tailored to Your Organization' : 'Her Kuruma, İhtiyacına Özel Çözüm'}</h4>
+                    <p>{isEn ? 'We believe every enterprise possesses unique dynamics and expectations. Rather than rigid off-the-shelf packages, we configure agile and modular programs designed around your distinct goals.' : 'Her kurumun beklentisinin ve organizasyon hedefinin farklı olduğuna inanıyoruz. Bu nedenle hazır paketler yerine, kurumun ihtiyaçlarına ve organizasyonun amacına göre şekillenen çözümler geliştiriyoruz.'}</p>
+                    <p>{isEn ? 'From transportation and accommodation to conference venues and event itineraries, we oversee the full operational pipeline, relieving your teams of logistics burden.' : 'Katılımcıların seyahatinden konaklamasına, toplantı alanından etkinlik programına kadar tüm süreci koordineli biçimde yöneterek kurumların organizasyon yükünü üstleniyoruz.'}</p>
+                    <p className="org-highlight-quote">&ldquo;{isEn ? 'You focus on the mission of your event, we manage every single detail.' : 'Siz organizasyonunuzun amacına odaklanın, biz tüm detayları planlayıp yönetelim.'}&rdquo;</p>
                   </div>
                 </div>
               </div>
@@ -685,7 +693,7 @@ const ServiceSubPage = ({ categoryTitle, pageTitle, category, slug }) => {
           
           <div className="service-cta-wrapper">
             <Link to="/iletisim" className="btn btn-primary service-cta-btn">
-              {catInfo.title} İle İletişime Geçin <ArrowRight size={20} className="cta-arrow" />
+              {isEn ? `Get in Touch Regarding ${catInfo.title}` : `${catInfo.title} İle İletişime Geçin`} <ArrowRight size={20} className="cta-arrow" />
             </Link>
           </div>
         </section>

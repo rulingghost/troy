@@ -6,7 +6,7 @@ import { defaultContent } from '../data/defaultContent';
 import './Footer.css';
 
 const Footer = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
   const contact = content?.contact || {};
   const general = content?.general || {};
   const services = content?.services?.items || [];
@@ -16,6 +16,8 @@ const Footer = () => {
 
   const rawPhone = (contact.whatsapp || '+905550123456').replace(/[^0-9]/g, '');
   const waLink = `https://wa.me/${rawPhone}${contact.whatsappText ? `?text=${encodeURIComponent(contact.whatsappText)}` : ''}`;
+
+  const isEn = lang === 'EN';
 
   const getModalContent = () => {
     if (activeModal === 'privacy') return legal.privacyPolicy;
@@ -36,12 +38,14 @@ const Footer = () => {
             </Link>
             <p className="footer-slogan"><em>&ldquo;{general.topBannerText || 'Enjoy Your Journey'}&rdquo;</em></p>
             <p className="footer-desc">
-              {contact.desc || 'Geleceğin yapay zeka destekli kurumsal iletişim, MICE etkinlik ve medikal teknoloji çözümleriyle yanınızdayız.'}
+              {contact.desc || (isEn 
+                ? 'We stand by your side with future-ready AI-powered corporate communication, MICE events, and medical tech solutions.' 
+                : 'Geleceğin yapay zeka destekli kurumsal iletişim, MICE etkinlik ve medikal teknoloji çözümleriyle yanınızdayız.')}
             </p>
           </div>
           
           <div className="footer-links-group">
-            <h4 className="footer-heading">Hizmetlerimiz</h4>
+            <h4 className="footer-heading">{isEn ? 'Our Services' : 'Hizmetlerimiz'}</h4>
             <ul className="footer-links">
               {services.map((s, idx) => (
                 <li key={s.id || idx}>
@@ -52,19 +56,19 @@ const Footer = () => {
           </div>
 
           <div className="footer-links-group">
-            <h4 className="footer-heading">Kurumsal & İletişim</h4>
+            <h4 className="footer-heading">{isEn ? 'Corporate & Contact' : 'Kurumsal & İletişim'}</h4>
             <ul className="footer-links">
-              <li><a href="/#about-preview">Hakkımızda</a></li>
-              <li><a href="/#journey">Hizmet Süreci</a></li>
-              <li><Link to="/iletisim">Bize Ulaşın</Link></li>
+              <li><a href="/#about-preview">{isEn ? 'About Us' : 'Hakkımızda'}</a></li>
+              <li><a href="/#journey">{isEn ? 'Service Process' : 'Hizmet Süreci'}</a></li>
+              <li><Link to="/iletisim">{isEn ? 'Contact Us' : 'Bize Ulaşın'}</Link></li>
               <li>
                 <a href={waLink} target="_blank" rel="noopener noreferrer">
-                  WhatsApp Destek
+                  {isEn ? 'WhatsApp Support' : 'WhatsApp Destek'}
                 </a>
               </li>
               <li>
                 <Link to="/admin" style={{ opacity: 0.5, fontSize: '0.85rem' }}>
-                  Yönetici Paneli (Admin)
+                  {isEn ? 'Admin Panel' : 'Yönetici Paneli (Admin)'}
                 </Link>
               </li>
             </ul>
@@ -72,16 +76,16 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} {contact.copyright || 'Alexander Troy Corporate. Tüm hakları saklıdır. — Enjoy Your Journey'}</p>
+          <p>&copy; {new Date().getFullYear()} {contact.copyright || (isEn ? 'Alexander Troy Corporate. All rights reserved. — Enjoy Your Journey' : 'Alexander Troy Corporate. Tüm hakları saklıdır. — Enjoy Your Journey')}</p>
           <div className="footer-legal">
             <button type="button" className="footer-legal-btn" onClick={() => setActiveModal('privacy')}>
-              Gizlilik Politikası
+              {legal?.privacyPolicy?.title || (isEn ? 'Privacy Policy' : 'Gizlilik Politikası')}
             </button>
             <button type="button" className="footer-legal-btn" onClick={() => setActiveModal('terms')}>
-              Kullanım Koşulları
+              {legal?.termsOfService?.title || (isEn ? 'Terms of Service' : 'Kullanım Koşulları')}
             </button>
             <button type="button" className="footer-legal-btn" onClick={() => setActiveModal('kvkk')}>
-              KVKK Aydınlatma
+              {legal?.kvkk?.title || (isEn ? 'Data Protection Notice' : 'KVKK Aydınlatma')}
             </button>
           </div>
         </div>
@@ -96,7 +100,7 @@ const Footer = () => {
                 <ShieldCheck size={24} className="legal-icon" />
                 <h3>{modalData.title}</h3>
               </div>
-              <button type="button" className="legal-modal-close" onClick={() => setActiveModal(null)} aria-label="Kapat">
+              <button type="button" className="legal-modal-close" onClick={() => setActiveModal(null)} aria-label={isEn ? 'Close' : 'Kapat'}>
                 <X size={20} />
               </button>
             </div>
@@ -106,9 +110,9 @@ const Footer = () => {
               </p>
             </div>
             <div className="legal-modal-footer">
-              <span className="legal-modal-updated">Son Güncelleme: {modalData.lastUpdated || '2026'}</span>
+              <span className="legal-modal-updated">{isEn ? 'Last Updated: ' : 'Son Güncelleme: '}{modalData.lastUpdated || '2026'}</span>
               <button type="button" className="btn btn-primary btn-sm" onClick={() => setActiveModal(null)}>
-                Anladım &amp; Kapat
+                {isEn ? 'Understood & Close' : 'Anladım & Kapat'}
               </button>
             </div>
           </div>

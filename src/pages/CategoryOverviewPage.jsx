@@ -414,7 +414,8 @@ const categoryOverviewData = {
 
 const CategoryOverviewPage = () => {
   const { category } = useParams();
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const catKey = (category || '').toLowerCase();
   const dynamicOverviews = content?.pages?.categoryOverviews || {};
   const defaultData = categoryOverviewData[catKey] || categoryOverviewData['kurumsal'];
@@ -438,7 +439,7 @@ const CategoryOverviewPage = () => {
         <div className="container">
           <div className="cat-hero-content">
             <div className="cat-breadcrumb">
-              <Link to="/">Anasayfa</Link>
+              <Link to="/">{isEn ? 'Home' : 'Anasayfa'}</Link>
               <ChevronRight size={14} className="bread-icon" />
               <span className="bread-active">{catData.title}</span>
             </div>
@@ -456,10 +457,10 @@ const CategoryOverviewPage = () => {
 
             <div className="cat-hero-actions">
               <a href="#sub-items-section" className="btn btn-primary cat-primary-btn">
-                Alt Başlıkları İncele <ArrowRight size={18} style={{ marginLeft: '8px' }} />
+                {isEn ? 'Explore Sub-pages' : 'Alt Başlıkları İncele'} <ArrowRight size={18} style={{ marginLeft: '8px' }} />
               </a>
               <Link to="/iletisim" className="btn btn-outline cat-outline-btn">
-                Bize Ulaşın
+                {isEn ? 'Contact Us' : 'Bize Ulaşın'}
               </Link>
             </div>
           </div>
@@ -485,10 +486,10 @@ const CategoryOverviewPage = () => {
       <section id="sub-items-section" className="cat-showcase-section">
         <div className="container">
           <div className="cat-section-header">
-            <span className="section-subtitle-tag">{catData.title} Sayfa Rehberi</span>
-            <h2 className="cat-main-heading">Özel Sayfalar &amp; Alt Başlıklar</h2>
+            <span className="section-subtitle-tag">{catData.title} {isEn ? 'Directory' : 'Sayfa Rehberi'}</span>
+            <h2 className="cat-main-heading">{isEn ? 'Featured Pages & Solutions' : 'Özel Sayfalar & Alt Başlıklar'}</h2>
             <p className="cat-heading-desc">
-              Aşağıdaki kartlardan dilediğiniz başlığa tıklayarak detayı sayfalara geçiş yapabilirsiniz.
+              {isEn ? 'Explore specific services and detail pages by clicking the cards below.' : 'Aşağıdaki kartlardan dilediğiniz başlığa tıklayarak detaylı sayfalara geçiş yapabilirsiniz.'}
             </p>
           </div>
 
@@ -515,7 +516,7 @@ const CategoryOverviewPage = () => {
 
                       {item.brand && (
                         <div className="cat-brand-pill">
-                          <span className="cat-brand-label">Çözüm Platformu: <strong>{item.brand}</strong></span>
+                          <span className="cat-brand-label">{isEn ? 'Platform: ' : 'Çözüm Platformu: '}<strong>{item.brand}</strong></span>
                         </div>
                       )}
 
@@ -532,7 +533,7 @@ const CategoryOverviewPage = () => {
 
                       <div className="cat-card-footer">
                         <Link to={item.path} className="cat-detail-link">
-                          <span>Sayfayı İncele</span>
+                          <span>{isEn ? 'Explore Page' : 'Sayfayı İncele'}</span>
                           <ArrowRight size={18} className="link-arrow" />
                         </Link>
                         {item.externalUrl && (
@@ -541,9 +542,9 @@ const CategoryOverviewPage = () => {
                             target="_blank" 
                             rel="noopener noreferrer" 
                             className="cat-ext-link-btn"
-                            title={`${item.brand} web sitesine git (${item.externalUrl})`}
+                            title={`${item.brand} (${item.externalUrl})`}
                           >
-                            <span>{item.brand} Web Sitesi</span>
+                            <span>{item.brand} {isEn ? 'Website' : 'Web Sitesi'}</span>
                             <ExternalLink size={14} style={{ marginLeft: '4px' }} />
                           </a>
                         )}
@@ -582,14 +583,14 @@ const CategoryOverviewPage = () => {
         <div className="container">
           <div className="cat-cta-box glass-panel">
             <div className="cat-cta-text">
-              <h2>{catData.ctaTitle || `${catData.title} Hizmetlerimiz Hakkında Sorularınız mı Var?`}</h2>
+              <h2>{catData.ctaTitle || (isEn ? `Have Questions About ${catData.title}?` : `${catData.title} Hizmetlerimiz Hakkında Sorularınız mı Var?`)}</h2>
               <p>
-                {catData.ctaDesc || 'Projenize özel çözümler, kongre organizasyonları ve medikal teknoloji süreçleri için uzman ekibimizle anında iletişime geçin.'}
+                {catData.ctaDesc || (isEn ? 'Contact our expert team immediately for tailor-made solutions, congress organizations, and medical tech processes.' : 'Projenize özel çözümler, kongre organizasyonları ve medikal teknoloji süreçleri için uzman ekibimizle anında iletişime geçin.')}
               </p>
             </div>
             <div className="cat-cta-button">
               <Link to={catData.ctaButtonLink || '/iletisim'} className="btn btn-primary cta-action-btn">
-                {catData.ctaButtonText || 'Bize Ulaşın'} <ArrowRight size={20} style={{ marginLeft: '10px' }} />
+                {catData.ctaButtonText || (isEn ? 'Contact Us' : 'Bize Ulaşın')} <ArrowRight size={20} style={{ marginLeft: '10px' }} />
               </Link>
             </div>
           </div>

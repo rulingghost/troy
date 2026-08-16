@@ -42,7 +42,9 @@ import {
   Award,
   Building2,
   MapPin,
-  ClipboardCheck
+  ClipboardCheck,
+  Search,
+  X
 } from 'lucide-react';
 import './Admin.css';
 
@@ -133,8 +135,8 @@ const ImageUploader = ({ label, value, onChange, placeholder = 'Görsel URL veya
 
 const Admin = () => {
   const { 
-    content, 
-    updateContent, 
+    rawContent, 
+    updateRawContent, 
     saveContent, 
     isSaving, 
     saveStatus, 
@@ -142,6 +144,30 @@ const Admin = () => {
     exportContentJson, 
     importContentJson 
   } = useContent();
+
+  // Admin Language State ('TR' | 'EN')
+  const [adminLang, setAdminLang] = useState('TR');
+  const isEditingEn = adminLang === 'EN';
+  const content = isEditingEn ? (rawContent?.en || defaultContent.en) : rawContent;
+
+  const updateContent = (updatedData) => {
+    if (isEditingEn) {
+      updateRawContent({
+        ...rawContent,
+        en: {
+          ...(rawContent?.en || defaultContent.en),
+          ...updatedData
+        }
+      });
+    } else {
+      updateRawContent({
+        ...rawContent,
+        ...updatedData,
+        en: rawContent?.en || defaultContent.en,
+        security: updatedData.security || rawContent.security
+      });
+    }
+  };
   
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -165,6 +191,19 @@ const Admin = () => {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [passwordSuccess, setPasswordSuccess] = useState('');
+  const [tabSearchQuery, setTabSearchQuery] = useState('');
+
+  // Ctrl+S / Cmd+S Keyboard Shortcut to Save
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveContent();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [saveContent]);
 
   // Backup & Restore state
   const [importStatus, setImportStatus] = useState('');
@@ -1293,6 +1332,30 @@ const Admin = () => {
           <h1 className="admin-brand-title">Alexander Troy <span>CMS</span></h1>
         </div>
 
+        {/* Language Switcher */}
+        <div className="admin-header-center">
+          <div className="admin-lang-switch">
+            <button 
+              type="button" 
+              className={`btn-admin-lang ${adminLang === 'TR' ? 'active' : ''}`}
+              onClick={() => setAdminLang('TR')}
+              title="Türkçe İçerikleri Düzenle"
+            >
+              <span className="lang-flag">🇹🇷</span>
+              <span>Türkçe (TR)</span>
+            </button>
+            <button 
+              type="button" 
+              className={`btn-admin-lang ${adminLang === 'EN' ? 'active' : ''}`}
+              onClick={() => setAdminLang('EN')}
+              title="English Content Edit"
+            >
+              <span className="lang-flag">🇬🇧</span>
+              <span>English (EN)</span>
+            </button>
+          </div>
+        </div>
+
         <div className="admin-header-actions">
           <a href="/" target="_blank" rel="noopener noreferrer" className="btn-admin-preview" title="Siteyi Yeni Sekmede Aç">
             <ExternalLink size={16} />
@@ -1331,167 +1394,225 @@ const Admin = () => {
         </div>
       </header>
 
+
+
       {/* Admin Content Area */}
       <div className="admin-main-container">
         {/* Navigation Tabs Sidebar */}
         <aside className="admin-tabs-sidebar">
           <nav className="admin-nav-tabs">
-            <div className="tab-group-label">GENEL &amp; NAVİGASYON</div>
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'general' ? 'active' : ''}`}
-              onClick={() => setActiveTab('general')}
-            >
-              <Sliders size={18} />
-              <span>Genel Ayarlar &amp; Logo</span>
-            </button>
+            {/* Quick Search Filter */}
+            <div className="admin-tab-search">
+              <Search size={14} className="search-icon" />
+              <input 
+                type="text" 
+                placeholder="Sekmelerde ara..." 
+                value={tabSearchQuery}
+                onChange={(e) => setTabSearchQuery(e.target.value)}
+              />
+              {tabSearchQuery && (
+                <button type="button" className="clear-search-btn" onClick={() => setTabSearchQuery('')} aria-label="Temizle">
+                  <X size={13} />
+                </button>
+              )}
+            </div>
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'menu' ? 'active' : ''}`}
-              onClick={() => setActiveTab('menu')}
-            >
-              <Navigation size={18} />
-              <span>Menü &amp; Navigasyon</span>
-            </button>
+            {/* General & Navigation */}
+            {(!tabSearchQuery || 'genel ayarlar logo'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'general' ? 'active' : ''}`}
+                onClick={() => setActiveTab('general')}
+              >
+                <Sliders size={18} />
+                <span>Genel Ayarlar &amp; Logo</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'hero' ? 'active' : ''}`}
-              onClick={() => setActiveTab('hero')}
-            >
-              <Sparkles size={18} />
-              <span>Hero &amp; Slaytlar</span>
-            </button>
+            {(!tabSearchQuery || 'menü navigasyon menu navigation'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'menu' ? 'active' : ''}`}
+                onClick={() => setActiveTab('menu')}
+              >
+                <Navigation size={18} />
+                <span>Menü &amp; Navigasyon</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'seo' ? 'active' : ''}`}
-              onClick={() => setActiveTab('seo')}
-            >
-              <Globe size={18} />
-              <span>🔍 SEO &amp; Meta Etiketleri</span>
-            </button>
+            {(!tabSearchQuery || 'hero slaytlar slider banner'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'hero' ? 'active' : ''}`}
+                onClick={() => setActiveTab('hero')}
+              >
+                <Sparkles size={18} />
+                <span>Hero &amp; Slaytlar</span>
+              </button>
+            )}
 
-            <div className="tab-group-label">TÜM SAYFALAR</div>
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'corporate' ? 'active' : ''}`}
-              onClick={() => setActiveTab('corporate')}
-            >
-              <FileText size={18} />
-              <span>🏢 Kurumsal Sayfaları</span>
-            </button>
+            {(!tabSearchQuery || 'seo meta etiketleri title description arama'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'seo' ? 'active' : ''}`}
+                onClick={() => setActiveTab('seo')}
+              >
+                <Globe size={18} />
+                <span>🔍 SEO &amp; Meta Etiketleri</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'categories' ? 'active' : ''}`}
-              onClick={() => setActiveTab('categories')}
-            >
-              <Globe size={18} />
-              <span>🌐 Kategori Sayfaları</span>
-            </button>
+            {/* Pages */}
+            {!tabSearchQuery && <div className="tab-group-label">TÜM SAYFALAR</div>}
+            
+            {(!tabSearchQuery || 'kurumsal sayfalar hakkimizda vizyon misyon'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'corporate' ? 'active' : ''}`}
+                onClick={() => setActiveTab('corporate')}
+              >
+                <FileText size={18} />
+                <span>🏢 Kurumsal Sayfaları</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'subservices' ? 'active' : ''}`}
-              onClick={() => setActiveTab('subservices')}
-            >
-              <Sparkles size={18} />
-              <span>🎯 Alt Hizmet &amp; Destinasyonlar</span>
-            </button>
+            {(!tabSearchQuery || 'kategori sayfaları mice digi need 4you overview'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'categories' ? 'active' : ''}`}
+                onClick={() => setActiveTab('categories')}
+              >
+                <Globe size={18} />
+                <span>🌐 Kategori Sayfaları</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'orgForm' ? 'active' : ''}`}
-              onClick={() => setActiveTab('orgForm')}
-            >
-              <ClipboardCheck size={18} />
-              <span>📋 Organizasyon Talep Formu</span>
-            </button>
+            {(!tabSearchQuery || 'alt hizmet destinasyonlar kongre sempozyum preceptorship kurs incentive travel seyahat'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'subservices' ? 'active' : ''}`}
+                onClick={() => setActiveTab('subservices')}
+              >
+                <Sparkles size={18} />
+                <span>🎯 Alt Hizmet &amp; Destinasyonlar</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'legal' ? 'active' : ''}`}
-              onClick={() => setActiveTab('legal')}
-            >
-              <ShieldCheck size={18} />
-              <span>📜 Yasal &amp; Sözleşme Metinleri</span>
-            </button>
+            {(!tabSearchQuery || 'organizasyon talep formu teklif brief'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'orgForm' ? 'active' : ''}`}
+                onClick={() => setActiveTab('orgForm')}
+              >
+                <ClipboardCheck size={18} />
+                <span>📋 Organizasyon Talep Formu</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'contact' ? 'active' : ''}`}
-              onClick={() => setActiveTab('contact')}
-            >
-              <PhoneCall size={18} />
-              <span>📞 İletişim, Harita &amp; SSS</span>
-            </button>
+            {(!tabSearchQuery || 'yasal sozlesme gizlilik politikasi terms kvkk aydinlatma'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'legal' ? 'active' : ''}`}
+                onClick={() => setActiveTab('legal')}
+              >
+                <ShieldCheck size={18} />
+                <span>📜 Yasal &amp; Sözleşme Metinleri</span>
+              </button>
+            )}
 
-            <div className="tab-group-label">ANA SAYFA BÖLÜMLERİ</div>
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'about' ? 'active' : ''}`}
-              onClick={() => setActiveTab('about')}
-            >
-              <FileText size={18} />
-              <span>Tanıtım Önizleme</span>
-            </button>
+            {(!tabSearchQuery || 'iletisim harita sss faq telefon whatsapp adres email'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'contact' ? 'active' : ''}`}
+                onClick={() => setActiveTab('contact')}
+              >
+                <PhoneCall size={18} />
+                <span>📞 İletişim, Harita &amp; SSS</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'services' ? 'active' : ''}`}
-              onClick={() => setActiveTab('services')}
-            >
-              <Briefcase size={18} />
-              <span>Hizmet Kartları</span>
-            </button>
+            {/* Home Sections */}
+            {!tabSearchQuery && <div className="tab-group-label">ANA SAYFA BÖLÜMLERİ</div>}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'journey' ? 'active' : ''}`}
-              onClick={() => setActiveTab('journey')}
-            >
-              <Compass size={18} />
-              <span>360° Hizmet Süreci</span>
-            </button>
+            {(!tabSearchQuery || 'tanitim onizleme about preview'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'about' ? 'active' : ''}`}
+                onClick={() => setActiveTab('about')}
+              >
+                <FileText size={18} />
+                <span>Tanıtım Önizleme</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'testimonials' ? 'active' : ''}`}
-              onClick={() => setActiveTab('testimonials')}
-            >
-              <MessageSquareQuote size={18} />
-              <span>Müşteri Yorumları</span>
-            </button>
+            {(!tabSearchQuery || 'hizmet kartlari services'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'services' ? 'active' : ''}`}
+                onClick={() => setActiveTab('services')}
+              >
+                <Briefcase size={18} />
+                <span>Hizmet Kartları</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'references' ? 'active' : ''}`}
-              onClick={() => setActiveTab('references')}
-            >
-              <Users size={18} />
-              <span>Çözüm Ortakları</span>
-            </button>
+            {(!tabSearchQuery || '360 hizmet sureci journey flow'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'journey' ? 'active' : ''}`}
+                onClick={() => setActiveTab('journey')}
+              >
+                <Compass size={18} />
+                <span>360° Hizmet Süreci</span>
+              </button>
+            )}
 
-            <div className="tab-group-label">SİSTEM &amp; GÜVENLİK</div>
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'media' ? 'active' : ''}`}
-              onClick={() => setActiveTab('media')}
-            >
-              <ImageIcon size={18} />
-              <span>Blob Medya Aracı</span>
-            </button>
+            {(!tabSearchQuery || 'musteri yorumlari testimonials'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'testimonials' ? 'active' : ''}`}
+                onClick={() => setActiveTab('testimonials')}
+              >
+                <MessageSquareQuote size={18} />
+                <span>Müşteri Yorumları</span>
+              </button>
+            )}
 
-            <button 
-              type="button"
-              className={`tab-btn ${activeTab === 'security' ? 'active' : ''}`}
-              onClick={() => setActiveTab('security')}
-            >
-              <KeyRound size={18} />
-              <span>Güvenlik &amp; Yedekleme</span>
-            </button>
+            {(!tabSearchQuery || 'cozum ortaklari references referanslar logo'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'references' ? 'active' : ''}`}
+                onClick={() => setActiveTab('references')}
+              >
+                <Users size={18} />
+                <span>Çözüm Ortakları</span>
+              </button>
+            )}
+
+            {/* System & Security */}
+            {!tabSearchQuery && <div className="tab-group-label">SİSTEM &amp; GÜVENLİK</div>}
+
+            {(!tabSearchQuery || 'blob medya gorsel dosya upload resim'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'media' ? 'active' : ''}`}
+                onClick={() => setActiveTab('media')}
+              >
+                <ImageIcon size={18} />
+                <span>Blob Medya Aracı</span>
+              </button>
+            )}
+
+            {(!tabSearchQuery || 'guvenlik sifre yedekleme json backup import export'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'security' ? 'active' : ''}`}
+                onClick={() => setActiveTab('security')}
+              >
+                <KeyRound size={18} />
+                <span>Güvenlik &amp; Yedekleme</span>
+              </button>
+            )}
           </nav>
 
           <div className="admin-sidebar-footer">
@@ -5062,19 +5183,7 @@ const Admin = () => {
         </main>
       </div>
 
-      {/* Floating Save Bar on Scroll */}
-      <div className="admin-floating-bar">
-        <span className="floating-hint">Unutmayın: Değişikliklerin yayına girmesi için kaydetmeyi unutmayın.</span>
-        <button 
-          type="button" 
-          className="btn-admin-save-floating" 
-          onClick={() => saveContent()}
-          disabled={isSaving}
-        >
-          <Save size={18} />
-          <span>{isSaving ? 'Kaydediliyor...' : 'Tüm Değişiklikleri Kaydet'}</span>
-        </button>
-      </div>
+
 
       {/* Reset Confirmation Modal */}
       {showResetConfirm && (

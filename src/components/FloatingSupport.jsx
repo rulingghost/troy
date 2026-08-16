@@ -5,7 +5,8 @@ import { defaultContent } from '../data/defaultContent';
 import './FloatingSupport.css';
 
 const FloatingSupport = () => {
-  const { content } = useContent();
+  const { content, lang } = useContent();
+  const isEn = lang === 'EN';
   const general = content?.general || defaultContent.general;
   const contact = content?.contact || defaultContent.contact;
   const floatingConfig = general.floatingButtons || defaultContent.general.floatingButtons || {};
@@ -26,7 +27,7 @@ const FloatingSupport = () => {
   }
 
   const rawPhone = (contact.whatsapp || '+905550123456').replace(/[^0-9]/g, '');
-  const waLink = `https://wa.me/${rawPhone}?text=${encodeURIComponent(contact.whatsappText || 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.')}`;
+  const waLink = `https://wa.me/${rawPhone}?text=${encodeURIComponent(contact.whatsappText || (isEn ? 'Hello, I would like to get information about Alexander Troy services.' : 'Merhaba, Alexander Troy hizmetleri hakkında bilgi almak istiyorum.'))}`;
   const directPhoneLink = `tel:${(contact.phone || '+902125550123').replace(/[^0-9+]/g, '')}`;
 
   const scrollToTop = () => {
@@ -34,16 +35,16 @@ const FloatingSupport = () => {
   };
 
   return (
-    <aside className="floating-support-bar" aria-label="Hızlı Destek ve İletişim">
+    <aside className="floating-support-bar" aria-label={isEn ? 'Fast Support & Contact' : 'Hızlı Destek ve İletişim'}>
       {/* WhatsApp Message Bubble */}
       {floatingConfig.whatsapp && bubbleOpen && (
         <div className="floating-bubble">
-          <span>{floatingConfig.bubbleText || 'Size nasıl yardımcı olabiliriz?'}</span>
+          <span>{floatingConfig.bubbleText || (isEn ? 'How can we help you?' : 'Size nasıl yardımcı olabiliriz?')}</span>
           <button 
             type="button" 
             className="floating-bubble-close" 
             onClick={() => setBubbleOpen(false)}
-            aria-label="Mesajı Kapat"
+            aria-label={isEn ? 'Close Message' : 'Mesajı Kapat'}
           >
             <X size={12} />
           </button>
@@ -57,8 +58,8 @@ const FloatingSupport = () => {
           target="_blank" 
           rel="noopener noreferrer" 
           className="floating-btn whatsapp-btn"
-          title="WhatsApp ile Mesaj Gönderin"
-          aria-label="WhatsApp Destek"
+          title={isEn ? 'Send Message on WhatsApp' : 'WhatsApp ile Mesaj Gönderin'}
+          aria-label={isEn ? 'WhatsApp Support' : 'WhatsApp Destek'}
         >
           <MessageSquare size={24} />
           <span className="pulse-ring"></span>
@@ -70,8 +71,8 @@ const FloatingSupport = () => {
         <a 
           href={directPhoneLink} 
           className="floating-btn phone-btn"
-          title="Bizi Arayın"
-          aria-label="Telefonla Arayın"
+          title={isEn ? 'Call Us' : 'Bizi Arayın'}
+          aria-label={isEn ? 'Call Us' : 'Telefonla Arayın'}
         >
           <Phone size={22} />
         </a>
@@ -83,8 +84,8 @@ const FloatingSupport = () => {
           type="button" 
           className="floating-btn scroll-btn"
           onClick={scrollToTop}
-          title="Sayfa Başına Dön"
-          aria-label="Başa Dön"
+          title={isEn ? 'Scroll to Top' : 'Sayfa Başına Dön'}
+          aria-label={isEn ? 'Back to Top' : 'Başa Dön'}
         >
           <ChevronUp size={24} />
         </button>

@@ -11,16 +11,42 @@ import ContactPage from './pages/ContactPage';
 import CategoryOverviewPage from './pages/CategoryOverviewPage';
 import Admin from './pages/Admin';
 
+import { useContent } from './context/ContentContext';
+
 function AppContent() {
+  const { content, lang } = useContent();
   const [showBanner, setShowBanner] = useState(true);
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
 
-  // Reset banner visibility and scroll to top on route change and page reload
+  // Update dynamic document title & scroll to top on route / language change
   useEffect(() => {
     setShowBanner(true);
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [location.pathname]);
+
+    const siteTitle = content?.general?.siteTitle || 'Alexander Troy';
+    const seoTitle = content?.seo?.metaTitle;
+    const isEn = lang === 'EN';
+
+    if (isAdmin) {
+      document.title = `${siteTitle} CMS • Yönetim Paneli`;
+      return;
+    }
+
+    if (location.pathname === '/' || location.pathname === '') {
+      document.title = seoTitle || `${siteTitle} • Enjoy Your Journey`;
+    } else if (location.pathname.includes('/iletisim') || location.pathname.includes('/contact')) {
+      document.title = isEn ? `Contact Us • ${siteTitle}` : `İletişim & Randevu • ${siteTitle}`;
+    } else {
+      const parts = location.pathname.split('/').filter(Boolean);
+      if (parts.length > 0) {
+        const formatted = parts.map(p => p.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())).join(' — ');
+        document.title = `${formatted} • ${siteTitle}`;
+      } else {
+        document.title = `${siteTitle} • Enjoy Your Journey`;
+      }
+    }
+  }, [location.pathname, content, lang, isAdmin]);
 
   if (isAdmin) {
     return (

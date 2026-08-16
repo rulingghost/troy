@@ -1,4 +1,4 @@
-export const defaultContent = {
+export const defaultContentTR = {
   general: {
     siteTitle: 'Alexander Troy Corporate',
     logo: '/logo.png',
@@ -289,12 +289,7 @@ export const defaultContent = {
   security: {
     adminPassword: 'admin'
   },
-
-  // ==========================================
-  // TÜM SAYFALARIN DİNAMİK İÇERİK ŞEMASI (PAGES)
-  // ==========================================
   pages: {
-    // 1. Kurumsal Alt Sayfaları (Hakkımızda, Vizyon, Misyon)
     corporate: {
       about: {
         title: 'Hakkımızda',
@@ -339,8 +334,6 @@ export const defaultContent = {
         ]
       }
     },
-
-    // 2. Kategori Genel Sayfaları (Overview Pages: /kurumsal, /alx-mice, /alx-4-you, /alx-digi, /alx-need)
     categoryOverviews: {
       'kurumsal': {
         title: 'Kurumsal',
@@ -389,7 +382,6 @@ export const defaultContent = {
           { title: 'Butik Çözümler', desc: 'Kurumunuzun özgün dinamiklerine özel kurgulanan stratejiler.' }
         ]
       },
-
       'alx-mice': {
         title: 'Alx MICE',
         badge: 'Etkinlik, Kongre & Sempozyum',
@@ -457,7 +449,6 @@ export const defaultContent = {
           { title: 'Rehberlik & Tur', desc: 'Organizasyon boyunca uzman kokartlı rehberlik ve özel geziler.' }
         ]
       },
-
       'alx-4-you': {
         title: 'Alx 4 You',
         badge: 'Butik Etkinlik, Eğitim & Incentive',
@@ -579,7 +570,6 @@ export const defaultContent = {
           { title: 'AI & VR Deneyimi', desc: 'En yeni dijital simülasyon teknolojileri.' }
         ]
       },
-
       'alx-digi': {
         title: 'Alx Digi',
         badge: 'Dijital Sağlık & AI Teknolojileri',
@@ -634,7 +624,6 @@ export const defaultContent = {
           { title: 'Kesintisiz Canlı Yayın', desc: 'Ameliyathane ve kongreler için düşük gecikmeli yayın.' }
         ]
       },
-
       'alx-need': {
         title: 'Alx Need',
         badge: 'Medikal İletişim, Çeviri & Omnichannel',
@@ -683,8 +672,6 @@ export const defaultContent = {
         ]
       }
     },
-
-    // 3. İletişim Sayfası İçerikleri
     contactPage: {
       heroBadge: 'Bize Ulaşın',
       heroTitle: 'Geleceğin Çözümleri İçin İletişime Geçin',
@@ -713,8 +700,6 @@ export const defaultContent = {
         }
       ]
     },
-
-    // 4. Alt Hizmet Sayfaları Özel Verileri (Kongreler, Destinasyonlar, Partnerler, Preceptorship, Kurslar)
     subServicesData: {
       congressEvents: [
         {
@@ -927,8 +912,6 @@ export const defaultContent = {
         }
       }
     },
-
-    // 5. Yan Panel (Sidebar) Genel Ayarları
     sidebarConfig: {
       contactTitle: 'Sorularınız mı var?',
       contactDesc: 'Ekibimiz hizmetlerimiz ve projelerinizle ilgili tüm sorularınızı yanıtlamaktan mutluluk duyacaktır.',
@@ -939,8 +922,6 @@ export const defaultContent = {
         { icon: '🌐', title: 'Global Erişilebilirlik', desc: '360° stratejik iş ortaklığı' }
       ]
     },
-
-    // 6. Yasal & Sözleşme Metinleri (Gizlilik Politikası, Kullanım Şartları, KVKK)
     legalPages: {
       privacyPolicy: {
         title: 'Gizlilik ve Kişisel Verilerin Korunması Politikası',
@@ -964,8 +945,6 @@ Yazılı izin olmaksızın site içeriğinin kopyalanması, çoğaltılması vey
 Dilediğiniz zaman şirketimize başvurarak verilerinizin işlenme durumunu öğrenme, düzeltilmesini veya silinmesini talep etme hakkına sahipsiniz.`
       }
     },
-
-    // 7. Organizasyon & Teklif Talep Formu Konfigürasyonu
     orgFormConfig: {
       badge: 'Online Teklif & Planlama',
       title: 'Organizasyon Talep Formu',
@@ -998,4 +977,987 @@ Dilediğiniz zaman şirketimize başvurarak verilerinizin işlenme durumunu öğ
       successDesc: 'Uzman operasyon ekibimiz organizasyon detaylarınızı inceleyerek en kısa sürede sizinle iletişime geçecektir.'
     }
   }
+};
+
+export const defaultContentEN = {
+  general: {
+    siteTitle: 'Alexander Troy Corporate',
+    logo: '/logo.png',
+    topBannerText: 'Enjoy Your Journey',
+    topBannerEnabled: true,
+    headerCtaText: 'Contact Us',
+    headerCtaLink: '/iletisim',
+    floatingButtons: {
+      enabled: true,
+      whatsapp: true,
+      phone: true,
+      scrollTop: true,
+      bubbleText: 'How can we help you?'
+    }
+  },
+  seo: {
+    metaTitle: 'Alexander Troy | MICE, Preceptorship & Medical Solutions',
+    metaDescription: 'Domestic and international congresses, symposiums, corporate travel, clinical preceptorship and AI-powered digital healthcare solutions.',
+    keywords: 'alexander troy, mice, congress, symposium, corporate travel, preceptorship, medical translation, artificial intelligence',
+    favicon: '/logo.png',
+    ogImage: '/hero-slide-1.jpg',
+    googleAnalyticsId: ''
+  },
+  menus: [
+    {
+      id: 'kurumsal',
+      title: 'Corporate',
+      path: '/kurumsal',
+      submenus: [
+        {
+          name: 'Corporate',
+          children: [
+            { name: 'About Us', path: '/kurumsal/hakkimizda' },
+            { name: 'Vision', path: '/kurumsal/vizyon' },
+            { name: 'Mission', path: '/kurumsal/misyon' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'alx-mice',
+      title: 'Alx MICE',
+      path: '/alx-mice',
+      submenus: [
+        {
+          name: 'Congress & Meeting',
+          children: [
+            { name: 'Domestic Congress', path: '/alx-mice/yurtici-kongre' },
+            { name: 'International Congress', path: '/alx-mice/yurtdisi-kongre' },
+            { name: 'Meeting', path: '/alx-mice/toplanti' }
+          ]
+        },
+        {
+          name: 'Symposium',
+          children: [
+            { name: 'Domestic Symposium', path: '/alx-mice/yurtici-sempozyum' },
+            { name: 'International Symposium', path: '/alx-mice/yurtdisi-sempozyum' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'alx-4-you',
+      title: 'Alx 4 You',
+      path: '/alx-4-you',
+      submenus: [
+        {
+          name: 'Own Event',
+          children: [
+            { name: 'Own Event - Domestic', path: '/alx-4-you/own-event-yurtici' },
+            { name: 'Own Event - International', path: '/alx-4-you/own-event-yurtdisi' },
+            { name: 'International Guest Services', path: '/alx-4-you/uluslararasi-misafir-hizmetleri' }
+          ]
+        },
+        {
+          name: 'Preceptorship',
+          children: [
+            { name: 'Domestic Preceptorship', path: '/alx-4-you/preceptorship-yurtici' },
+            { name: 'International Preceptorship', path: '/alx-4-you/preceptorship-yurtdisi' }
+          ]
+        },
+        {
+          name: 'Courses & Training',
+          children: [
+            { name: 'Hands-on Courses', path: '/alx-4-you/uygulamali-kurslar' },
+            { name: 'AI-Supported Courses', path: '/alx-4-you/ai-destekli-kurslar' },
+            { name: 'VR-Supported Learning', path: '/alx-4-you/vr-destekli-ogrenme' }
+          ]
+        },
+        {
+          name: 'Incentive',
+          children: [
+            { name: 'Motivational Activities', path: '/alx-4-you/motivasyonel-faaliyetler' },
+            { name: 'Launch Meetings', path: '/alx-4-you/lansman-toplantilari' },
+            { name: 'Company Picnics', path: '/alx-4-you/sirket-piknikleri' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'alx-digi',
+      title: 'Alx Digi',
+      path: '/alx-digi',
+      submenus: [
+        {
+          name: 'Digital Solutions',
+          children: [
+            { name: 'Online Health Consulting (Doktorum Yanımda)', path: '/alx-digi/online-saglik-danismanlik' },
+            { name: 'Online Health Assistant (Beynex)', path: '/alx-digi/online-saglik-asistan' },
+            { name: 'AI Healthcare Services (Niceye)', path: '/alx-digi/ai-saglik-hizmetleri' },
+            { name: 'Online Live Streaming (Niceye)', path: '/alx-digi/giyilebilir-teknoloji-online-canli-yayin' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'alx-need',
+      title: 'Alx Need',
+      path: '/alx-need',
+      submenus: [
+        {
+          name: 'Medical & Communication',
+          children: [
+            { name: 'Medical & Scientific (Gama CRO)', path: '/alx-need/medikal-bilimsel' },
+            { name: 'Statistics & Translation (Gama CRO)', path: '/alx-need/istatistik-ceviri' },
+            { name: 'Omnichannel (Niceye)', path: '/alx-need/omnichannel' }
+          ]
+        }
+      ]
+    }
+  ],
+  hero: {
+    slides: [
+      {
+        id: 1,
+        image: '/slide1.png',
+        badge: '🤖 AI & MICE Technologies',
+        title: 'Next-Gen AI-Powered Event & Congress Management',
+        desc: 'We transform your organizations into seamless journeys with AI algorithms, smart digital attendee experiences, and hybrid platforms.',
+        slogan: 'Enjoy Your Journey',
+        primaryCta: 'Explore Services',
+        primaryCtaLink: '#services',
+        secondaryCta: 'Contact Us',
+        secondaryCtaLink: '/iletisim'
+      },
+      {
+        id: 2,
+        image: '/slide2.png',
+        badge: '💡 Alx Digi & Medical Tech',
+        title: 'Tele-Health & Virtual Reality (VR) Solutions',
+        desc: 'Break boundaries with wearable technologies, AI-powered clinical training simulations, and interactive health platforms.',
+        slogan: 'Enjoy Your Journey',
+        primaryCta: 'Digital Solutions',
+        primaryCtaLink: '/alx-digi',
+        secondaryCta: 'Get in Touch',
+        secondaryCtaLink: '/iletisim'
+      },
+      {
+        id: 3,
+        image: '/slide3.png',
+        badge: '🌐 Omnichannel & Corporate Strategy',
+        title: 'End-to-End Smart Data & Live Broadcast Management',
+        desc: 'We are your innovative partner every step of the way with 360° medical communication, live digital broadcasts, and AI-powered translations.',
+        slogan: 'Enjoy Your Journey',
+        primaryCta: 'Review Our Process',
+        primaryCtaLink: '#journey',
+        secondaryCta: 'Talk to Us',
+        secondaryCtaLink: '/iletisim'
+      }
+    ]
+  },
+  about: {
+    subtitle: 'Who We Are',
+    title: 'Designing Tomorrow\'s Solutions Today',
+    desc1: 'We are a reliable and sustainable partner producing 360-degree strategic solutions nationally and internationally with customized, science-based, and original approaches.',
+    desc2: 'As Alx Troy, we believe that corporate events are "strategic journeys" that nurture company culture and serve your goals, beyond just being an organization.',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800',
+    ctaText: 'More About Us',
+    ctaLink: '/kurumsal/hakkimizda'
+  },
+  services: {
+    title: 'Our Services',
+    items: [
+      {
+        id: 1,
+        title: 'Alx MICE',
+        subtitle: 'Events, Congresses & Symposiums',
+        desc: 'Domestic and international congress, meeting, and symposium services (Transportation, flight ticketing, accommodation, dining, curated tours, and professional guidance).',
+        link: '/alx-mice',
+        bgImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=800'
+      },
+      {
+        id: 2,
+        title: 'Alx 4 You',
+        subtitle: 'Boutique & Corporate Solutions',
+        desc: 'Tailor-made domestic and international meetings, preceptorships, courses, seminars, and incentive services compliant with regulatory guidelines.',
+        link: '/alx-4-you',
+        bgImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800'
+      },
+      {
+        id: 3,
+        title: 'Alx Digi',
+        subtitle: 'Digital & AI Health Technologies',
+        desc: 'Online healthcare consulting, AI assistants, wearable technologies, and live broadcasting platforms powered by Doktorum Yanımda, Beynex, and Niceye.',
+        link: '/alx-digi',
+        bgImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
+      },
+      {
+        id: 4,
+        title: 'Alx Need',
+        subtitle: 'Medical & Omnichannel Management',
+        desc: 'Medical writing, biostatistics, scientific consulting, certified translation, and omnichannel healthcare brand management powered by Gama CRO and Niceye.',
+        link: '/alx-need',
+        bgImage: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800'
+      }
+    ]
+  },
+  journey: {
+    title: 'Alx 360° Service Process',
+    subtitle: 'Our end-to-end methodology delivering project excellence',
+    steps: [
+      { id: 1, title: 'Needs Analysis', desc: 'Understanding requirements', icon: 'Search' },
+      { id: 2, title: 'Strategy', desc: 'Omnichannel planning', icon: 'Target' },
+      { id: 3, title: 'Content & Design', desc: 'Platform & visual production', icon: 'PenTool' },
+      { id: 4, title: 'Execution', desc: 'Events & live broadcasting', icon: 'Rocket' },
+      { id: 5, title: 'Measurement', desc: 'Analytics and sustainability', icon: 'BarChart2' }
+    ]
+  },
+  testimonials: {
+    title: 'Client Testimonials',
+    items: [
+      {
+        id: 1,
+        name: 'John Miller',
+        role: 'Marketing Director, MedTech Corp',
+        content: 'The product launch we executed with Alx far exceeded our expectations. The digital integrations in particular fascinated our attendees.',
+        image: 'https://i.pravatar.cc/150?img=11'
+      },
+      {
+        id: 2,
+        name: 'Sarah Jenkins',
+        role: 'Head of Clinical Research',
+        content: 'Thanks to their professionalism in medical translation and live broadcasting, we completed our international congress with zero defects.',
+        image: 'https://i.pravatar.cc/150?img=5'
+      },
+      {
+        id: 3,
+        name: 'Dr. Michael Chang',
+        role: 'Chief Medical Officer',
+        content: 'They possess a world-class vision in telehealth and AI-powered medical education solutions. Our communication has grown significantly stronger.',
+        image: 'https://i.pravatar.cc/150?img=8'
+      },
+      {
+        id: 4,
+        name: 'Elena Rostova',
+        role: 'Senior Event Manager',
+        content: 'Their proactive support throughout the entire organization process enabled us to navigate unexpected challenges smoothly.',
+        image: 'https://i.pravatar.cc/150?img=9'
+      }
+    ]
+  },
+  references: {
+    title: 'Our Business Partners',
+    items: [
+      { id: 1, name: 'GSK', logo: '' },
+      { id: 2, name: 'Kyowa Kirin', logo: '' },
+      { id: 3, name: 'Teva', logo: '' },
+      { id: 4, name: 'Novo Nordisk', logo: '' },
+      { id: 5, name: 'Janssen', logo: '' },
+      { id: 6, name: 'Bristol-Myers', logo: '' },
+      { id: 7, name: 'Lilly', logo: '' },
+      { id: 8, name: 'Johnson & Johnson', logo: '' }
+    ]
+  },
+  contact: {
+    title: 'Get in Touch With Us',
+    subtitle: 'Contact & Support',
+    desc: 'Reach out to us via any channel for events, congresses, medical translations, and AI-powered digital health solutions.',
+    phone: '+90 (212) 555 01 23',
+    whatsapp: '+90 (555) 012 34 56',
+    whatsappText: 'Hello, I would like to get information about Alexander Troy services.',
+    email: 'info@alx.com.tr',
+    address: 'Levent, Büyükdere Cd. No:195, Şişli / Istanbul, Turkey',
+    instagram: 'https://instagram.com',
+    wechat: '#',
+    copyright: 'Alexander Troy Corporate. All rights reserved. — Enjoy Your Journey'
+  },
+  pages: {
+    corporate: {
+      about: {
+        title: 'About Us',
+        lead: 'As Alx Troy, we believe that corporate events are strategic journeys that nurture company culture and serve your goals, beyond just being an organization.',
+        desc1: 'We are a next-generation MICE partner focusing on each organization\'s unique dynamics, approaching projects with scientific and boutique-creative solutions.',
+        mottoQuote: 'Enjoy Your Journey',
+        mottoDesc: 'With our motto, we transform the entire journey from planning to post-event into a delightful experience. We approach every task not just as a vendor, but as a strategic partner adding genuine value.',
+        statsTitle: 'Who Are We?',
+        statsBullets: [
+          '25 years of excellence,',
+          'Operating on national and international scales,',
+          'Acting with the responsibility of a trusted & sustainable stakeholder,',
+          'A US-headquartered global organization...'
+        ],
+        capabilitiesTitle: 'What Can We Do For You?',
+        capabilities: [
+          { icon: '💻', title: 'MICE & Congress Services', desc: 'Flight ticketing, luxury accommodation, VIP transfers, technical production, gala events, and certified guides.' },
+          { icon: '✈️', title: 'Own Event & Special Destinations', desc: 'Boutique travel and custom corporate events across Turkey (Cappadocia, Kars) and worldwide (Italy, Spain, etc.).' },
+          { icon: '🩺', title: 'Preceptorship & Clinical Training', desc: 'Clinical observation programs and hands-on workshops in Bronchoscopy, TAVI, Bifurcation, and DBS.' },
+          { icon: '🤖', title: 'AI-Powered Health & Broadcasting', desc: 'Online health consulting, telemedicine, wearable tech integrations, and 4K live streaming.' },
+          { icon: '📊', title: 'Medical & Omnichannel Management', desc: 'Medical writing, biostatistics, certified medical translation, and omnichannel communication strategies.' }
+        ]
+      },
+      vision: {
+        title: 'Our Strategic Vision',
+        quote: 'To be the leading strategic partner that anticipates existing or unperceived needs in the healthcare sector, creating proactive solutions and making a difference.',
+        desc: 'At Alx Troy, we adopt an innovative, dynamic, and forward-looking vision in the healthcare and corporate events industry. We not only meet existing demands, but also identify emerging needs to build proactive solutions.',
+        bullets: [
+          'Pioneering tomorrow\'s healthcare & MICE technologies today',
+          'Strategic partnership mindset delivering tangible value',
+          'Leading the industry with scientific and innovative methodologies'
+        ]
+      },
+      mission: {
+        title: 'Our Mission',
+        quote: 'To be a sustainable and reliable partner through science-based boutique solutions offered within local and global frameworks.',
+        desc: 'Centering on the unique dynamics of each organization and project, our mission is to deliver high-quality, sustainable, and scientifically backed services worldwide.',
+        bullets: [
+          'Sustainable partnerships across local and global markets',
+          'Tailored boutique and scientific approach for every project',
+          'Uncompromising reliability and operational excellence'
+        ]
+      }
+    },
+    categoryOverviews: {
+      'kurumsal': {
+        title: 'Corporate',
+        badge: 'Alexander Troy Corporate',
+        tagline: 'Enjoy Your Journey',
+        heroImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1920',
+        description: 'Alexander Troy is a strategic journey partner that enriches your company culture and serves your milestones. We stand by you with over 25 years of experience and US-headquartered international strength.',
+        stats: [
+          { value: '25+', label: 'Years Experience' },
+          { value: 'USA', label: 'Global Network' },
+          { value: '100%', label: 'Client Centric' },
+          { value: '360°', label: 'Strategic Partner' }
+        ],
+        groups: [
+          {
+            groupTitle: 'Our Structure & Values',
+            groupDesc: 'The cornerstones shaping the future standards of corporate events and medical communications.',
+            items: [
+              {
+                name: 'About Us',
+                path: '/kurumsal/hakkimizda',
+                tag: 'Corporate Identity',
+                shortDesc: 'Who we are: A US-headquartered organization acting as a trusted partner in national and international arenas for 25 years.',
+                highlights: ['25 years of industry heritage', 'US-headquartered global network', 'Strategic partnership approach']
+              },
+              {
+                name: 'Vision',
+                path: '/kurumsal/vizyon',
+                tag: 'Strategic Vision',
+                shortDesc: 'To be the leading strategic partner that anticipates healthcare needs, delivering transformative solutions.',
+                highlights: ['Proactive and visionary approach', 'Anticipating industry needs', 'Science-based methodology']
+              },
+              {
+                name: 'Mission',
+                path: '/kurumsal/misyon',
+                tag: 'Core Mission',
+                shortDesc: 'Delivering boutique, science-based solutions to be a trusted and sustainable partner worldwide.',
+                highlights: ['Boutique and tailored solutions', 'Local & global standards', 'Sustainable collaboration']
+              }
+            ]
+          }
+        ],
+        features: [
+          { title: 'Trusted Partner', desc: 'End-to-end transparent and sustainable operational excellence.' },
+          { title: 'Global Vision', desc: 'US-based infrastructure and extensive international reach.' },
+          { title: 'Boutique Solutions', desc: 'Tailored strategies designed specifically for your organization.' }
+        ]
+      },
+      'alx-mice': {
+        title: 'Alx MICE',
+        badge: 'Events, Congresses & Symposiums',
+        tagline: 'Flawless Congress & Event Management',
+        heroImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=1920',
+        description: 'We manage your domestic and international congresses, meetings, and symposiums end-to-end — from flight ticketing and transfers to accommodation, gala dinners, and professional guides.',
+        stats: [
+          { value: '500+', label: 'Congresses & Events' },
+          { value: '50+', label: 'Country Network' },
+          { value: '24/7', label: 'Operations Support' },
+          { value: '360°', label: 'End-to-End Service' }
+        ],
+        groups: [
+          {
+            groupTitle: 'Congress & Meeting Solutions',
+            groupDesc: 'National and international medical, scientific, and corporate congress organizations.',
+            items: [
+              {
+                name: 'Domestic Congress',
+                path: '/alx-mice/yurtici-kongre',
+                tag: 'National Congresses',
+                shortDesc: 'Organization and delegation management of national congresses in cardiology, medicine, and specialty branches.',
+                highlights: ['Local accommodation & transfers', 'Registration & welcome desk', 'Budget & compliance oversight']
+              },
+              {
+                name: 'International Congress',
+                path: '/alx-mice/yurtdisi-kongre',
+                tag: 'Global Congresses',
+                shortDesc: 'Full attendance and operational support for prestigious medical congresses worldwide, such as ESC Congress.',
+                highlights: ['International flights & hotels', 'Visa & logistics handling', 'Certified multilingual guides']
+              },
+              {
+                name: 'Meeting',
+                path: '/alx-mice/toplanti',
+                tag: 'Corporate Meetings',
+                shortDesc: 'Boutique planning for corporate strategy meetings, Advisory Boards, and private product briefings.',
+                highlights: ['VIP transfer & hospitality', 'Sound/light & AV infrastructure', 'Exclusive venue selection']
+              }
+            ]
+          },
+          {
+            groupTitle: 'Symposium Management',
+            groupDesc: 'Scientific and academic symposiums tailored to specialized medical disciplines.',
+            items: [
+              {
+                name: 'Domestic Symposium',
+                path: '/alx-mice/yurtici-sempozyum',
+                tag: 'Scientific Symposium',
+                shortDesc: 'Flawless planning and execution of neuroscience, respiratory, and specialty medical summits in Turkey.',
+                highlights: ['Academic speaker management', 'Digital poster & abstract portals', 'Exclusive gala arrangements']
+              },
+              {
+                name: 'International Symposium',
+                path: '/alx-mice/yurtdisi-sempozyum',
+                tag: 'Global Summits',
+                shortDesc: 'Full group operations, travel, and accommodation for worldwide lung health and medical symposia.',
+                highlights: ['Global coordination', 'Cultural & city excursions', '24/7 on-site operations crew']
+              }
+            ]
+          }
+        ],
+        features: [
+          { title: 'End-to-End Logistics', desc: 'Flight tickets, luxury hotels, VIP transfers, and venue management.' },
+          { title: 'On-Time Operations', desc: 'Punctual, seamless workflow management ensuring zero friction.' },
+          { title: 'Guidance & Tours', desc: 'Professional licensed tour guides and customized excursion itineraries.' }
+        ]
+      },
+      'alx-4-you': {
+        title: 'Alx 4 You',
+        badge: 'Boutique Events, Training & Incentive',
+        tagline: 'Tailor-Made Experiential Solutions',
+        heroImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1920',
+        description: 'Bespoke domestic and international Own Event concepts, clinical Preceptorship programs, AI/VR-supported hands-on workshops, and motivational incentive trips.',
+        stats: [
+          { value: 'Boutique', label: 'Tailor-Made' },
+          { value: 'Compliance', label: '100% Compliant' },
+          { value: 'AI/VR', label: 'Advanced Tech' },
+          { value: 'Global', label: 'Destination Reach' }
+        ],
+        groups: [
+          {
+            groupTitle: 'Own Event (Custom Destination Experiences)',
+            groupDesc: 'Corporate journeys designed with destination-specific cultural concepts and iconic landmarks.',
+            items: [
+              {
+                name: 'Domestic Travel & Events',
+                path: '/alx-4-you/own-event-yurtici',
+                tag: 'Domestic Destinations',
+                shortDesc: 'End-to-end planning and management of corporate meetings, events, and travel across Turkey.',
+                highlights: ['Corporate launches & meetings', 'Incentive & dealer excursions', 'Full transport & lodging logistics']
+              },
+              {
+                name: 'International Travel & Events',
+                path: '/alx-4-you/own-event-yurtdisi',
+                tag: 'Global Destinations',
+                shortDesc: 'Managing meetings, travel, and corporate events worldwide with seamless central coordination.',
+                highlights: ['Worldwide travel management', 'International congresses & incentives', 'Single-point central operation']
+              },
+              {
+                name: 'International Guest Services',
+                path: '/alx-4-you/uluslararasi-misafir-hizmetleri',
+                tag: 'VIP Hospitality',
+                shortDesc: 'Comprehensive hospitality, VIP airport greeting, and accommodation management in Turkey for your global guests.',
+                highlights: ['VIP airport meet & greet', 'Luxury accommodation & dining', '360° dedicated concierge']
+              }
+            ]
+          },
+          {
+            groupTitle: 'Preceptorship (Clinical Observation Programs)',
+            groupDesc: 'Hands-on clinical observation opportunities in leading centers for physicians and medical specialists.',
+            items: [
+              {
+                name: 'Domestic Preceptorship',
+                path: '/alx-4-you/preceptorship-yurtici',
+                tag: 'National Observation',
+                shortDesc: 'Clinical observation in Bronchoscopy, TAVI, Bifurcation, and DBS across Turkey’s leading medical centers.',
+                highlights: ['Live case observations', 'Expert faculty workshops', 'Regulatory-compliant framework']
+              },
+              {
+                name: 'International Preceptorship',
+                path: '/alx-4-you/preceptorship-yurtdisi',
+                tag: 'Global Preceptorship',
+                shortDesc: 'Observation programs in global centers for Bronchoscopy, EBUS, TAVI, and complex coronary procedures.',
+                highlights: ['Global hospital partnerships', 'Advanced surgical observation', 'Accredited certificate']
+              }
+            ]
+          },
+          {
+            groupTitle: 'Courses & Training Modules',
+            groupDesc: 'Interactive competency-building trainings backed by next-generation technology.',
+            items: [
+              {
+                name: 'Hands-on Courses',
+                path: '/alx-4-you/uygulamali-kurslar',
+                tag: 'Interactive Workshops',
+                shortDesc: 'Courses enhancing stakeholder skills through anatomical models, simulators, and live case studies.',
+                highlights: ['Hands-on practical training', 'Renowned instructor faculty', 'Interactive group dynamics']
+              },
+              {
+                name: 'AI-Supported Courses',
+                path: '/alx-4-you/ai-destekli-kurslar',
+                tag: 'Artificial Intelligence',
+                shortDesc: 'Enriched educational materials featuring personalized learning paths and smart AI simulations.',
+                highlights: ['Intelligent case simulation', 'Data-driven progress tracking', 'Next-gen learning content']
+              },
+              {
+                name: 'VR-Supported Learning',
+                path: '/alx-4-you/vr-destekli-ogrenme',
+                tag: 'Virtual Reality',
+                shortDesc: 'Immerse into virtual operating rooms and complex clinical procedures using VR headsets.',
+                highlights: ['3D OR simulation', 'Virtual case practice', 'High learning retention']
+              }
+            ]
+          },
+          {
+            groupTitle: 'Incentive & Corporate Motivation',
+            groupDesc: 'Bespoke events fostering team spirit and strengthening organizational bonds.',
+            items: [
+              {
+                name: 'Motivational Activities',
+                path: '/alx-4-you/motivasyonel-faaliyetler',
+                tag: 'Team Spirit',
+                shortDesc: 'Dynamic indoor and outdoor team-building games, sports activities, and creative workshops.',
+                highlights: ['Strengthening communication', 'Stress-relief activities', 'Diverse venue alternatives']
+              },
+              {
+                name: 'Launch Meetings',
+                path: '/alx-4-you/lansman-toplantilari',
+                tag: 'Product Launches',
+                shortDesc: 'Prestigious launch events introducing new products, services, or strategies with high-impact staging.',
+                highlights: ['Stunning stage & AV production', 'Media & guest coordination', 'Memorable brand experiences']
+              },
+              {
+                name: 'Company Picnics',
+                path: '/alx-4-you/sirket-piknikleri',
+                tag: 'Outdoor Gatherings',
+                shortDesc: 'Outdoor gatherings bringing employees and their families together with activities and gourmet catering.',
+                highlights: ['Scenic outdoor venues', 'Activities for all ages', 'Gourmet catering services']
+              }
+            ]
+          }
+        ],
+        features: [
+          { title: 'Customized & Boutique', desc: 'Flexible planning specifically structured for your organization.' },
+          { title: 'Regulatory Compliance', desc: '100% adherence to healthcare codes and promotion guidelines.' },
+          { title: 'AI & VR Technology', desc: 'State-of-the-art immersive simulation and learning technologies.' }
+        ]
+      },
+      'alx-digi': {
+        title: 'Alx Digi',
+        badge: 'Digital Health & AI Technologies',
+        tagline: 'Digital Transformation in Healthcare',
+        heroImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1920',
+        description: 'Online healthcare consulting platforms, AI-supported clinical assistants, smart diagnostic tools, and live streaming via wearable technology.',
+        stats: [
+          { value: 'AI', label: 'AI-Powered Core' },
+          { value: '24/7', label: 'Online Telehealth' },
+          { value: 'IoT', label: 'Wearable Tech' },
+          { value: '99.9%', label: 'Uptime Reliability' }
+        ],
+        groups: [
+          {
+            groupTitle: 'Digital Health & Telemedicine Ecosystem',
+            groupDesc: 'Innovative technological healthcare solutions delivered in partnership with Niceye, Doktorum Yanımda, and Beynex.',
+            items: [
+              {
+                name: 'Online Health Consulting',
+                path: '/alx-digi/online-saglik-danismanlik',
+                tag: 'Doktorum Yanımda',
+                shortDesc: 'Encrypted telehealth platform enabling patients to conduct 24/7 video consultations with doctors.',
+                highlights: ['End-to-end encrypted video calls', 'E-Prescription & report sharing', '24/7 physician availability']
+              },
+              {
+                name: 'Online Health Assistant',
+                path: '/alx-digi/online-saglik-asistan',
+                tag: 'Beynex',
+                shortDesc: 'AI-based cognitive health tracking system and personalized brain fitness exercises.',
+                highlights: ['Brain health & memory tracking', 'Clinical-scale cognitive tests', 'Mobile digital assistant']
+              },
+              {
+                name: 'AI Healthcare Services',
+                path: '/alx-digi/ai-saglik-hizmetleri',
+                tag: 'Niceye Vidizayn',
+                shortDesc: 'AI medical visualization, diagnostic decision-support tools, and smart healthcare algorithms.',
+                highlights: ['AI-generated medical visuals & video', 'Automated diagnostic suggestions', 'Medical content optimization']
+              },
+              {
+                name: 'Wearable Tech & Live Streaming',
+                path: '/alx-digi/giyilebilir-teknoloji-online-canli-yayin',
+                tag: 'Niceye Vistream',
+                shortDesc: 'Uninterrupted live streaming from operating rooms and field sites using smart glasses and cameras.',
+                highlights: ['Ultra-low latency 4K surgical streams', 'Wearable sensor integration', 'Interactive remote Q&A']
+              }
+            ]
+          }
+        ],
+        features: [
+          { title: 'Secure Infrastructure', desc: 'KVKK and HIPAA-compliant end-to-end encrypted data exchange.' },
+          { title: 'Smart Artificial Intelligence', desc: 'Algorithms accelerating clinical analysis and decision-making.' },
+          { title: 'Continuous Live Streaming', desc: 'Ultra-low latency streaming tailored for surgery and congresses.' }
+        ]
+      },
+      'alx-need': {
+        title: 'Alx Need',
+        badge: 'Medical Communication, Translation & Omnichannel',
+        tagline: 'Strategic Communication & Medical Expertise',
+        heroImage: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=1920',
+        description: '360° strategic partnership in healthcare through medical writing, biostatistics, certified medical translation, and omnichannel brand management backed by Gama CRO and Niceye.',
+        stats: [
+          { value: '360°', label: 'Omnichannel Strategy' },
+          { value: 'PhD/MD', label: 'Scientific Faculty' },
+          { value: '100%', label: 'Medical Accuracy' },
+          { value: 'Global', label: 'Publishing Standards' }
+        ],
+        groups: [
+          {
+            groupTitle: 'Medical & Scientific Solutions',
+            groupDesc: 'Scientific research, clinical study reporting, and omnichannel medical brand communication.',
+            items: [
+              {
+                name: 'Medical & Scientific Consulting',
+                path: '/alx-need/medikal-bilimsel',
+                tag: 'Gama CRO',
+                shortDesc: 'Clinical study protocols, medical writing, and scientific Advisory Board management.',
+                highlights: ['Clinical research reports', 'Manuscript & poster preparation', 'Regulatory medical writing']
+              },
+              {
+                name: 'Statistics & Medical Translation',
+                path: '/alx-need/istatistik-ceviri',
+                tag: 'Gama CRO Bioinformatics',
+                shortDesc: 'Biostatistical data analysis, clinical data mining, and physician-approved medical translation.',
+                highlights: ['Advanced biostatistical modeling', 'Notarized medical translation', 'Strict terminological fidelity']
+              },
+              {
+                name: 'Omnichannel Brand Management',
+                path: '/alx-need/omnichannel',
+                tag: 'Niceye IT',
+                shortDesc: 'Multichannel digital communication strategies targeting doctors, pharmacists, and patients.',
+                highlights: ['360° Digital marketing', 'CRM and email automation', 'Measurable brand equity growth']
+              }
+            ]
+          }
+        ],
+        features: [
+          { title: 'Scientific Reliability', desc: 'Supervision by academic physicians and experienced biostatisticians.' },
+          { title: 'Multichannel Integration', desc: 'Synchronized management across digital, print, and event touchpoints.' },
+          { title: 'International Standards', desc: 'Full compliance with ICH-GCP guidelines and global medical codes.' }
+        ]
+      }
+    },
+    contactPage: {
+      heroBadge: 'Contact Us',
+      heroTitle: 'Get in Touch for Future-Ready Solutions',
+      heroLead: 'Alexander Troy provides end-to-end solutions with MICE, 4 You, Digi, and Need services. Reach out to us for project inquiries and collaboration.',
+      quickBadges: [
+        { label: 'Fast Response' },
+        { label: 'Levent / Istanbul Headquarters' },
+        { label: 'Confidentiality & Quality Guaranteed' }
+      ],
+      faqs: [
+        {
+          q: "When can I get in touch with an Alexander Troy representative?",
+          a: "Our phone and email lines are active weekdays from 09:00 to 18:00 (GMT+3). You can send inquiries 24/7 via our WhatsApp live support."
+        },
+        {
+          q: "How far in advance should we submit MICE and Event requests?",
+          a: "For national and international congress or incentive event planning, we recommend reaching out at least 2-4 weeks prior to your target dates."
+        },
+        {
+          q: "How are medical translation and digital technology projects handled?",
+          a: "Upon receiving your request, our medical & technical team will contact you within 24 hours to conduct a requirements analysis and project scope."
+        },
+        {
+          q: "Is an appointment required to visit your headquarters?",
+          a: "Yes, we kindly request scheduling an appointment in advance so we can ensure the appropriate department leads are available to host you."
+        }
+      ]
+    },
+    subServicesData: {
+      congressEvents: [
+        {
+          category: 'yurtici-kongre',
+          title: '42nd National Cardiology Congress',
+          org: 'Turkish Society of Cardiology (TKD)',
+          desc: 'Latest scientific advances, clinical cases, and expert panels in national cardiology.',
+          link: 'https://tkd.org.tr/2026kongre/',
+          badge: 'Domestic Congress'
+        },
+        {
+          category: 'yurtdisi-kongre',
+          title: 'European Society of Cardiology (ESC Congress)',
+          org: 'European Society of Cardiology',
+          desc: 'ESC Congress, the world’s leading and most prestigious international cardiology gathering.',
+          link: 'https://www.escardio.org/events/congresses/esc-congress/',
+          badge: 'International Congress'
+        },
+        {
+          category: 'yurtici-sempozyum',
+          title: '3rd Neuroscience Symposium',
+          org: 'Turkish Neurological Society',
+          desc: 'Innovative breakthroughs in brain research and clinical neuroscience gathering top academicians.',
+          link: 'https://www.tndnorobilim.org/',
+          badge: 'Domestic Symposium'
+        },
+        {
+          category: 'yurtici-sempozyum',
+          title: '11th Respiratory Summit',
+          org: 'Turkish Respiratory Society',
+          desc: 'State-of-the-art clinical approaches and academic presentations in pulmonary health.',
+          link: 'https://www.solunumzirvesi.org/',
+          badge: 'Domestic Symposium'
+        },
+        {
+          category: 'yurtdisi-sempozyum',
+          title: 'World Conference on Lung Health',
+          org: 'The Union',
+          desc: 'The world’s largest international conference and symposium on global lung health.',
+          link: 'https://worldlunghealth.org/symposia/',
+          badge: 'International Symposium'
+        }
+      ],
+      destinations: {
+        yurtdisi: [
+          { name: 'Spain', landmark: 'Sagrada Familia & Plaza Mayor', image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&q=80&w=600', icon: '🇪🇸' },
+          { name: 'Italy', landmark: 'Colosseum & Venice Canals', image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=80&w=600', icon: '🇮🇹' },
+          { name: 'Algeria', landmark: 'Martyrs\' Memorial & Kasbah', image: 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?auto=format&fit=crop&q=80&w=600', icon: '🇩🇿' },
+          { name: 'Egypt', landmark: 'Pyramids of Giza & Cairo Museum', image: 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=600', icon: '🇪🇬' },
+          { name: 'Albania', landmark: 'Skanderbeg Square & Berat', image: 'https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?auto=format&fit=crop&q=80&w=600', icon: '🇦🇱' },
+          { name: 'Kosovo', landmark: 'Prizren Stone Bridge & Pristina', image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&q=80&w=600', icon: '🇽🇰' },
+          { name: 'North Macedonia', landmark: 'Skopje Stone Bridge & Lake Ohrid', image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&q=80&w=600', icon: '🇲🇰' },
+          { name: 'Azerbaijan', landmark: 'Heydar Aliyev Center & Flame Towers', image: 'https://images.unsplash.com/photo-1609856878074-cf31e21ccb6b?auto=format&fit=crop&q=80&w=600', icon: '🇦🇿' }
+        ],
+        yurtici: [
+          { name: 'Cappadocia', landmark: 'Fairy Chimneys & Hot Air Balloons', image: 'https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?auto=format&fit=crop&q=80&w=600', icon: '🎈' },
+          { name: 'Kars', landmark: 'Ani Ruins & Lake Çıldır', image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600', icon: '❄️' },
+          { name: 'Trabzon - Rize', landmark: 'Uzungöl, Ayder Plateau & Fırtına River', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=600', icon: '🌲' },
+          { name: 'Gaziantep', landmark: 'Zeugma Mosaic Museum & Historic Bazaar', image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=600', icon: '🏛️' },
+          { name: 'Hatay', landmark: 'City of Civilizations & Antakya Mosaics', image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=600', icon: '🕌' },
+          { name: 'Çanakkale', landmark: 'Trojan Horse & Gallipoli Memorial', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=600', icon: '⚔️' }
+        ]
+      },
+      preceptorship: {
+        yurtici: [
+          { title: 'Bronchoscopy Preceptorship', desc: 'Practical bronchoscopic interventional procedures and case studies.', image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600', badge: 'Domestic Preceptorship' },
+          { title: 'TAVI Preceptorship', desc: 'Transcatheter Aortic Valve Implantation procedural training & simulation.', image: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=600', badge: 'Domestic Preceptorship' },
+          { title: 'Bifurcation Preceptorship', desc: 'State-of-the-art techniques in complex coronary bifurcation cases.', image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600', badge: 'Domestic Preceptorship' },
+          { title: 'DBS Parkinson Surgery', desc: 'Deep Brain Stimulation (DBS) pre- and post-operative clinical management.', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=600', badge: 'Domestic Preceptorship' }
+        ],
+        yurtdisi: [
+          { title: 'Bronchoscopy Preceptorship', desc: 'Advanced bronchoscopy training in renowned international medical centers.', image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600', badge: 'International Preceptorship' },
+          { title: 'EBUS Preceptorship', desc: 'Endobronchial Ultrasound (EBUS) clinical observation program.', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=600', badge: 'International Preceptorship' },
+          { title: 'TAVI Preceptorship', desc: 'Specialized TAVI observation in global medical centers.', image: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=600', badge: 'International Preceptorship' },
+          { title: 'Bifurcation Preceptorship', desc: 'Case analysis and observation in world-class interventional cardiology suites.', image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600', badge: 'International Preceptorship' }
+        ]
+      },
+      partnerPlatforms: {
+        'alx-digi': [
+          {
+            title: 'Online Health Consulting',
+            brand: 'Doktorum Yanımda',
+            link: 'https://doktorumyanimda.net/',
+            desc: 'Encrypted and secure healthcare platform allowing 24/7 video consultations between patients and certified doctors.',
+            icon: '🩺',
+            slug: 'online-saglik-danismanlik'
+          },
+          {
+            title: 'Online Health Assistant',
+            brand: 'Beynex',
+            link: 'https://www.beynex.com/tr/',
+            desc: 'Cognitive health tracking, digital assistant solutions, and personalized brain fitness exercises powered by Beynex.',
+            icon: '🤖',
+            slug: 'online-saglik-asistan'
+          },
+          {
+            title: 'AI Healthcare Services',
+            brand: 'Niceye',
+            link: 'https://niceye.com/vidizayn',
+            desc: 'AI-assisted medical content design, diagnostic support algorithms, and innovative health applications.',
+            icon: '⚡',
+            slug: 'ai-saglik-hizmetleri'
+          },
+          {
+            title: 'Wearable Tech & Live Stream',
+            brand: 'Niceye',
+            link: 'https://niceye.com/vistream',
+            desc: 'Wearable sensor integration and uninterrupted HD live broadcasts from operating rooms powered by Niceye Vistream.',
+            icon: '📡',
+            slug: 'giyilebilir-teknoloji-online-canli-yayin'
+          }
+        ],
+        'alx-need': [
+          {
+            title: 'Medical & Scientific',
+            brand: 'Gama CRO',
+            link: 'https://gamacro.com/medical-writing/',
+            desc: 'International-standard medical writing, scientific papers, and literature summaries by Gama CRO.',
+            icon: '🔬',
+            slug: 'medikal-bilimsel'
+          },
+          {
+            title: 'Statistics & Translation',
+            brand: 'Gama CRO',
+            link: 'https://gamacro.com/bioinformatics-and-data-analysis/',
+            desc: 'Biomedical data analysis, biostatistical reporting, and certified medical translation by Gama CRO Bioinformatics.',
+            icon: '📊',
+            slug: 'istatistik-ceviri'
+          },
+          {
+            title: 'Omnichannel Brand Management',
+            brand: 'Niceye',
+            link: 'https://niceye.com/niceyeit',
+            desc: 'Integrated omnichannel medical brand management and communication strategies across physical and digital touchpoints.',
+            icon: '🔄',
+            slug: 'omnichannel'
+          }
+        ]
+      },
+      courses: [
+        { title: 'Hands-on Courses', desc: 'Interactive, practical physical and medical workshops designed for stakeholder development.', icon: '🩺', badge: 'Practical Training' },
+        { title: 'AI-Supported Courses', desc: 'Artificial intelligence algorithms, personalized learning modules, and smart clinical scenarios.', icon: '🤖', badge: 'AI-Supported' },
+        { title: 'VR-Supported Experiential Learning', desc: 'Immersive operating room and clinical simulations using VR headsets and interactive modules.', icon: '🥽', badge: 'VR Experiential' }
+      ],
+      incentive: [
+        { title: 'Indoor & Outdoor Motivational Activities', desc: 'High-energy indoor and outdoor team-building activities fostering camaraderie and company spirit.', icon: '⚡', badge: 'Motivation Event' },
+        { title: 'Internal & External Stakeholder Launch Events', desc: 'Corporate launch events introducing your new products, services, or strategies.', icon: '🎤', badge: 'Launch Meeting' },
+        { title: 'Company Picnics & Special Gatherings', desc: 'Unforgettable open-air picnics and celebrations for your teams and their families.', icon: '🎪', badge: 'Corporate Event' }
+      ],
+      corporateTravel: {
+        guestServices: {
+          motto: 'Enjoy Your Journey — Savor every moment, leave the rest to us',
+          title: 'INTERNATIONAL GUEST SERVICES',
+          subtitle: 'Your Guests\' Journey Begins With Our Professional Touch',
+          lead: 'We manage all travel, hospitality, and event arrangements across Turkey from a single point for your international business partners, executives, and VIP guests.',
+          text1: 'From luxury accommodation and VIP airport transfers to meeting planning, private banquets, and cultural city excursions, every detail is custom designed for your organization.',
+          text2: 'While we transform your guests\' time in Turkey into a comfortable, safe, and memorable journey, you can focus on building strategic business relationships.',
+          featureTitle: 'Every Detail From Arrival to Farewell is Our Responsibility',
+          featureNote: 'Our experienced team manages the entire process from airport greetings to bespoke gala dinners with seamless attention to detail.',
+          services: [
+            'Airport Meet & Greet with VIP Transfers',
+            'Luxury Hotel Bookings & Accommodation Management',
+            'Exclusive Meeting & Event Organizations',
+            'Fine Dining, Gourmet Banquets & Private Receptions',
+            'Social & Cultural City Tours',
+            '24/7 Dedicated Multilingual On-Site Support'
+          ]
+        },
+        overseasTravel: {
+          motto: 'Enjoy Your Journey — We Take Care of Every Detail',
+          title: 'INTERNATIONAL TRAVEL & EVENTS',
+          subtitle: 'Global Event and Corporate Travel Solutions',
+          lead: 'We plan and execute corporate meetings, travel, incentives, and events across the globe — from Europe to the Far East, the Americas to the Middle East.',
+          text: 'Whether it is an intimate executive meeting in a single capital or a large-scale international congress across multiple destinations, we manage the entire operation centrally.',
+          featureTitle: 'Anywhere in the World, Centrally Managed',
+          featureNote: 'We oversee destination selection, logistics, scheduling, and on-site coordination with end-to-end expertise.',
+          services: [
+            'International corporate conferences and seminars',
+            'Congresses, symposiums, and scientific summits',
+            'Educational and incentive travel programs',
+            'Dealer, distributor, and stakeholder summits',
+            'Brand launches and introductory campaigns',
+            'Regional field strategy meetings',
+            'Incentive tours and cultural excursions',
+            'Exhibition and trade fair delegations',
+            'Flight, hotel, and city transportation management',
+            'VIP airport and intercity transfers',
+            'Corporate banquets and evening social programs'
+          ]
+        },
+        domesticTravel: {
+          title: 'DOMESTIC TRAVEL & EVENTS',
+          subtitle: 'Comprehensive Event and Travel Solutions in Turkey',
+          lead: 'We coordinate meetings, events, and corporate travel throughout Turkey. Understanding diverse industry demands, we deliver customized, high-standard solutions aligned with your goals.',
+          text: 'From corporate strategy meetings and dealer gatherings to medical conferences, product launches, and regional team summits, we meticulously coordinate every detail.',
+          featureTitle: 'By Your Side at Every Step of the Journey',
+          featureNote: 'We centrally oversee venue selection, AV equipment, transfers, hospitality, catering, and social itineraries from inception to post-event wrap-up.',
+          services: [
+            'Corporate meetings, seminars, and workshops',
+            'Training and team motivation organizations',
+            'Dealer, distributor, and business partner summits',
+            'Product launches and promotional campaigns',
+            'Scientific congresses and medical symposiums',
+            'Specialized healthcare professional gatherings',
+            'Regional and field sales meetings',
+            'Corporate retreats and special excursions',
+            'Accommodation, flight, and transfer coordination',
+            'Corporate banquets, dinners, and social events'
+          ]
+        }
+      }
+    },
+    sidebarConfig: {
+      contactTitle: 'Have Questions?',
+      contactDesc: 'Our dedicated team will be delighted to answer any inquiries regarding our services and your upcoming projects.',
+      featuresTitle: 'Key Highlights',
+      features: [
+        { icon: '✨', title: 'Quality Guarantee', desc: 'International quality standards' },
+        { icon: '🚀', title: 'Swift Integration', desc: 'Seamless adaptation to your workflows' },
+        { icon: '🌐', title: 'Global Accessibility', desc: '360° strategic business partnership' }
+      ]
+    },
+    legalPages: {
+      privacyPolicy: {
+        title: 'Privacy and Personal Data Protection Policy',
+        lastUpdated: '2026',
+        content: `At Alexander Troy, the security and confidentiality of personal data belonging to our clients, partners, and visitors is our highest priority. In compliance with data protection laws (including KVKK and international standards), all information shared with us is processed solely for executing requested MICE events, corporate travel, digital healthcare, or medical consulting services.
+
+Your personal data is never shared with unauthorized third parties without your explicit consent, except where required by law. All data collected in our systems is guarded by state-of-the-art encryption protocols.`
+      },
+      termsOfService: {
+        title: 'Terms of Service & Usage Conditions',
+        lastUpdated: '2026',
+        content: `All visitors to this website are deemed to have accepted these terms of service. All content, visuals, trademarks, logos, and design elements presented by Alexander Troy are protected under international copyright and intellectual property laws.
+
+Reproduction, duplication, or commercial exploitation of site content without prior written consent is strictly prohibited. RFPs and event requests submitted through the portal are subject to operational review.`
+      },
+      kvkk: {
+        title: 'Data Protection & Privacy Notice',
+        lastUpdated: '2026',
+        content: `Alexander Troy ("Company") processes your personal data in full compliance with applicable data protection regulations. Personal details collected via inquiry forms, event registrations, and operational bookings are utilized solely for service fulfillment.
+
+You have the right to inquire about your processed data, request corrections, or ask for deletion at any time by contacting our data protection officer.`
+      }
+    },
+    orgFormConfig: {
+      badge: 'Online RFP & Planning',
+      title: 'Organization Request Form',
+      subtitle: 'Contact Us for Event & Travel Planning',
+      desc: 'Fill out the form below to receive a customized proposal for a seamless organization experience aligned with your goals.',
+      orgTypes: [
+        'Meeting / Seminar',
+        'Congress / Symposium',
+        'Training Program',
+        'Dealer / Distributor Gathering',
+        'Product Launch / Promotion',
+        'Motivation / Incentive',
+        'Corporate Travel',
+        'Exhibition / Fair',
+        'Other'
+      ],
+      servicesList: [
+        'Flights / Transportation',
+        'Hotel / Accommodation',
+        'Airport & City Transfers',
+        'Meeting / Event Venue',
+        'Technical Equipment & Production',
+        'Dining / Banquet Services',
+        'Social Programs & Activities',
+        'Tour Guiding Services',
+        'Other'
+      ],
+      submitBtnText: 'Submit Proposal Request',
+      successTitle: 'Your Request Has Been Received!',
+      successDesc: 'Our operations team will review your requirements and get in touch with you shortly.'
+    }
+  }
+};
+
+export const defaultContent = {
+  ...defaultContentTR,
+  en: defaultContentEN
 };
