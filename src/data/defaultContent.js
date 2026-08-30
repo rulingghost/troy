@@ -8,8 +8,8 @@ export const defaultContentTR = {
     headerCtaLink: '/iletisim',
     floatingButtons: {
       enabled: true,
-      whatsapp: true,
-      phone: true,
+      whatsapp: false,
+      phone: false,
       scrollTop: true,
       bubbleText: 'Size nasıl yardımcı olabiliriz?'
     }
@@ -989,8 +989,8 @@ export const defaultContentEN = {
     headerCtaLink: '/iletisim',
     floatingButtons: {
       enabled: true,
-      whatsapp: true,
-      phone: true,
+      whatsapp: false,
+      phone: false,
       scrollTop: true,
       bubbleText: 'How can we help you?'
     }
