@@ -1,14 +1,10 @@
-// Alexander Troy - Hızlı & Dinamik Takip Sorulu AI Servisi
-
-const STORAGE_CHATS_KEY = 'troy_ai_chats_history';
 const STORAGE_SETTINGS_KEY = 'troy_ai_settings';
+const STORAGE_CHATS_KEY = 'troy_ai_chats_history';
 
-// Hızlı ve kaliteli model zinciri
-const FALLBACK_MODELS = [
-  'qwen/qwen3.8-27b:free',
-  'liquid/lfm-2.5-2.6b:free',
-  'nex-agi/nex-n2.5-pro:free',
-  'z-ai/glm-5.2:free'
+// 1 Saniyenin altında çalışan, mantıklı, zeki ve kurumsal Türkçe bilen model sırası
+const FAST_MODELS = [
+  'nex-agi/nex-n2.5-mini:free',
+  'deepseek/deepseek-chat'
 ];
 
 export const defaultAiSettings = {
@@ -16,7 +12,7 @@ export const defaultAiSettings = {
   walkingTrojanEnabled: true,
   walkingSpeed: 40,
   openRouterKey: '',
-  model: 'qwen/qwen3.8-27b:free',
+  model: FAST_MODELS[0],
   assistantName: 'Alexander Troy Danışman',
   welcomeMessage: 'Merhaba! Alexander Troy kanal kaplama sistemleri ve kurumsal çözümlerimiz hakkında size nasıl yardımcı olabilirim?',
   customPrompt: ''
@@ -30,34 +26,44 @@ export const getAiSettings = () => {
   return defaultAiSettings;
 };
 
+export const saveAiSettings = (settings) => {
+  try {
+    const current = getAiSettings();
+    const updated = { ...current, ...settings };
+    localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(updated));
+    return updated;
+  } catch (e) {
+    return settings;
+  }
+};
+
 // ============================================================================
-// HIZLI, NET VE ÖZ SİSTEM PROMPTU (Dinamik 3 Soru Formatlı)
+// HIZLI & NET SİSTEM PROMPTU (Zeki, Mantıklı ve Kısa)
 // ============================================================================
 export const buildSystemPrompt = () => {
   return `
-Sen "Alexander Troy" firmasının resmi Canlı Destek Danışmanısın.
-Uzmanlığın: İlaç ve gıda fabrikaları için antibakteriyel kanal kaplama sistemleri, GMP temiz oda standartları ve Alx MICE medikal kongre operasyonları.
+Sen "Alexander Troy" kurumsal firmasının profesyonel, zeki ve son derece net Canlı Destek Danışmanısın.
+Uzmanlık Alanın: İlaç, gıda, kimya ve medikal tesisler için antibakteriyel kanal kaplama sistemleri, GMP temiz oda standartları, sıfır duruşlu montaj ve Alx MICE medikal kongre çözümleri.
 
-KRİTİK KURALLAR:
-1. ÇOK HIZLI, NET VE KISA CEVAP VER. Asla uzun destanlar, karmaşık tablolar veya uydurma kelimeler yazma.
-2. Maksimum 2-3 kısa paragraf veya 3-4 madde imi kullan.
-3. Kusursuz, akıcı ve kurumsal bir Türkçe ile konuş.
-4. Müşteri kanal kaplama veya fiyat sorduğunda en can alıcı bilgiyi ver ve ücretsiz 3D keşif için numara bırakmaya davet et.
-5. Ziyaretçi telefon numarası (05xx...) yazarsa teşekkür et ve mühendis ekibimizin gün içinde arayacağını belirt.
+TEMEL YANIT KURALLARI:
+1. ÇOK HIZLI, ÖZ VE MANTIKLI CEVAP VER. Asla gereksiz uzun cümleler, saçma kelimeler veya roman gibi paragraflar yazma.
+2. Maksimum 2-3 cümle veya 3 kısa madde ile doğrudan sorunun özünü yanıtla.
+3. Kusursuz, akıcı ve kurumsal bir Türkçe kullan.
+4. Müşteriyi nazikçe ücretsiz keşif ve teklif için telefon numarası bırakmaya davet et.
+5. Kullanıcı telefon numarası (05xx...) yazarsa teşekkür et ve proje mühendisimizin arayacağını belirt.
 
 DİNAMİK TAKİP SORULARI ZORUNLULUĞU:
-Her yanıtının en sonunda mutlaka kullanıcının bir sonraki adımda sorabileceği TAM 3 ADET kısa ve mantıklı soru önerisi koy.
-Format kesinlikle şu şekilde olmalıdır:
+Her cevabının en sonuna MUTLAKA aşağıdaki formatta tam 3 tane kısa, mantıklı ve konuya özel soru ekle:
 
 [SORULAR]
-1. Birinci soru?
-2. İkinci soru?
-3. Üçüncü soru?
+1. Birinci mantıklı soru?
+2. İkinci mantıklı soru?
+3. Üçüncü mantıklı soru?
 `;
 };
 
 // ============================================================================
-// HIZLI VE KISA YEREL MOTOR (Cevaba Özel 3 Dinamik Soru Üretir)
+// ANINDA YANIT VEREN AKILLI KURUMSAL MOTOR (Sıfır Gecikme)
 // ============================================================================
 export const generateSmartResponseWithQuestions = (userMessage) => {
   const msg = (userMessage || '').toLowerCase();
@@ -66,10 +72,10 @@ export const generateSmartResponseWithQuestions = (userMessage) => {
   const phoneMatch = msg.match(/(?:0\s*5|\+90\s*5|\b5)\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/);
   if (phoneMatch) {
     return {
-      text: `✅ **İletişim Numaranız Alındı!**\n\nPaylaşmış olduğunuz **${phoneMatch[0]}** numaralı telefonu Proje ve Mühendislik birimimize ilettim. Uzmanımız en kısa sürede sizi arayarak projeniz hakkında detaylı bilgi verecektir. Teşekkür ederiz.`,
+      text: `✅ **İletişim Numaranız Alındı!**\n\nPaylaşmış olduğunuz **${phoneMatch[0]}** numaralı telefonu Proje ve Mühendislik birimimize ilettim. Uzman mühendisimiz gün içinde sizinle iletişime geçerek keşif ve teklif sürecinizi başlatacaktır.`,
       questions: [
-        'Kanal kaplama montajı kaç gün sürer?',
-        'Keşif için herhangi bir ücret alınıyor mu?',
+        'Kanal kaplama montaj süresi nedir?',
+        'Garanti kapsamı neleri içerir?',
         'Referanslarınızı görebilir miyim?'
       ]
     };
@@ -78,7 +84,7 @@ export const generateSmartResponseWithQuestions = (userMessage) => {
   // Kanal Kaplama ve İzolasyon
   if (msg.includes('kanal') || msg.includes('kaplama') || msg.includes('hijyen') || msg.includes('temiz oda') || msg.includes('cleanroom')) {
     return {
-      text: `🛡️ **Alexander Troy Kanal Kaplama Sistemleri**\n\nİlaç, gıda ve sağlık tesisleri için geliştirdiğimiz kaplama çözümlerimiz **GMP ve ISO 14644** temiz oda standartlarına %100 uyumludur.\n\n• **Antibakteriyel Yüzey:** Bakteri ve küf tutmaz, kimyasallara dayanıklıdır.\n• **Sıfır Duruş Montaj:** Üretim hatlarınızı durdurmadan hızlı kilit panellerle monte edilir.\n• **10 Yıl Garanti:** Tam sızdırmazlık ve ısı/yoğuşma yalıtımı sağlar.\n\nTesisinize özel ücretsiz 3D keşif için telefon numaranızı iletebilirsiniz.`,
+      text: `🛡️ **Alexander Troy Kanal Kaplama Sistemleri**\n\nİlaç, gıda ve kimya tesisleri için geliştirdiğimiz kaplamalar **GMP ve ISO 14644** temiz oda standartlarına %100 uyumludur.\n\n• **Antibakteriyel Yüzey:** Bakteri ve partikül tutmaz, VHP gazlama ve kimyasallara dayanıklıdır.\n• **Sıfır Duruş (Zero-Downtime):** Üretim hatlarınızı durdurmadan modüler kilitli panellerle hızla monte edilir.\n• **10 Yıl Garanti:** Tam sızdırmazlık ve ısı/yoğuşma izolasyonu sağlar.\n\nTesisinize özel ücretsiz 3D keşif için telefon numaranızı iletebilirsiniz.`,
       questions: [
         'Kanal kaplama fiyat teklifi nasıl alınır?',
         'Sıfır duruşla montaj nasıl yapılıyor?',
@@ -159,18 +165,17 @@ export const generateSmartResponseWithQuestions = (userMessage) => {
 };
 
 // ============================================================================
-// OPENROUTER API ÇAĞRISI (Kısa, Hızlı & Dinamik Soru Ayrıştırmalı)
+// HIZLI VE AKILLI API ÇAĞRISI (Maksimum 3.5 Saniye Timeout'lu)
 // ============================================================================
-export const sendChatMessage = async ({ messages, siteContent }) => {
+export const sendChatMessage = async ({ messages }) => {
   const apiKey = (import.meta.env.VITE_OPENROUTER_API_KEY || '').trim();
   const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')?.content || '';
 
-  // Telefon numarası varsa anında hızlı yerel yanıt ver (gecikmesiz)
+  // Telefon varsa anında yanıt ver (gecikmesiz)
   if (/(?:0\s*5|\+90\s*5|\b5)\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/.test(lastUserMsg)) {
     return generateSmartResponseWithQuestions(lastUserMsg);
   }
 
-  // Eğer API anahtarı varsa OpenRouter'a kısa token limitiyle sor
   if (apiKey) {
     const systemPrompt = buildSystemPrompt();
     const apiMessages = [
@@ -178,8 +183,11 @@ export const sendChatMessage = async ({ messages, siteContent }) => {
       ...messages.map(m => ({ role: m.role, content: m.content }))
     ];
 
-    for (const modelCandidate of FALLBACK_MODELS) {
+    for (const modelCandidate of FAST_MODELS) {
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3800); // 3.8 saniyede yanıt gelmezse bekletme
+
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -191,16 +199,25 @@ export const sendChatMessage = async ({ messages, siteContent }) => {
           body: JSON.stringify({
             model: modelCandidate,
             messages: apiMessages,
-            temperature: 0.5, // Daha net, daha az saçmalayan tutarlı sıcaklık
-            max_tokens: 380   // Hızlı ve kısa cevap vermesini sağlar
-          })
+            temperature: 0.3,
+            max_tokens: 380
+          }),
+          signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         if (response.ok) {
           const data = await response.json();
-          const fullReply = data?.choices?.[0]?.message?.content;
-          if (fullReply && fullReply.trim().length > 0) {
-            // [SORULAR] etiketini ayıkla
+          const choice = data?.choices?.[0];
+          let fullReply = choice?.message?.content;
+
+          // Eğer model reasoning döndürdüyse ve content boşsa
+          if ((!fullReply || fullReply === 'null') && choice?.message?.reasoning) {
+            fullReply = choice.message.reasoning;
+          }
+
+          if (fullReply && typeof fullReply === 'string' && fullReply.trim().length > 0 && fullReply !== 'null') {
             let cleanText = fullReply;
             let extractedQuestions = [];
 
@@ -212,11 +229,8 @@ export const sendChatMessage = async ({ messages, siteContent }) => {
             }
 
             if (extractedQuestions.length === 0) {
-              extractedQuestions = [
-                'Fiyat ve keşif teklifi nasıl alınır?',
-                'Montaj süreci nasıl işliyor?',
-                'Telefon numaramı bırakmak istiyorum'
-              ];
+              const defaultFallbackQuestions = generateSmartResponseWithQuestions(lastUserMsg).questions;
+              extractedQuestions = defaultFallbackQuestions;
             }
 
             return {
@@ -226,12 +240,12 @@ export const sendChatMessage = async ({ messages, siteContent }) => {
           }
         }
       } catch (e) {
-        // Bir sonraki modele geç
+        // Zaman aşımı veya hata durumunda hemen bir sonraki modele / yerel motora geç
       }
     }
   }
 
-  // Model yanıt veremezse veya gecikirse anında zengin yerel yanıt döndür
+  // Model yavaş kalırsa veya yanıt vermezse saniyesinde profesyonel yerel yanıtı ver
   return generateSmartResponseWithQuestions(lastUserMsg);
 };
 
