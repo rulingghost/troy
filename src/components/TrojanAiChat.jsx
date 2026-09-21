@@ -11,10 +11,8 @@ import {
   Mail, 
   CheckCircle2, 
   Bot,
-  ExternalLink,
-  MessageSquare,
-  ChevronLeft,
-  ChevronRight
+  HelpCircle,
+  ArrowRight
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { 
@@ -24,12 +22,10 @@ import {
 } from '../services/aiService';
 import './TrojanAiChat.css';
 
-const quickSuggestions = [
-  { id: 'coating', label: '🛡️ Kanal Kaplama & Temiz Oda', text: 'Kanal kaplama sistemleriniz, GMP ve hijyen standartlarınız hakkında detaylı bilgi alabilir miyim?' },
-  { id: 'pricing', label: '📐 Ücretsiz Keşif & Metraj Teklifi', text: 'Tesisimiz için ücretsiz keşif, 3D ölçülendirme ve maliyet teklifi nasıl alabiliriz?' },
-  { id: 'installation', label: '⚡ Sıfır Duruşla Hızlı Montaj', text: 'Üretim hatlarımızı durdurmadan kanal kaplama montajı nasıl yapılıyor?' },
-  { id: 'mice', label: '🏛️ Alx MICE & Kongre Çözümleri', text: 'Medikal kongre organizasyonları, hekim preceptorship eğitimleri ve kurumsal etkinlikleriniz nelerdir?' },
-  { id: 'contact', label: '📞 Uzmanımız Sizi Arasın', text: 'Yetkili proje mühendisinizin beni aramasını istiyorum, numaramı bırakabilir miyim?' }
+const defaultWelcomeQuestions = [
+  '🛡️ Kanal Kaplama Sistemleri Nedir?',
+  '📐 Ücretsiz Keşif & Fiyat Teklifi Nasıl Alınır?',
+  '📞 Yetkilinizin Beni Aramasını İstiyorum'
 ];
 
 const TrojanAiChat = ({ isOpen, onClose }) => {
@@ -48,13 +44,6 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const suggestionsRef = useRef(null);
-
-  const scrollSuggestions = (dir) => {
-    if (suggestionsRef.current) {
-      suggestionsRef.current.scrollBy({ left: dir * 180, behavior: 'smooth' });
-    }
-  };
 
   // Oturum Başlatma ve Mesajları Yükleme
   useEffect(() => {
@@ -81,7 +70,8 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
     const initialMsg = {
       id: 'welcome-1',
       role: 'assistant',
-      content: `Merhaba Sn. Misafirimiz! 👋\n\nBen **Alexander Troy Akıllı Proje Danışmanıyım**. İlaç ve gıda tesislerine özel **antibakteriyel kanal kaplama sistemlerimiz**, temiz oda çözümleri ve **Alx MICE & etkinlik yönetimi** hakkında merak ettiğiniz tüm teknik detayları yanıtlayabilir, projeniz için **ücretsiz keşif ve fiyat teklifi** sürecinizi başlatabilirim.\n\nSize bugün hangi konuda yardımcı olabilirim?`,
+      content: `Merhaba Sn. Misafirimiz! 👋\n\nAlexander Troy kurumsal danışmanına hoş geldiniz. İlaç, gıda ve sağlık tesislerine özel **antibakteriyel kanal kaplama sistemlerimiz**, GMP temiz oda standartları ve **Alx MICE kongre hizmetlerimiz** hakkında size hızlıca bilgi verebilirim.\n\nAşağıdaki sorulardan birine tıklayarak hemen başlayabilir veya sorunuzu yazabilirsiniz:`,
+      questions: defaultWelcomeQuestions,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     setMessages([initialMsg]);
@@ -128,6 +118,13 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
     const text = (textToSend || inputText).trim();
     if (!text || isLoading) return;
 
+    // Eğer "telefon numaramı bırakmak" veya "aramasını istiyorum" tarzı bir butona tıklandıysa formu aç
+    if (text.toLowerCase().includes('ara') || text.toLowerCase().includes('numara') || text.toLowerCase().includes('iletişim')) {
+      if (!leadSaved && !visitorPhone) {
+        setShowLeadForm(true);
+      }
+    }
+
     const userMessage = {
       id: 'usr_' + Date.now(),
       role: 'user',
@@ -152,7 +149,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
     persistSession(updatedMessages, { phone: currentPhone });
 
     try {
-      // AI servisine gönder
+      // AI servisine gönder (Kısa, net ve dinamik 3 soru üreten sistem)
       const aiResponse = await sendChatMessage({
         messages: updatedMessages.filter(m => m.id !== 'welcome-1'),
         siteContent: content
@@ -161,7 +158,8 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
       const assistantMessage = {
         id: 'ast_' + Date.now(),
         role: 'assistant',
-        content: aiResponse.content,
+        content: aiResponse.text || aiResponse.content || 'Size nasıl yardımcı olabilirim?',
+        questions: aiResponse.questions || [],
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
 
@@ -169,25 +167,21 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
       setMessages(finalMessages);
       persistSession(finalMessages, { phone: currentPhone });
     } catch (error) {
-      console.error('Mesaj gönderim hatası:', error);
+      console.error('Mesaj hatası:', error);
       const errorMsg = {
         id: 'err_' + Date.now(),
         role: 'assistant',
-        content: 'Bağlantı esnasında bir gecikme yaşandı. Sorunuzu yanıtlamak veya sizi aramak üzere **+90 212 211 44 48** numaralı santralimizden veya buradan numaranızı ileterek uzmanımıza hemen ulaşabilirsiniz.',
+        content: 'Sorunuzu yanıtlarken kısa bir gecikme oluştu. Uzman mühendisimizin sizi doğrudan araması için telefon numaranızı bırakabilirsiniz.',
+        questions: [
+          'Kanal kaplama fiyatı ne kadar?',
+          'Telefon numaramı bırakmak istiyorum',
+          'İletişim bilgileriniz nedir?'
+        ],
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages([...updatedMessages, errorMsg]);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  // Hızlı öneri butonuna tıklama
-  const handleSuggestionClick = (suggestion) => {
-    if (suggestion.id === 'contact') {
-      setShowLeadForm(true);
-    } else {
-      handleSendMessage(suggestion.text);
     }
   };
 
@@ -202,7 +196,12 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
     const leadConfirmedMsg = {
       id: 'lead_confirm_' + Date.now(),
       role: 'assistant',
-      content: `✅ **İletişim bilgileriniz başarıyla alındı!**\n\nSn. **${visitorName || 'Değerli Misafirimiz'}**, paylaşmış olduğunuz **${visitorPhone}** numaralı telefonunuz üzerinden proje mühendisimiz en kısa sürede sizinle irtibata geçecek ve teknik keşif/teklif sürecinizi başlatacaktır. Alexander Troy kalitesini tercih ettiğiniz için teşekkür ederiz.`,
+      content: `✅ **İletişim bilgileriniz başarıyla alındı!**\n\nSn. **${visitorName || 'Değerli Misafirimiz'}**, **${visitorPhone}** numaralı telefonunuz Proje Müdürlüğümüze iletilmiştir. Uzman mühendisimiz gün içinde sizinle iletişime geçerek keşif ve teklif detaylarını aktaracaktır.`,
+      questions: [
+        'Kanal kaplama montaj süresi nedir?',
+        'Garanti kapsamı neleri içerir?',
+        'Referanslarınızı görebilir miyim?'
+      ],
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
@@ -213,7 +212,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
 
   // Sohbeti Sıfırlama
   const handleResetChat = () => {
-    if (window.confirm('Mevcut sohbeti sıfırlamak istiyor musunuz?')) {
+    if (window.confirm('Sohbeti sıfırlamak istiyor musunuz?')) {
       const newSessionId = 'chat_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
       localStorage.setItem('troy_active_chat_session_id', newSessionId);
       localStorage.removeItem(`troy_chat_msgs_${sessionId}`);
@@ -226,13 +225,14 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
       setMessages([{
         id: 'welcome-1',
         role: 'assistant',
-        content: 'Merhaba Sn. Misafirimiz! Alexander Troy kanal kaplama sistemleri ve kurumsal çözümlerimiz hakkında size nasıl yardımcı olabilirim?',
+        content: 'Merhaba Sn. Misafirimiz! Alexander Troy kanal kaplama ve temiz oda çözümlerimiz hakkında size nasıl yardımcı olabilirim?',
+        questions: defaultWelcomeQuestions,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }]);
     }
   };
 
-  // Zengin Formatlayıcı (Kalın metin, emojiler, maddeler)
+  // Zengin Formatlayıcı
   const renderFormattedMessage = (content) => {
     if (!content) return '';
     const lines = content.split('\n');
@@ -284,7 +284,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
             <div className="chat-header-info">
               <h3 className="chat-title">Alexander Troy Danışman</h3>
               <p className="chat-subtitle">
-                <span className="dot-blink" /> 7/24 Kanal Kaplama &amp; Proje Canlı Destek
+                <span className="dot-blink" /> Canlı Proje &amp; Kanal Kaplama Desteği
               </p>
             </div>
           </div>
@@ -314,7 +314,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
           <div className="chat-lead-banner">
             <div className="lead-banner-text">
               <PhoneCall size={13} />
-              <span>Projeniz için uzmanımızın sizi aramasını ister misiniz?</span>
+              <span>Uzmanımızın sizi hemen aramasını ister misiniz?</span>
             </div>
             <button 
               type="button" 
@@ -331,7 +331,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
           <form className="chat-lead-panel" onSubmit={handleLeadSubmit}>
             <div className="lead-panel-header">
               <ShieldCheck size={16} />
-              <h4>Ücretsiz 3D Keşif &amp; Fiyat Teklifi İçin Numaranızı İletin</h4>
+              <h4>Ücretsiz Keşif &amp; Fiyat Teklifi İçin Numaranızı İletin</h4>
             </div>
             <div className="lead-inputs">
               <div className="lead-field">
@@ -358,7 +358,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
                 <Mail size={14} />
                 <input 
                   type="email" 
-                  placeholder="E-Posta Adresiniz (İsteğe bağlı)" 
+                  placeholder="E-Posta (İsteğe bağlı)" 
                   value={visitorEmail} 
                   onChange={(e) => setVisitorEmail(e.target.value)}
                 />
@@ -374,7 +374,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
               </button>
               <button type="submit" className="lead-btn-submit">
                 <CheckCircle2 size={14} />
-                <span>Bilgilerimi İlet</span>
+                <span>İlet</span>
               </button>
             </div>
           </form>
@@ -382,26 +382,52 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
 
         {/* Mesaj Akışı */}
         <div className="chat-messages-area">
-          {messages.map((msg) => (
-            <div 
-              key={msg.id} 
-              className={`chat-message-row ${msg.role === 'user' ? 'user-row' : 'assistant-row'}`}
-            >
-              {msg.role === 'assistant' && (
-                <div className="msg-avatar">
-                  <Sparkles size={13} />
+          {messages.map((msg, index) => {
+            const isLastAssistant = msg.role === 'assistant' && index === messages.length - 1;
+            const hasQuestions = msg.questions && Array.isArray(msg.questions) && msg.questions.length > 0;
+
+            return (
+              <div key={msg.id} className="chat-message-group">
+                <div 
+                  className={`chat-message-row ${msg.role === 'user' ? 'user-row' : 'assistant-row'}`}
+                >
+                  {msg.role === 'assistant' && (
+                    <div className="msg-avatar">
+                      <Sparkles size={13} />
+                    </div>
+                  )}
+                  <div className="msg-bubble">
+                    <div className="msg-content">
+                      {renderFormattedMessage(msg.content)}
+                    </div>
+                    <div className="msg-meta">
+                      <span className="msg-time">{msg.timestamp}</span>
+                    </div>
+                  </div>
                 </div>
-              )}
-              <div className="msg-bubble">
-                <div className="msg-content">
-                  {renderFormattedMessage(msg.content)}
-                </div>
-                <div className="msg-meta">
-                  <span className="msg-time">{msg.timestamp}</span>
-                </div>
+
+                {/* SADECE EN SON ASİSTAN MESAJININ ALTINDA ÇIKAN DİNAMİK 3 SORU BUTONU */}
+                {isLastAssistant && hasQuestions && !isLoading && (
+                  <div className="dynamic-questions-container">
+                    <span className="dynamic-questions-title">💡 İlgili Sorular:</span>
+                    <div className="dynamic-questions-list">
+                      {msg.questions.map((qText, qIdx) => (
+                        <button
+                          key={qIdx}
+                          type="button"
+                          className="dynamic-question-btn"
+                          onClick={() => handleSendMessage(qText)}
+                        >
+                          <span>{qText}</span>
+                          <ArrowRight size={12} className="btn-arrow" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {isLoading && (
             <div className="chat-message-row assistant-row">
@@ -419,49 +445,6 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Hızlı Öneri Çipleri (Quick Suggestions) */}
-        <div className="chat-suggestions-wrapper">
-          <button 
-            type="button" 
-            className="chip-scroll-btn left" 
-            onClick={() => scrollSuggestions(-1)}
-            title="Sola Kaydır"
-          >
-            <ChevronLeft size={14} />
-          </button>
-
-          <div 
-            className="chat-suggestions-strip" 
-            ref={suggestionsRef}
-            onWheel={(e) => {
-              if (e.deltaY !== 0) {
-                e.currentTarget.scrollLeft += e.deltaY;
-              }
-            }}
-          >
-            {quickSuggestions.map((item) => (
-              <button 
-                key={item.id} 
-                type="button" 
-                className="suggestion-chip"
-                onClick={() => handleSuggestionClick(item)}
-                disabled={isLoading}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-
-          <button 
-            type="button" 
-            className="chip-scroll-btn right" 
-            onClick={() => scrollSuggestions(1)}
-            title="Sağa Kaydır"
-          >
-            <ChevronRight size={14} />
-          </button>
-        </div>
-
         {/* Chat Input Alanı */}
         <form 
           className="chat-input-bar" 
@@ -473,7 +456,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
           <input 
             ref={inputRef}
             type="text" 
-            placeholder="Kanal kaplama veya projeniz hakkında soru sorun..." 
+            placeholder="Kanal kaplama veya projeniz hakkında yazın..." 
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             disabled={isLoading}

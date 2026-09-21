@@ -405,78 +405,72 @@
   40% { transform: scale(1); opacity: 1; }
 }
 
-/* Hızlı Öneri Çipleri Sarmalayıcısı & Ok Butonları */
-.chat-suggestions-wrapper {
-  position: relative;
+/* Dinamik Takip Soruları (Her Mesajın Altında Özel Çıkar) */
+.dynamic-questions-container {
+  margin-top: 8px;
+  margin-left: 38px;
   display: flex;
-  align-items: center;
-  background: rgba(15, 23, 42, 0.6);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 4px 6px;
-}
-
-.chip-scroll-btn {
-  background: rgba(30, 27, 75, 0.85);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: #c084fc;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
-  z-index: 2;
-}
-
-.chip-scroll-btn:hover {
-  background: #7c3aed;
-  color: #ffffff;
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
-}
-
-.chat-suggestions-strip {
-  flex: 1;
-  padding: 6px 6px;
-  display: flex;
+  flex-direction: column;
   gap: 6px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(168, 85, 247, 0.3) transparent;
+  animation: questionsFadeIn 0.3s ease-out;
 }
 
-.chat-suggestions-strip::-webkit-scrollbar {
-  height: 3px;
+@keyframes questionsFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.chat-suggestions-strip::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.35);
-  border-radius: 6px;
+.dynamic-questions-title {
+  font-size: 11px;
+  color: #c084fc;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.suggestion-chip {
-  background: rgba(30, 27, 75, 0.85);
+.dynamic-questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dynamic-question-btn {
+  background: rgba(30, 27, 75, 0.7);
   border: 1px solid rgba(168, 85, 247, 0.3);
   color: #e2e8f0;
-  padding: 5px 11px;
-  border-radius: 14px;
-  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 12px;
   font-weight: 500;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.dynamic-question-btn:hover {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.4), rgba(79, 70, 229, 0.4));
+  border-color: #a855f7;
+  color: #ffffff;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+}
+
+.dynamic-question-btn .btn-arrow {
+  color: #fbbf24;
+  opacity: 0.8;
+  transition: transform 0.2s ease;
   flex-shrink: 0;
 }
 
-.suggestion-chip:hover:not(:disabled) {
-  background: #7c3aed;
-  color: #ffffff;
-  border-color: #a855f7;
-  transform: translateY(-1px);
+.dynamic-question-btn:hover .btn-arrow {
+  transform: translateX(3px);
+  opacity: 1;
 }
 
 /* Input Bar */
