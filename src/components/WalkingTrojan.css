@@ -40,15 +40,24 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  /* Havaya uçurmayan, zeminde hafif yuvarlanma/ilerleme efekti */
-  animation: trojanRoll 1.2s ease-in-out infinite alternate;
   transition: filter 0.25s ease, transform 0.25s ease;
   line-height: 0;
 }
 
+/* Yürürken hafif adımlama / tekerlek efekti */
+.trojan-horse-body.is-walking {
+  animation: trojanRoll 1.1s ease-in-out infinite alternate;
+}
+
+/* 1/8 pozisyonuna ulaşıp park ettiğinde stabil duruş */
+.trojan-horse-body.is-parked {
+  animation: none;
+  transform: translateY(0);
+}
+
 .walking-trojan-container.hovered .trojan-horse-body {
-  animation-play-state: paused;
   filter: drop-shadow(0 4px 14px rgba(124, 58, 237, 0.6)) drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+  transform: scale(1.04);
 }
 
 .trojan-horse-img {
