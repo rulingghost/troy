@@ -13,7 +13,7 @@ const WalkingTrojan = ({ onOpenChat, isChatOpen }) => {
   const requestRef = useRef();
   const lastTimeRef = useRef();
 
-  // Ekran boyutunu izle & 1/8 pozisyonunu dinamik tut
+  // Ekran boyutunu izle & 1/8 pozisyonunu güncel tut
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
@@ -27,11 +27,11 @@ const WalkingTrojan = ({ onOpenChat, isChatOpen }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [hasArrived]);
 
-  // Sol taraftan başla, ekranın 1/8'i kadar yol al ve orada sabit kal (git-gel yapmaz)
+  // Sağ taraftan başla, ekranın 1/8'i kadar sola yol al ve orada sabit kal (git-gel yapmaz)
   useEffect(() => {
     if (hasArrived || isChatOpen || isHidden || isMobile) return;
 
-    const speed = 55; // Piksel/saniye (akıcı ve doğal yürüme hızı)
+    const speed = 55; // Piksel/saniye (akıcı ve doğal adımlama hızı)
 
     const animate = (time) => {
       const targetX = Math.round(window.innerWidth / 8);
@@ -79,7 +79,7 @@ const WalkingTrojan = ({ onOpenChat, isChatOpen }) => {
     <div 
       className={`walking-trojan-container ${isMobile ? 'is-mobile' : ''} ${isHovered ? 'hovered' : ''} ${hasArrived ? 'is-arrived' : ''}`}
       style={{
-        transform: isMobile ? 'none' : `translateX(${posX}px)`
+        transform: isMobile ? 'none' : `translateX(-${posX}px)`
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -113,8 +113,8 @@ const WalkingTrojan = ({ onOpenChat, isChatOpen }) => {
         </div>
       )}
 
-      {/* Yüzü daima sağa (ileriye) bakar */}
-      <div className="trojan-flip-wrap face-right">
+      {/* Sağdan sola yürüdüğü için yüzü sola bakar */}
+      <div className="trojan-flip-wrap face-left">
         <div 
           className={`trojan-horse-body ${isWalking ? 'is-walking' : 'is-parked'}`}
           onClick={onOpenChat}
