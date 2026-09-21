@@ -42,22 +42,27 @@ export const saveAiSettings = (settings) => {
 // ============================================================================
 export const buildSystemPrompt = () => {
   return `
-Sen "Alexander Troy" kurumsal firmasının Canlı Destek Danışmanısın.
-Uzmanlık Alanın: İlaç, gıda ve kimya tesisleri için antibakteriyel kanal kaplama sistemleri, GMP temiz oda standartları, sıfır duruşlu (zero-downtime) montaj ve Alx MICE medikal kongre çözümleri.
+Sen "Alexander Troy" kurumsal firmasının kıdemli Proje ve Mühendislik Danışmanısın.
+Uzmanlık Alanın: İlaç, gıda, kimya ve medikal tesisler için antibakteriyel kanal kaplama sistemleri, GMP ve ISO 14644 temiz oda standartları, sıfır duruşlu (zero-downtime) montaj ve Alx MICE medikal çözümleri.
 
-KESİN KURALLAR:
-1. SADECE TÜRKÇE YANIT VER. Asla İngilizce, iç ses, reasoning, "We need", "User asks", "Let's formulate" veya düşünce süreci yazma.
-2. Net, kurumsal ve akıcı 2-3 tam cümle ile doğrudan soruyu yanıtla. Cümleleri ASLA yarım bırakma.
-3. Müşteriyi nazikçe ücretsiz keşif ve teklif için telefon numarası bırakmaya davet et.
-4. Kullanıcı telefon numarası (05xx...) yazarsa teşekkür et ve proje mühendisimizin arayacağını belirt.
+ÇOK ÖNEMLİ KURALLAR:
+1. KULLANICIYA HER SEFERİNDE PAPAĞAN GİBİ "TELEFON NUMARANIZI BIRAKIN" DEME! Bu kullanıcıyı bıktırır ve sistemi yapay gösterir.
+2. Kullanıcının sorusuna GERÇEK, DETAYLI VE UZMANCA BİLGİ VER:
+   - Sektör sorarsa: İlaç üretimi, gıda işleme tesisleri, kimya laboratuvarları, hastane ve temiz odalara hizmet verdiğimizi, GMP/ISO 14644 standartlarına tam uyumlu olduğumuzu anlat.
+   - Malzeme/gereksinim sorarsa: Antibakteriyel, VHP hidrojen peroksit gazına ve agresif kimyasallara dayanıklı, sızdırmaz modüler panellerimizi anlat.
+   - Montaj sorarsa: Sıfır duruşla (zero-downtime) tesisin üretimini durdurmadan, toz çıkarmadan modüler kilitli panellerle hızlıca monte edildiğini anlat.
+   - Fiyat/keşif sorarsa: Ücretsiz 3D lazer tarama ile yerinde keşif yapıldığını ve metraja göre net maliyet tablosu sunulduğunu belirt; sadece bu aşamada isterse numara bırakabileceğini ekle.
+3. Asla kullanıcının sorusunu ters çevirip "X öğrenmek için lütfen telefon numaranızı bırakın" gibi anlamsız yanıtlar verme. Bilgiyi kullanıcıya doğrudan sen aktaracaksın!
+4. SADECE TÜRKÇE konuş. Akıcı, kurumsal, zengin ve profesyonel 2-3 cümlelik doyurucu yanıt ver. Cümleleri asla yarım bırakma.
+5. Kullanıcı 05xx... ile telefon numarası bırakırsa teşekkür et ve mühendisimizin gün içinde arayacağını belirt.
 
-DİNAMİK TAKİP SORULARI:
-Cevabının en sonuna MUTLAKA aşağıdaki formatta tam 3 tane kısa ve konuya özel soru ekle:
+DİNAMİK TAKİP SORULARI ZORUNLULUĞU:
+Cevabının en sonuna MUTLAKA aşağıdaki formatta kullanıcının ilgilenebileceği TAM 3 TANE YENİ VE MANTIKLI soru ekle (aynı soruları tekrarlama):
 
 [SORULAR]
-1. Birinci soru?
-2. İkinci soru?
-3. Üçüncü soru?
+1. Birinci yeni soru?
+2. İkinci yeni soru?
+3. Üçüncü yeni soru?
 `;
 };
 
@@ -111,6 +116,30 @@ export const generateSmartResponseWithQuestions = (userMessage) => {
       questions: [
         'Ücretsiz keşif için randevu alabilir miyim?',
         'Garanti süreniz ne kadar?',
+        'İletişim bilgilerinizi alabilir miyim?'
+      ]
+    };
+  }
+
+  // Sektörler & Kullanım Alanları
+  if (msg.includes('sektör') || msg.includes('ilaç') || msg.includes('gıda') || msg.includes('kimya') || msg.includes('hastane')) {
+    return {
+      text: `🏭 **Hizmet Verdiğimiz Sektörler & Tesisler**\n\nAlexander Troy olarak yüksek hijyen standartlarının zorunlu olduğu kritik sektörlerde çalışıyoruz:\n\n• **İlaç & Biyoteknoloji:** GMP Grade A/B/C/D temiz odaları, VHP gazlama alanları.\n• **Gıda & İçecek:** Bakteri, küf ve maya oluşumunu engelleyen yıkanabilir hatlar.\n• **Kimya & Laboratuvar:** Agresif kimyasallara ve asit buharlarına tam dayanım.\n• **Hastaneler & Medikal:** Ameliyathane ve yoğun bakım HVAC kanalları.`,
+      questions: [
+        'Sıfır duruşla montaj nasıl yapılıyor?',
+        'Kanal kaplama teknik özellikleri nelerdir?',
+        'Ücretsiz keşif için nasıl randevu alırım?'
+      ]
+    };
+  }
+
+  // Özel Gereksinimler & Teknik Özellikler
+  if (msg.includes('gereksinim') || msg.includes('özellik') || msg.includes('dayanım') || msg.includes('standart')) {
+    return {
+      text: `🔬 **Özel Gereksinimler & Teknik Standartlarımız**\n\nTesisinizin ortam koşullarına göre özel mühendislik çözümleri sunuyoruz:\n\n• **Hijyen & Temiz Oda:** GMP, ISO 14644 ve FDA gereksinimlerine %100 uyumluluk.\n• **Yüksek Dayanım:** VHP hidrojen peroksit gazlama, klor bazlı dezenfektanlar ve kimyasallara tam direnç.\n• **Sızdırmazlık & İzolasyon:** Yoğuşma ve ısı kaybını önleyen 10 yıl garantili sızdırmazlık.`,
+      questions: [
+        'Kanal kaplama fiyat teklifi nasıl alınır?',
+        'Referans projelerinizi görebilir miyim?',
         'İletişim bilgilerinizi alabilir miyim?'
       ]
     };
@@ -212,7 +241,7 @@ export const sendChatMessage = async ({ messages }) => {
           body: JSON.stringify({
             model: modelCandidate,
             messages: apiMessages,
-            temperature: 0.3,
+            temperature: 0.6, // Doğal, zengin ve çeşitli konuşma tonu (tekrarları engeller)
             max_tokens: 750 // Yarım kalmayı ve kelime ortasında kesilmeyi tamamen engeller
           }),
           signal: controller.signal
