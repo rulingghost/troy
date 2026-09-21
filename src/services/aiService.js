@@ -3,8 +3,8 @@ const STORAGE_CHATS_KEY = 'troy_ai_chats_history';
 
 // 1 Saniyenin altında çalışan, mantıklı, zeki ve kurumsal Türkçe bilen model sırası
 const FAST_MODELS = [
-  'nex-agi/nex-n2.5-mini:free',
-  'deepseek/deepseek-chat'
+  'deepseek/deepseek-chat',
+  'nex-agi/nex-n2.5-mini:free'
 ];
 
 export const defaultAiSettings = {
@@ -42,23 +42,22 @@ export const saveAiSettings = (settings) => {
 // ============================================================================
 export const buildSystemPrompt = () => {
   return `
-Sen "Alexander Troy" kurumsal firmasının profesyonel, zeki ve son derece net Canlı Destek Danışmanısın.
-Uzmanlık Alanın: İlaç, gıda, kimya ve medikal tesisler için antibakteriyel kanal kaplama sistemleri, GMP temiz oda standartları, sıfır duruşlu montaj ve Alx MICE medikal kongre çözümleri.
+Sen "Alexander Troy" kurumsal firmasının Canlı Destek Danışmanısın.
+Uzmanlık Alanın: İlaç, gıda ve kimya tesisleri için antibakteriyel kanal kaplama sistemleri, GMP temiz oda standartları, sıfır duruşlu (zero-downtime) montaj ve Alx MICE medikal kongre çözümleri.
 
-TEMEL YANIT KURALLARI:
-1. ÇOK HIZLI, ÖZ VE MANTIKLI CEVAP VER. Asla gereksiz uzun cümleler, saçma kelimeler veya roman gibi paragraflar yazma.
-2. Maksimum 2-3 cümle veya 3 kısa madde ile doğrudan sorunun özünü yanıtla.
-3. Kusursuz, akıcı ve kurumsal bir Türkçe kullan.
-4. Müşteriyi nazikçe ücretsiz keşif ve teklif için telefon numarası bırakmaya davet et.
-5. Kullanıcı telefon numarası (05xx...) yazarsa teşekkür et ve proje mühendisimizin arayacağını belirt.
+KESİN KURALLAR:
+1. SADECE TÜRKÇE YANIT VER. Asla İngilizce, iç ses, reasoning, "We need", "User asks", "Let's formulate" veya düşünce süreci yazma.
+2. Net, kurumsal ve akıcı 2-3 tam cümle ile doğrudan soruyu yanıtla. Cümleleri ASLA yarım bırakma.
+3. Müşteriyi nazikçe ücretsiz keşif ve teklif için telefon numarası bırakmaya davet et.
+4. Kullanıcı telefon numarası (05xx...) yazarsa teşekkür et ve proje mühendisimizin arayacağını belirt.
 
-DİNAMİK TAKİP SORULARI ZORUNLULUĞU:
-Her cevabının en sonuna MUTLAKA aşağıdaki formatta tam 3 tane kısa, mantıklı ve konuya özel soru ekle:
+DİNAMİK TAKİP SORULARI:
+Cevabının en sonuna MUTLAKA aşağıdaki formatta tam 3 tane kısa ve konuya özel soru ekle:
 
 [SORULAR]
-1. Birinci mantıklı soru?
-2. İkinci mantıklı soru?
-3. Üçüncü mantıklı soru?
+1. Birinci soru?
+2. İkinci soru?
+3. Üçüncü soru?
 `;
 };
 
@@ -176,6 +175,20 @@ export const sendChatMessage = async ({ messages }) => {
     return generateSmartResponseWithQuestions(lastUserMsg);
   }
 
+  // Modelin iç sesi / reasoning veya saçma yanıt filtresi
+  const isGarbageOrReasoning = (str) => {
+    if (!str || typeof str !== 'string' || str.trim().length < 15) return true;
+    const lower = str.toLowerCase();
+    return (
+      lower.includes('we need') || 
+      lower.includes('user asks') || 
+      lower.includes('rule says') || 
+      lower.includes("let's formulate") ||
+      lower.includes('need explain') ||
+      lower.includes('mention pre-fabricated')
+    );
+  };
+
   if (apiKey) {
     const systemPrompt = buildSystemPrompt();
     const apiMessages = [
@@ -186,7 +199,7 @@ export const sendChatMessage = async ({ messages }) => {
     for (const modelCandidate of FAST_MODELS) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3800); // 3.8 saniyede yanıt gelmezse bekletme
+        const timeoutId = setTimeout(() => controller.abort(), 4500);
 
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
@@ -200,7 +213,7 @@ export const sendChatMessage = async ({ messages }) => {
             model: modelCandidate,
             messages: apiMessages,
             temperature: 0.3,
-            max_tokens: 380
+            max_tokens: 750 // Yarım kalmayı ve kelime ortasında kesilmeyi tamamen engeller
           }),
           signal: controller.signal
         });
@@ -210,42 +223,41 @@ export const sendChatMessage = async ({ messages }) => {
         if (response.ok) {
           const data = await response.json();
           const choice = data?.choices?.[0];
-          let fullReply = choice?.message?.content;
+          const rawContent = choice?.message?.content;
 
-          // Eğer model reasoning döndürdüyse ve content boşsa
-          if ((!fullReply || fullReply === 'null') && choice?.message?.reasoning) {
-            fullReply = choice.message.reasoning;
-          }
+          // Asla reasoning/iç ses alanını kullanıcıya gösterme! Yalnızca geçerli Türkçe içerik
+          if (rawContent && typeof rawContent === 'string' && !isGarbageOrReasoning(rawContent)) {
+            // Eğer yanıt yarım kesilmişse (finish_reason = length ve nokta ile bitmemişse) reddet
+            const isCutOff = choice?.finish_reason === 'length' && !/[.!?\n]$/.test(rawContent.trim());
+            if (!isCutOff) {
+              let cleanText = rawContent.trim();
+              let extractedQuestions = [];
 
-          if (fullReply && typeof fullReply === 'string' && fullReply.trim().length > 0 && fullReply !== 'null') {
-            let cleanText = fullReply;
-            let extractedQuestions = [];
+              if (cleanText.includes('[SORULAR]')) {
+                const parts = cleanText.split('[SORULAR]');
+                cleanText = parts[0].trim();
+                const qLines = parts[1].split('\n').map(l => l.replace(/^\d+[\.\)\-]\s*/, '').trim()).filter(l => l.length > 3);
+                extractedQuestions = qLines.slice(0, 3);
+              }
 
-            if (fullReply.includes('[SORULAR]')) {
-              const parts = fullReply.split('[SORULAR]');
-              cleanText = parts[0].trim();
-              const qLines = parts[1].split('\n').map(l => l.replace(/^\d+[\.\)\-]\s*/, '').trim()).filter(l => l.length > 3);
-              extractedQuestions = qLines.slice(0, 3);
+              if (extractedQuestions.length === 0) {
+                extractedQuestions = generateSmartResponseWithQuestions(lastUserMsg).questions;
+              }
+
+              return {
+                text: cleanText,
+                questions: extractedQuestions
+              };
             }
-
-            if (extractedQuestions.length === 0) {
-              const defaultFallbackQuestions = generateSmartResponseWithQuestions(lastUserMsg).questions;
-              extractedQuestions = defaultFallbackQuestions;
-            }
-
-            return {
-              text: cleanText,
-              questions: extractedQuestions
-            };
           }
         }
       } catch (e) {
-        // Zaman aşımı veya hata durumunda hemen bir sonraki modele / yerel motora geç
+        // Hata durumunda bir sonraki modele geç
       }
     }
   }
 
-  // Model yavaş kalırsa veya yanıt vermezse saniyesinde profesyonel yerel yanıtı ver
+  // Model yavaş kalırsa, yarım kalırsa veya saçmalarsa 0ms profesyonel yerel yanıtı ver
   return generateSmartResponseWithQuestions(lastUserMsg);
 };
 
