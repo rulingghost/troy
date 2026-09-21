@@ -44,8 +44,10 @@ import {
   MapPin,
   ClipboardCheck,
   Search,
-  X
+  X,
+  Bot
 } from 'lucide-react';
+import AdminAiSupportTab from '../components/AdminAiSupportTab';
 import './Admin.css';
 
 // Reusable Image Uploader Component supporting Vercel Blob and direct URL
@@ -1586,6 +1588,20 @@ const Admin = () => {
               >
                 <Users size={18} />
                 <span>Çözüm Ortakları</span>
+              </button>
+            )}
+
+            {/* AI Canlı Destek & Görüşmeler */}
+            {!tabSearchQuery && <div className="tab-group-label">YAPAY ZEKA &amp; CANLI DESTEK</div>}
+
+            {(!tabSearchQuery || 'ai yapay zeka canli destek sohbet lead openrouter bot gorüsmeler'.includes(tabSearchQuery.toLowerCase())) && (
+              <button 
+                type="button" 
+                className={`tab-btn ${activeTab === 'ai-support' ? 'active' : ''}`}
+                onClick={() => setActiveTab('ai-support')}
+              >
+                <Bot size={18} />
+                <span>AI Destek &amp; Görüşmeler</span>
               </button>
             )}
 
@@ -5178,6 +5194,13 @@ const Admin = () => {
                   </div>
                 </form>
               </div>
+            </section>
+          )}
+
+          {/* TAB: AI CANLI DESTEK & GÖRÜŞMELER */}
+          {activeTab === 'ai-support' && (
+            <section className="admin-tab-content">
+              <AdminAiSupportTab />
             </section>
           )}
         </main>

@@ -13,6 +13,7 @@ dist-ssr
 *.local
 .vercel
 .dev-site-content.json
+.dev-ai-chats.json
 
 
 # Editor directories and files

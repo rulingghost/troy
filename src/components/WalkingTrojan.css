@@ -1,0 +1,202 @@
+/* Walking Trojan Horse Mascot Styles - Grounded & Direction Corrected */
+
+.walking-trojan-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 9990;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+/* Yön Döndürme Sarmalayıcısı - Animasyondan bağımsız flip */
+.trojan-flip-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center bottom;
+}
+
+/* Sağa giderken normal (yüzü sağa bakar) */
+.trojan-flip-wrap.face-right {
+  transform: scaleX(1);
+}
+
+/* Sola dönerken tam aynalanır (yüzü sola bakar - geri geri yürümez!) */
+.trojan-flip-wrap.face-left {
+  transform: scaleX(-1);
+}
+
+/* Truva Atı Gövdesi */
+.trojan-horse-body {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* Havaya uçurmayan, zeminde hafif yuvarlanma/ilerleme efekti */
+  animation: trojanRoll 1.2s ease-in-out infinite alternate;
+  transition: filter 0.25s ease, transform 0.25s ease;
+  line-height: 0;
+}
+
+.walking-trojan-container.hovered .trojan-horse-body {
+  animation-play-state: paused;
+  filter: drop-shadow(0 4px 14px rgba(124, 58, 237, 0.6)) drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+}
+
+.trojan-horse-img {
+  height: 70px;
+  width: auto;
+  max-width: 82px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  margin-bottom: -2px; /* Tam zemin çizgisine yapıştır */
+}
+
+/* Zeminde Hafif Ahşap/Tekerlek Sarsıntısı (Havaya Kaldırmaz, Uçurmaz) */
+@keyframes trojanRoll {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-0.8px) rotate(0.4deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(-0.3deg);
+  }
+}
+
+/* Zemin Temas Gölgesi - Atın kesinlikle yere basmasını sağlar */
+.trojan-ground-shadow {
+  width: 68px;
+  height: 6px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 75%);
+  border-radius: 50%;
+  margin-top: -3px;
+  opacity: 0.85;
+}
+
+/* Çok Küçük, Zarif Canlı Destek Butonu */
+.trojan-micro-chat-btn {
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 12px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3.5px;
+  margin-bottom: 2px;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.5), 0 0 6px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.trojan-micro-chat-btn:hover {
+  background: linear-gradient(135deg, #9333ea, #6366f1);
+  transform: scale(1.06);
+  box-shadow: 0 3px 12px rgba(124, 58, 237, 0.7);
+}
+
+.micro-icon {
+  color: #fde047;
+}
+
+.micro-pulse-dot {
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 4px #10b981;
+  animation: microPulse 1.5s infinite;
+}
+
+@keyframes microPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Mini Kontroller (Durdur/Kapat) */
+.trojan-mini-controls {
+  position: absolute;
+  top: -14px;
+  right: -6px;
+  display: flex;
+  gap: 3px;
+  z-index: 10;
+}
+
+.trojan-ctrl-btn {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.trojan-ctrl-btn:hover {
+  background: #7c3aed;
+  color: #fff;
+}
+
+.trojan-ctrl-btn.close-btn:hover {
+  background: #ef4444;
+}
+
+/* Yeniden Açma Rozeti (Gizlendiğinde) */
+.trojan-reopen-pill {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  z-index: 9990;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.35);
+}
+
+/* Mobil Cihazlar */
+@media (max-width: 768px) {
+  .walking-trojan-container.is-mobile {
+    position: fixed;
+    bottom: 70px;
+    left: 10px;
+    transform: none !important;
+  }
+
+  .trojan-horse-img {
+    height: 56px;
+  }
+
+  .trojan-horse-body {
+    animation: none;
+  }
+}
