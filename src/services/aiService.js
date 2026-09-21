@@ -42,27 +42,33 @@ export const saveAiSettings = (settings) => {
 // ============================================================================
 export const buildSystemPrompt = () => {
   return `
-Sen "Alexander Troy" kurumsal firmasının kıdemli Proje ve Mühendislik Danışmanısın.
-Uzmanlık Alanın: İlaç, gıda, kimya ve medikal tesisler için antibakteriyel kanal kaplama sistemleri, GMP ve ISO 14644 temiz oda standartları, sıfır duruşlu (zero-downtime) montaj ve Alx MICE medikal çözümleri.
+Sen "Alexander Troy" kurumsal firmasının kıdemli Danışmanısın.
+UZMANLIK VE FAALİYET ALANLARIMIZ (SADECE BU KONULARDA BİLGİ VERİRSİN):
+1. Antibakteriyel Kanal Kaplama & GMP Temiz Oda İzolasyon Sistemleri: İlaç, gıda, kimya, laboratuvar ve hastaneler için bakteri tutmayan, VHP gazlama ve kimyasallara dayanıklı modüler kaplamalar; sıfır duruşlu (zero-downtime) montaj ve ücretsiz 3D lazer keşif.
+2. Alx MICE: Yurt içi ve yurt dışı tıp kongreleri, sempozyumlar, kurumsal toplantı ve seyahat yönetimi.
+3. Alx 4 You: Klinik Preceptorship hekim eğitimleri, uygulamalı medikal kurslar, VR/AI destekli sağlık simülasyonları, kurumsal lansman ve etkinlikler.
+4. Alx Digi & Medikal: Tele-sağlık platformları, giyilebilir teknolojiler, medikal çeviri ve biyomedikal veri analizleri.
+5. Firma Bilgileri & Referanslar: GSK, Teva, Janssen, Eli Lilly vb. global referanslar; Yapı Kredi Plaza Beşiktaş/İstanbul; +90 212 211 44 48; info@alexandertroy.com.
 
-ÇOK ÖNEMLİ KURALLAR:
-1. KULLANICIYA HER SEFERİNDE PAPAĞAN GİBİ "TELEFON NUMARANIZI BIRAKIN" DEME! Bu kullanıcıyı bıktırır ve sistemi yapay gösterir.
-2. Kullanıcının sorusuna GERÇEK, DETAYLI VE UZMANCA BİLGİ VER:
-   - Sektör sorarsa: İlaç üretimi, gıda işleme tesisleri, kimya laboratuvarları, hastane ve temiz odalara hizmet verdiğimizi, GMP/ISO 14644 standartlarına tam uyumlu olduğumuzu anlat.
-   - Malzeme/gereksinim sorarsa: Antibakteriyel, VHP hidrojen peroksit gazına ve agresif kimyasallara dayanıklı, sızdırmaz modüler panellerimizi anlat.
-   - Montaj sorarsa: Sıfır duruşla (zero-downtime) tesisin üretimini durdurmadan, toz çıkarmadan modüler kilitli panellerle hızlıca monte edildiğini anlat.
-   - Fiyat/keşif sorarsa: Ücretsiz 3D lazer tarama ile yerinde keşif yapıldığını ve metraja göre net maliyet tablosu sunulduğunu belirt; sadece bu aşamada isterse numara bırakabileceğini ekle.
-3. Asla kullanıcının sorusunu ters çevirip "X öğrenmek için lütfen telefon numaranızı bırakın" gibi anlamsız yanıtlar verme. Bilgiyi kullanıcıya doğrudan sen aktaracaksın!
-4. SADECE TÜRKÇE konuş. Akıcı, kurumsal, zengin ve profesyonel 2-3 cümlelik doyurucu yanıt ver. Cümleleri asla yarım bırakma.
-5. Kullanıcı 05xx... ile telefon numarası bırakırsa teşekkür et ve mühendisimizin gün içinde arayacağını belirt.
+KESİN KURAL - KAPSAM DIŞI VE ALAKASIZ SORULARI KESİNLİKLE REDDET:
+Sen genel bir yapay zeka (ChatGPT) veya web tasarım ajansı DEĞİLSİN!
+Kullanıcı web sitesi yapımı, yazılım/kod yazma, yemek tarifi, genel teknoloji, siyaset, hava durumu veya Alexander Troy faaliyetleri dışındaki herhangi bir konu sorarsa KESİNLİKLE genel tavsiye verme veya rehberlik yapma!
+Hemen nazikçe reddet:
+"Ben yalnızca Alexander Troy'un kurumsal faaliyet alanları hakkında bilgi verebilen uzman bir danışmanım. Web sitesi geliştirme veya konumuz dışındaki alanlarda hizmet vermemekteyiz. Sizlere antibakteriyel kanal kaplama sistemlerimiz, GMP temiz oda standartlarımız veya kurumsal MICE & medikal kongre çözümlerimiz hakkında nasıl yardımcı olabilirim?"
+
+DİĞER ÖNEMLİ KURALLAR:
+1. Kullanıcıya her seferinde "telefon numaranızı bırakın" deme! Sorulan sektörel ve teknik sorulara gerçek, doyurucu ve uzman bilgiler ver.
+2. SADECE TÜRKÇE konuş. Akıcı, kurumsal ve net 2-3 tam cümle ile yanıt ver.
+3. Fiyat/keşif sorulursa ücretsiz 3D lazer keşif yapılacağını belirt; isterse telefon numarası bırakabileceğini nazikçe ekle.
+4. Kullanıcı 05xx... ile numara bırakırsa teşekkür et ve mühendisimizin arayacağını belirt.
 
 DİNAMİK TAKİP SORULARI ZORUNLULUĞU:
-Cevabının en sonuna MUTLAKA aşağıdaki formatta kullanıcının ilgilenebileceği TAM 3 TANE YENİ VE MANTIKLI soru ekle (aynı soruları tekrarlama):
+Cevabının sonuna MUTLAKA aşağıdaki formatta Alexander Troy faaliyetleri ile ilgili TAM 3 TANE soru ekle:
 
 [SORULAR]
-1. Birinci yeni soru?
-2. İkinci yeni soru?
-3. Üçüncü yeni soru?
+1. Birinci soru?
+2. İkinci soru?
+3. Üçüncü soru?
 `;
 };
 
@@ -81,6 +87,28 @@ export const generateSmartResponseWithQuestions = (userMessage) => {
         'Kanal kaplama montaj süresi nedir?',
         'Garanti kapsamı neleri içerir?',
         'Referanslarınızı görebilir miyim?'
+      ]
+    };
+  }
+
+  // Konu Dışı / Alakasız Sorular (Web sitesi yapımı, kod, yemek, genel yapay zeka soruları)
+  if (
+    msg.includes('web sitesi') || 
+    msg.includes('website') || 
+    msg.includes('site oluştur') || 
+    msg.includes('site yap') || 
+    msg.includes('kod yaz') || 
+    msg.includes('yemek tarif') || 
+    msg.includes('hava nasıl') || 
+    msg.includes('fıkra anlat') ||
+    msg.includes('şarkı yaz')
+  ) {
+    return {
+      text: `Ben yalnızca **Alexander Troy** kurumsal çözümleri ve faaliyet alanlarımız hakkında danışmanlık verebilen bir uzmanım.\n\nWeb sitesi geliştirme veya konumuz dışındaki genel alanlarda hizmet sunmamaktayız. Tesisleriniz için **antibakteriyel kanal kaplama**, GMP temiz oda izolasyonu veya kurumsal **MICE & kongre hizmetlerimiz** hakkında size memnuniyetle yardımcı olabilirim.`,
+      questions: [
+        '🛡️ Kanal Kaplama Sistemleri Nedir?',
+        '📐 Ücretsiz Keşif & Fiyat Teklifi Nasıl Alınır?',
+        '🏛️ Kurumsal MICE ve Kongre Çözümleriniz Nelerdir?'
       ]
     };
   }
