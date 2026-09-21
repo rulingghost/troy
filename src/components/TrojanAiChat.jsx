@@ -12,7 +12,9 @@ import {
   CheckCircle2, 
   Bot,
   ExternalLink,
-  MessageSquare
+  MessageSquare,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { 
@@ -46,6 +48,13 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const suggestionsRef = useRef(null);
+
+  const scrollSuggestions = (dir) => {
+    if (suggestionsRef.current) {
+      suggestionsRef.current.scrollBy({ left: dir * 180, behavior: 'smooth' });
+    }
+  };
 
   // Oturum Başlatma ve Mesajları Yükleme
   useEffect(() => {
@@ -411,18 +420,46 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
         </div>
 
         {/* Hızlı Öneri Çipleri (Quick Suggestions) */}
-        <div className="chat-suggestions-strip">
-          {quickSuggestions.map((item) => (
-            <button 
-              key={item.id} 
-              type="button" 
-              className="suggestion-chip"
-              onClick={() => handleSuggestionClick(item)}
-              disabled={isLoading}
-            >
-              {item.label}
-            </button>
-          ))}
+        <div className="chat-suggestions-wrapper">
+          <button 
+            type="button" 
+            className="chip-scroll-btn left" 
+            onClick={() => scrollSuggestions(-1)}
+            title="Sola Kaydır"
+          >
+            <ChevronLeft size={14} />
+          </button>
+
+          <div 
+            className="chat-suggestions-strip" 
+            ref={suggestionsRef}
+            onWheel={(e) => {
+              if (e.deltaY !== 0) {
+                e.currentTarget.scrollLeft += e.deltaY;
+              }
+            }}
+          >
+            {quickSuggestions.map((item) => (
+              <button 
+                key={item.id} 
+                type="button" 
+                className="suggestion-chip"
+                onClick={() => handleSuggestionClick(item)}
+                disabled={isLoading}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          <button 
+            type="button" 
+            className="chip-scroll-btn right" 
+            onClick={() => scrollSuggestions(1)}
+            title="Sağa Kaydır"
+          >
+            <ChevronRight size={14} />
+          </button>
         </div>
 
         {/* Chat Input Alanı */}
