@@ -62,13 +62,29 @@ DİĞER ÖNEMLİ KURALLAR:
 3. Fiyat/keşif sorulursa ücretsiz 3D lazer keşif yapılacağını belirt; isterse telefon numarası bırakabileceğini nazikçe ekle.
 4. Kullanıcı 05xx... ile numara bırakırsa teşekkür et ve mühendisimizin arayacağını belirt.
 
-DİNAMİK TAKİP SORULARI ZORUNLULUĞU:
-Cevabının sonuna MUTLAKA aşağıdaki formatta Alexander Troy faaliyetleri ile ilgili TAM 3 TANE soru ekle:
+DİNAMİK TAKİP SORULARI (ÇOK ÖNEMLİ - KESİNLİKLE MÜŞTERİ AĞZINDAN OLMALIDIR):
+Cevabının altındaki 3 soru butonu, KULLANICININ/MÜŞTERİNİN TIKLAYIP SANA SORACAĞI sorulardır!
+Bu yüzden sorular ASLA botun/danışmanın ağzından ("...ister misiniz?", "...var mı?", "...düşünür müsünüz?") OLMAMALIDIR!
+Sorular KESİNLİKLE MÜŞTERİ AĞZINDAN birinci tekil şahıs veya soru kipiyle ("...alabilir miyim?", "...nasıl yapılıyor?", "...nelerdir?", "...randevu alabilir miyim?") şeklinde yazılmalıdır.
 
+DOĞRU MÜŞTERİ AĞZI ÖRNEKLERİ:
+✅ "Kanal kaplama sistemleriniz hakkında detaylı bilgi alabilir miyim?"
+✅ "GMP temiz oda standartlarına nasıl uyum sağlıyorsunuz?"
+✅ "Sıfır duruşla montaj süreciniz fabrikayı durdurmadan nasıl yapılıyor?"
+✅ "Ücretsiz 3D lazer keşif randevusu oluşturabilir miyim?"
+✅ "Kurumsal MICE ve medikal kongre çözümleriniz nelerdir?"
+✅ "Referans çalıştığınız ilaç ve gıda firmalarını görebilir miyim?"
+
+YANLIŞ SORULAR (ASLA BUNLARI YAZMA):
+❌ "...bilgi almak ister misiniz?" (Yanlış - Bu botun sorusudur)
+❌ "...proje gereksiniminiz var mı?" (Yanlış - Bu botun sorusudur)
+❌ "...talebinde bulunmak ister misiniz?" (Yanlış - Bu botun sorusudur)
+
+FORMAT:
 [SORULAR]
-1. Birinci soru?
-2. İkinci soru?
-3. Üçüncü soru?
+1. Müşteri ağzından birinci soru?
+2. Müşteri ağzından ikinci soru?
+3. Müşteri ağzından üçüncü soru?
 `;
 };
 
@@ -246,6 +262,29 @@ export const sendChatMessage = async ({ messages }) => {
     );
   };
 
+  // Soruları her zaman müşteri ağzına çeviren yardımcı dönüştürücü
+  const formatCustomerQuestion = (q) => {
+    if (!q || typeof q !== 'string') return '';
+    let str = q.trim();
+    str = str.replace(/hakkında\s+detaylı\s+bilgi\s+almak\s+ister\s+misiniz\??/gi, 'hakkında detaylı bilgi alabilir miyim?');
+    str = str.replace(/hakkında\s+bilgi\s+almak\s+ister\s+misiniz\??/gi, 'hakkında bilgi alabilir miyim?');
+    str = str.replace(/bilgi\s+edinmek\s+ister\s+misiniz\??/gi, 'bilgi alabilir miyim?');
+    str = str.replace(/almak\s+ister\s+misiniz\??/gi, 'alabilir miyim?');
+    str = str.replace(/ister\s+misiniz\??/gi, 'alabilir miyim?');
+    str = str.replace(/istiyor\s+musunuz\??/gi, 'alabilir miyim?');
+    str = str.replace(/ister\s+miydiniz\??/gi, 'alabilir miyim?');
+    str = str.replace(/öğrenmek\s+ister\s+misiniz\??/gi, 'öğrenebilir miyim?');
+    str = str.replace(/özel\s+bir\s+proje\s+gereksiniminiz\s+var\s+mı\??/gi, 'Projeler için teknik standartlarınız nelerdir?');
+    str = str.replace(/özel\s+bir\s+gereksiniminiz\s+var\s+mı\??/gi, 'Standartlara uyumunuz nedir?');
+    str = str.replace(/ihtiyacınız\s+var\s+mı\??/gi, 'çözümünüz var mı?');
+    str = str.replace(/talebinde\s+bulunmak\s+ister\s+misiniz\??/gi, 'talebi oluşturabilir miyim?');
+    str = str.replace(/bulunmak\s+ister\s+misiniz\??/gi, 'bulunabilir miyim?');
+    str = str.replace(/faydalanmak\s+ister\s+misiniz\??/gi, 'faydalanabilir miyim?');
+    str = str.replace(/yararlanmak\s+ister\s+misiniz\??/gi, 'yararlanabilir miyim?');
+    if (!str.endsWith('?')) str += '?';
+    return str;
+  };
+
   if (apiKey) {
     const systemPrompt = buildSystemPrompt();
     const apiMessages = [
@@ -294,11 +333,11 @@ export const sendChatMessage = async ({ messages }) => {
                 const parts = cleanText.split('[SORULAR]');
                 cleanText = parts[0].trim();
                 const qLines = parts[1].split('\n').map(l => l.replace(/^\d+[\.\)\-]\s*/, '').trim()).filter(l => l.length > 3);
-                extractedQuestions = qLines.slice(0, 3);
+                extractedQuestions = qLines.slice(0, 3).map(formatCustomerQuestion);
               }
 
               if (extractedQuestions.length === 0) {
-                extractedQuestions = generateSmartResponseWithQuestions(lastUserMsg).questions;
+                extractedQuestions = generateSmartResponseWithQuestions(lastUserMsg).questions.map(formatCustomerQuestion);
               }
 
               return {
