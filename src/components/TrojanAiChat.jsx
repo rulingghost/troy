@@ -23,9 +23,9 @@ import {
 import './TrojanAiChat.css';
 
 const defaultWelcomeQuestions = [
-  '🛡️ Kanal Kaplama Sistemleri Nedir?',
-  '📐 Ücretsiz Keşif & Fiyat Teklifi Nasıl Alınır?',
-  '📞 Yetkilinizin Beni Aramasını İstiyorum'
+  '🏛️ Alx MICE Kongre ve Etkinlik Hizmetleriniz Nelerdir?',
+  '🎓 Preceptorship ve Klinik Eğitim Programlarınız Nasıl İşliyor?',
+  '💡 Dijital Sağlık & AI Çözümleriniz Hakkında Bilgi Alabilir miyim?'
 ];
 
 const TrojanAiChat = ({ isOpen, onClose }) => {
@@ -70,7 +70,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
     const initialMsg = {
       id: 'welcome-1',
       role: 'assistant',
-      content: `Merhaba Sn. Misafirimiz! 👋\n\nAlexander Troy kurumsal danışmanına hoş geldiniz. İlaç, gıda ve sağlık tesislerine özel **antibakteriyel kanal kaplama sistemlerimiz**, GMP temiz oda standartları ve **Alx MICE kongre hizmetlerimiz** hakkında size hızlıca bilgi verebilirim.\n\nAşağıdaki sorulardan birine tıklayarak hemen başlayabilir veya sorunuzu yazabilirsiniz:`,
+      content: `Merhaba Sn. Misafirimiz! 👋\n\nAlexander Troy kurumsal asistanına hoş geldiniz. **Alx MICE** ulusal & uluslararası tıp kongrelerimiz, **Preceptorship** klinik hekim eğitimlerimiz ve **Alx Digi** dijital sağlık teknolojilerimiz hakkında size bilgi vermekten mutluluk duyarım.\n\n"Enjoy Your Journey" yaklaşımımızla projenizi birlikte planlayabiliriz. Aşağıdaki sorulardan birine tıklayarak hemen başlayabilir veya sorunuzu yazabilirsiniz:`,
       questions: defaultWelcomeQuestions,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
@@ -171,11 +171,11 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
       const errorMsg = {
         id: 'err_' + Date.now(),
         role: 'assistant',
-        content: 'Sorunuzu yanıtlarken kısa bir gecikme oluştu. Uzman mühendisimizin sizi doğrudan araması için telefon numaranızı bırakabilirsiniz.',
+        content: 'Sorunuzu yanıtlarken kısa bir gecikme oluştu. Proje yöneticimizin sizi doğrudan araması için telefon numaranızı bırakabilirsiniz.',
         questions: [
-          'Kanal kaplama fiyatı ne kadar?',
-          'Telefon numaramı bırakmak istiyorum',
-          'İletişim bilgileriniz nedir?'
+          'MICE kongre organizasyon süreciniz nasıl işliyor?',
+          'Preceptorship klinik eğitim detaylarını alabilir miyim?',
+          'İletişim bilgilerinizi alabilir miyim?'
         ],
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
@@ -196,10 +196,10 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
     const leadConfirmedMsg = {
       id: 'lead_confirm_' + Date.now(),
       role: 'assistant',
-      content: `✅ **İletişim bilgileriniz başarıyla alındı!**\n\nSn. **${visitorName || 'Değerli Misafirimiz'}**, **${visitorPhone}** numaralı telefonunuz Proje Müdürlüğümüze iletilmiştir. Uzman mühendisimiz gün içinde sizinle iletişime geçerek keşif ve teklif detaylarını aktaracaktır.`,
+      content: `✅ **İletişim bilgileriniz başarıyla alındı!**\n\nSn. **${visitorName || 'Değerli Misafirimiz'}**, **${visitorPhone}** numaralı telefonunuz Proje ve Etkinlik Yönetimimize iletilmiştir. Uzman proje yöneticimiz gün içinde sizinle iletişime geçerek detayları aktaracaktır.`,
       questions: [
-        'Kanal kaplama montaj süresi nedir?',
-        'Garanti kapsamı neleri içerir?',
+        'MICE kongre organizasyon süreciniz nasıl işliyor?',
+        'Preceptorship eğitim programlarınız için teklif alabilir miyim?',
         'Referanslarınızı görebilir miyim?'
       ],
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -225,7 +225,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
       setMessages([{
         id: 'welcome-1',
         role: 'assistant',
-        content: 'Merhaba Sn. Misafirimiz! Alexander Troy kanal kaplama ve temiz oda çözümlerimiz hakkında size nasıl yardımcı olabilirim?',
+        content: 'Merhaba Sn. Misafirimiz! Alexander Troy kurumsal MICE kongre organizasyonları, Preceptorship klinik hekim eğitimleri ve medikal çözümlerimiz hakkında size nasıl yardımcı olabilirim?',
         questions: defaultWelcomeQuestions,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }]);
@@ -284,7 +284,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
             <div className="chat-header-info">
               <h3 className="chat-title">Alexander Troy Danışman</h3>
               <p className="chat-subtitle">
-                <span className="dot-blink" /> Canlı Proje &amp; Kanal Kaplama Desteği
+                <span className="dot-blink" /> Canlı MICE &amp; Proje Danışmanı
               </p>
             </div>
           </div>
@@ -456,7 +456,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
           <input 
             ref={inputRef}
             type="text" 
-            placeholder="Kanal kaplama veya projeniz hakkında yazın..." 
+            placeholder="MICE, Preceptorship veya medikal projeniz hakkında yazın..." 
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             disabled={isLoading}
@@ -474,7 +474,7 @@ const TrojanAiChat = ({ isOpen, onClose }) => {
 
         {/* Footer Alt Bilgi */}
         <div className="chat-footer-brand">
-          <span>⚡ Alexander Troy Endüstriyel Hijyen &amp; MICE Çözümleri</span>
+          <span>⚡ Alexander Troy Kurumsal MICE &amp; Medikal Çözümler • "Enjoy Your Journey"</span>
         </div>
       </aside>
     </div>

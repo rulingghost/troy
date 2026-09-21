@@ -172,7 +172,7 @@ const AdminAiSupportTab = () => {
           </div>
           <div className="stat-details">
             <span className="stat-label">AI Altyapı Durumu</span>
-            <strong className="stat-value-text">Qwen 3.8 27B • Aktif</strong>
+            <strong className="stat-value-text">Troy AI • Aktif</strong>
           </div>
         </div>
       </div>

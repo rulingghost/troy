@@ -14,7 +14,7 @@ export const defaultAiSettings = {
   openRouterKey: '',
   model: FAST_MODELS[0],
   assistantName: 'Alexander Troy Danışman',
-  welcomeMessage: 'Merhaba! Alexander Troy kanal kaplama sistemleri ve kurumsal çözümlerimiz hakkında size nasıl yardımcı olabilirim?',
+  welcomeMessage: 'Merhaba! Alexander Troy kurumsal MICE, Preceptorship klinik eğitimleri ve medikal çözümlerimiz hakkında size nasıl yardımcı olabilirim?',
   customPrompt: ''
 };
 
@@ -38,47 +38,64 @@ export const saveAiSettings = (settings) => {
 };
 
 // ============================================================================
-// HIZLI & NET SİSTEM PROMPTU (Zeki, Mantıklı ve Kısa)
+// HIZLI & NET SİSTEM PROMPTU (Alexander Troy Proje Bilgileri & Kurumsal Kurallar)
 // ============================================================================
 export const buildSystemPrompt = () => {
   return `
-Sen "Alexander Troy" kurumsal firmasının kıdemli Danışmanısın.
+Sen "Alexander Troy" (Alx Troy) kurumsal firmasının uzman MICE ve Proje Danışmanısın.
+Sloganımız: "Enjoy Your Journey".
+BU PROJE ALEXANDER TROY PROJESİDİR. KESİNLİKLE KANAL KAPLAMA, İNŞAAT VEYA HAVALANDIRMA İLE İLGİLİ DEĞİLDİR.
+
 UZMANLIK VE FAALİYET ALANLARIMIZ (SADECE BU KONULARDA BİLGİ VERİRSİN):
-1. Antibakteriyel Kanal Kaplama & GMP Temiz Oda İzolasyon Sistemleri: İlaç, gıda, kimya, laboratuvar ve hastaneler için bakteri tutmayan, VHP gazlama ve kimyasallara dayanıklı modüler kaplamalar; sıfır duruşlu (zero-downtime) montaj ve ücretsiz 3D lazer keşif.
-2. Alx MICE: Yurt içi ve yurt dışı tıp kongreleri, sempozyumlar, kurumsal toplantı ve seyahat yönetimi.
-3. Alx 4 You: Klinik Preceptorship hekim eğitimleri, uygulamalı medikal kurslar, VR/AI destekli sağlık simülasyonları, kurumsal lansman ve etkinlikler.
-4. Alx Digi & Medikal: Tele-sağlık platformları, giyilebilir teknolojiler, medikal çeviri ve biyomedikal veri analizleri.
-5. Firma Bilgileri & Referanslar: GSK, Teva, Janssen, Eli Lilly vb. global referanslar; Yapı Kredi Plaza Beşiktaş/İstanbul; +90 212 211 44 48; info@alexandertroy.com.
+1. Alx MICE (Meetings, Incentives, Conferences, Events):
+   - Yurt içi ve yurt dışı ulusal ve uluslararası tıp kongreleri, sempozyumlar, bilimsel zirveler, kurumsal bayi toplantıları ve ürün lansmanları.
+   - Uçak bileti & charter uçuşlar, VIP havalimanı transferi, lüks otel konaklama yönetimi, kongre merkezi & salon kiralama, sahne, ses, ışık & dev LED ekran sistemleri, simultane çeviri & teknik altyapı, sosyal ve kültürel programlar (Boğaz turları, gala geceleri, şehir turları).
+2. Alx 4 You (Klinik Eğitim & Butik Deneyimler):
+   - Klinik Preceptorship Hekim Eğitimleri: Uzman hekimlerin mesleki gelişimleri için yurt içi ve yurt dışı kliniklerde birebir vaka gözlemleri, ameliyathane uygulamalı cerrahi eğitim programları.
+   - VR ve AI Destekli Medikal Simülasyonlar: Cerrahi ve klinik senaryolar için ileri teknoloji eğitim deneyimleri.
+   - Motivasyon Gezileri & Kurumsal Lansmanlar: Şirket ekiplerine ve hekimlere özel butik deneyimler.
+   - Uluslararası Delege Ağırlama (VIP Delegasyon Yönetimi).
+3. Alx Digi (Dijital Sağlık & İnovasyon):
+   - Doktorum Yanımda: Hekimler ve hastalar için güvenli online danışmanlık ve tele-sağlık platformu.
+   - Beynex: Yapay zeka tabanlı bilişsel sağlık, hafıza ve beyin egzersizi asistanı.
+   - Niceye: AI destekli sağlık çözümleri, giyilebilir teknolojiler, medikal veri analitiği.
+   - Canlı Cerrahi & Kongre Yayınları: Ameliyathanelerden kongre salonlarına kesintisiz, yüksek çözünürlüklü canlı yayın altyapısı.
+4. Alx Need (Medikal İletişim, CRO & Danışmanlık):
+   - Gama CRO: Klinik araştırmalar, medikal ve bilimsel danışmanlık, biyo-istatistiksel analiz ve raporlama.
+   - Tıbbi Çeviri & Bilimsel Yayın Desteği: Çok dilli medikal literatür, makale ve ruhsatlandırma çevirileri.
+   - Omnichannel Medikal Marka Yönetimi: Niceye IT altyapısıyla fiziksel ve dijital entegre çok kanallı iletişim kurguları.
+5. Referanslarımız & Çözüm Ortaklarımız:
+   - GSK, Kyowa Kirin, Teva, Novo Nordisk, Janssen, Bristol-Myers Squibb, Eli Lilly, Johnson & Johnson vb. küresel ilaç devleri.
+6. İletişim & Lokasyon:
+   - Genel Merkez: Levent, Büyükdere Cd. No:195, Şişli / İstanbul (Yapı Kredi Plaza Beşiktaş)
+   - Telefon: +90 (212) 555 01 23 / +90 (212) 211 44 48
+   - E-Posta: info@alexandertroy.com / info@alx.com.tr
+   - Çalışma Saatleri: Hafta içi 09:00 - 18:00
 
 KESİN KURAL - KAPSAM DIŞI VE ALAKASIZ SORULARI KESİNLİKLE REDDET:
-Sen genel bir yapay zeka (ChatGPT) veya web tasarım ajansı DEĞİLSİN!
-Kullanıcı web sitesi yapımı, yazılım/kod yazma, yemek tarifi, genel teknoloji, siyaset, hava durumu veya Alexander Troy faaliyetleri dışındaki herhangi bir konu sorarsa KESİNLİKLE genel tavsiye verme veya rehberlik yapma!
-Hemen nazikçe reddet:
-"Ben yalnızca Alexander Troy'un kurumsal faaliyet alanları hakkında bilgi verebilen uzman bir danışmanım. Web sitesi geliştirme veya konumuz dışındaki alanlarda hizmet vermemekteyiz. Sizlere antibakteriyel kanal kaplama sistemlerimiz, GMP temiz oda standartlarımız veya kurumsal MICE & medikal kongre çözümlerimiz hakkında nasıl yardımcı olabilirim?"
+1. Eğer kullanıcı "kanal kaplama", "inşaat", "havalandırma kanalı" gibi şeyler sorarsa:
+   "Alexander Troy olarak kanal kaplama veya inşaat hizmeti sunmamaktayız. Firmamız MICE kongre organizasyonları, klinik Preceptorship hekim eğitimleri ve dijital sağlık teknolojileri alanında hizmet vermektedir."
+2. Kullanıcı web sitesi yapımı, kod/yazılım yazma, yemek tarifi, genel teknoloji, siyaset veya Alexander Troy dışındaki bir konu sorarsa genel tavsiye verme! Hemen nazikçe reddet:
+   "Ben yalnızca Alexander Troy'un kurumsal faaliyet alanları hakkında bilgi verebilen uzman bir danışmanım. Web sitesi geliştirme veya konumuz dışındaki alanlarda hizmet sunmamaktayız. Sizlere Alx MICE kongre çözümlerimiz, klinik Preceptorship hekim eğitimlerimiz veya dijital sağlık teknolojilerimiz hakkında nasıl yardımcı olabilirim?"
 
 DİĞER ÖNEMLİ KURALLAR:
-1. Kullanıcıya her seferinde "telefon numaranızı bırakın" deme! Sorulan sektörel ve teknik sorulara gerçek, doyurucu ve uzman bilgiler ver.
-2. SADECE TÜRKÇE konuş. Akıcı, kurumsal ve net 2-3 tam cümle ile yanıt ver.
-3. Fiyat/keşif sorulursa ücretsiz 3D lazer keşif yapılacağını belirt; isterse telefon numarası bırakabileceğini nazikçe ekle.
-4. Kullanıcı 05xx... ile numara bırakırsa teşekkür et ve mühendisimizin arayacağını belirt.
+1. Kullanıcıya her seferinde "telefon numaranızı bırakın" deme! Sorulan kongre, etkinlik, hekim eğitimi veya teknoloji sorularına doyurucu, vizyoner ve profesyonel bilgiler ver.
+2. SADECE TÜRKÇE konuş. Akıcı, kurumsal, saygılı ve net yanıt ver.
+3. Fiyat veya bütçe sorulursa; etkinliğin katılımcı sayısı, lokasyon ve lojistik kapsamına göre bütçelendirildiğini belirt; isterse telefon numarası bırakabileceğini nazikçe ekle.
+4. Kullanıcı 05xx... ile numara bırakırsa teşekkür et ve proje yöneticimizin kendisini arayacağını belirt.
 
 DİNAMİK TAKİP SORULARI (ÇOK ÖNEMLİ - KESİNLİKLE MÜŞTERİ AĞZINDAN OLMALIDIR):
 Cevabının altındaki 3 soru butonu, KULLANICININ/MÜŞTERİNİN TIKLAYIP SANA SORACAĞI sorulardır!
 Bu yüzden sorular ASLA botun/danışmanın ağzından ("...ister misiniz?", "...var mı?", "...düşünür müsünüz?") OLMAMALIDIR!
-Sorular KESİNLİKLE MÜŞTERİ AĞZINDAN birinci tekil şahıs veya soru kipiyle ("...alabilir miyim?", "...nasıl yapılıyor?", "...nelerdir?", "...randevu alabilir miyim?") şeklinde yazılmalıdır.
+Sorular KESİNLİKLE MÜŞTERİ AĞZINDAN birinci tekil şahıs veya soru kipiyle ("...alabilir miyim?", "...nasıl yapılıyor?", "...nelerdir?", "...düzenlenebilir mi?") şeklinde yazılmalıdır.
 
 DOĞRU MÜŞTERİ AĞZI ÖRNEKLERİ:
-✅ "Kanal kaplama sistemleriniz hakkında detaylı bilgi alabilir miyim?"
-✅ "GMP temiz oda standartlarına nasıl uyum sağlıyorsunuz?"
-✅ "Sıfır duruşla montaj süreciniz fabrikayı durdurmadan nasıl yapılıyor?"
-✅ "Ücretsiz 3D lazer keşif randevusu oluşturabilir miyim?"
-✅ "Kurumsal MICE ve medikal kongre çözümleriniz nelerdir?"
-✅ "Referans çalıştığınız ilaç ve gıda firmalarını görebilir miyim?"
-
-YANLIŞ SORULAR (ASLA BUNLARI YAZMA):
-❌ "...bilgi almak ister misiniz?" (Yanlış - Bu botun sorusudur)
-❌ "...proje gereksiniminiz var mı?" (Yanlış - Bu botun sorusudur)
-❌ "...talebinde bulunmak ister misiniz?" (Yanlış - Bu botun sorusudur)
+✅ "MICE tıp kongrelerinizde simultane çeviri ve teknik altyapı sağlıyor musunuz?"
+✅ "Preceptorship klinik eğitim programlarınız hangi uzmanlık alanlarını kapsıyor?"
+✅ "Canlı cerrahi yayın altyapınız ameliyathaneden kongre salonuna nasıl aktarılıyor?"
+✅ "500 kişilik bir uluslararası kongre için organizasyon teklifi alabilir miyim?"
+✅ "Referans çalıştığınız küresel ilaç firmalarını öğrenebilir miyim?"
+✅ "VR ve AI destekli medikal simülasyonlarınız nasıl uygulanıyor?"
 
 FORMAT:
 [SORULAR]
@@ -98,16 +115,16 @@ export const generateSmartResponseWithQuestions = (userMessage) => {
   const phoneMatch = msg.match(/(?:0\s*5|\+90\s*5|\b5)\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/);
   if (phoneMatch) {
     return {
-      text: `✅ **İletişim Numaranız Alındı!**\n\nPaylaşmış olduğunuz **${phoneMatch[0]}** numaralı telefonu Proje ve Mühendislik birimimize ilettim. Uzman mühendisimiz gün içinde sizinle iletişime geçerek keşif ve teklif sürecinizi başlatacaktır.`,
+      text: `✅ **İletişim Numaranız Alındı!**\n\nPaylaşmış olduğunuz **${phoneMatch[0]}** numaralı telefonu Proje ve Etkinlik Yönetimi birimimize ilettim. MICE kongre veya medikal projenizle ilgili detayları görüşmek üzere uzman proje yöneticimiz gün içinde sizinle iletişime geçecektir.`,
       questions: [
-        'Kanal kaplama montaj süresi nedir?',
-        'Garanti kapsamı neleri içerir?',
-        'Referanslarınızı görebilir miyim?'
+        'MICE kongre organizasyon süreciniz nasıl işliyor?',
+        'Preceptorship klinik eğitim detaylarını alabilir miyim?',
+        'Referans çalıştığınız ilaç firmaları hangileridir?'
       ]
     };
   }
 
-  // Konu Dışı / Alakasız Sorular (Web sitesi yapımı, kod, yemek, genel yapay zeka soruları)
+  // Konu Dışı / Alakasız Sorular (Web sitesi yapımı, kod, yemek vb.)
   if (
     msg.includes('web sitesi') || 
     msg.includes('website') || 
@@ -120,118 +137,162 @@ export const generateSmartResponseWithQuestions = (userMessage) => {
     msg.includes('şarkı yaz')
   ) {
     return {
-      text: `Ben yalnızca **Alexander Troy** kurumsal çözümleri ve faaliyet alanlarımız hakkında danışmanlık verebilen bir uzmanım.\n\nWeb sitesi geliştirme veya konumuz dışındaki genel alanlarda hizmet sunmamaktayız. Tesisleriniz için **antibakteriyel kanal kaplama**, GMP temiz oda izolasyonu veya kurumsal **MICE & kongre hizmetlerimiz** hakkında size memnuniyetle yardımcı olabilirim.`,
+      text: `Ben yalnızca **Alexander Troy** kurumsal çözümleri ve faaliyet alanlarımız hakkında danışmanlık verebilen bir uzmanım.\n\nWeb sitesi geliştirme veya konumuz dışındaki genel alanlarda hizmet sunmamaktayız. Kurumsal **MICE tıp kongrelerimiz**, **Preceptorship klinik hekim eğitimlerimiz** ve **dijital sağlık teknolojilerimiz** hakkında size memnuniyetle yardımcı olabilirim.`,
       questions: [
-        '🛡️ Kanal Kaplama Sistemleri Nedir?',
-        '📐 Ücretsiz Keşif & Fiyat Teklifi Nasıl Alınır?',
-        '🏛️ Kurumsal MICE ve Kongre Çözümleriniz Nelerdir?'
+        '🏛️ Alx MICE Kongre ve Etkinlik Hizmetleriniz Nelerdir?',
+        '🎓 Preceptorship ve Klinik Eğitim Programlarınız Nasıl İşliyor?',
+        '💡 Dijital Sağlık & AI Çözümleriniz Hakkında Bilgi Alabilir miyim?'
       ]
     };
   }
 
-  // Kanal Kaplama ve İzolasyon
-  if (msg.includes('kanal') || msg.includes('kaplama') || msg.includes('hijyen') || msg.includes('temiz oda') || msg.includes('cleanroom')) {
+  // Kanal Kaplama Sorulursa (Açık ve Net Ret)
+  if (msg.includes('kanal') && (msg.includes('kaplama') || msg.includes('havalandırma') || msg.includes('izolasyon') || msg.includes('temiz oda'))) {
     return {
-      text: `🛡️ **Alexander Troy Kanal Kaplama Sistemleri**\n\nİlaç, gıda ve kimya tesisleri için geliştirdiğimiz kaplamalar **GMP ve ISO 14644** temiz oda standartlarına %100 uyumludur.\n\n• **Antibakteriyel Yüzey:** Bakteri ve partikül tutmaz, VHP gazlama ve kimyasallara dayanıklıdır.\n• **Sıfır Duruş (Zero-Downtime):** Üretim hatlarınızı durdurmadan modüler kilitli panellerle hızla monte edilir.\n• **10 Yıl Garanti:** Tam sızdırmazlık ve ısı/yoğuşma izolasyonu sağlar.\n\nTesisinize özel ücretsiz 3D keşif için telefon numaranızı iletebilirsiniz.`,
+      text: `Alexander Troy olarak kanal kaplama veya inşaat/tesisat hizmeti sunmamaktayız.\n\nFirmamız **MICE ulusal & uluslararası tıp kongreleri**, **Preceptorship klinik hekim eğitimleri**, **Alx Digi sağlık teknolojileri** ve **Alx Need medikal iletişim** alanlarında faaliyet göstermektedir. Projelerinizde size yardımcı olmaktan memnuniyet duyarız.`,
       questions: [
-        'Kanal kaplama fiyat teklifi nasıl alınır?',
-        'Sıfır duruşla montaj nasıl yapılıyor?',
-        'Hangi ilaç firmaları ile çalışıyorsunuz?'
+        '🏛️ Alx MICE Kongre ve Etkinlik Hizmetleriniz Nelerdir?',
+        '🎓 Preceptorship ve Klinik Eğitim Programlarınız Nasıl İşliyor?',
+        '💡 Dijital Sağlık & AI Çözümleriniz Hakkında Bilgi Alabilir miyim?'
       ]
     };
   }
 
-  // Fiyat ve Keşif Teklifi
-  if (msg.includes('fiyat') || msg.includes('teklif') || msg.includes('keşif') || msg.includes('maliyet') || msg.includes('ne kadar') || msg.includes('ücret')) {
+  // MICE, Kongre, Toplantı, Sempozyum, Organizasyon, Seyahat
+  if (
+    msg.includes('mice') || 
+    msg.includes('kongre') || 
+    msg.includes('toplantı') || 
+    msg.includes('sempozyum') || 
+    msg.includes('etkinlik') || 
+    msg.includes('organizasyon') || 
+    msg.includes('lansman') ||
+    msg.includes('uçak') ||
+    msg.includes('otel') ||
+    msg.includes('transfer') ||
+    msg.includes('simultane')
+  ) {
     return {
-      text: `📋 **Fiyat & Ücretsiz Keşif Süreci**\n\nKanal kaplama sistemlerimizde fiyatlandırma; tesisin alan metrajı, hijyen sınıfı ve ortam koşullarına göre projeye özel hesaplanır.\n\nUzman mühendisimiz yerinize gelerek **ücretsiz 3D lazer tarama ve keşif** yapar, ardından net maliyet tablonuzu sunar.\n\nTelefon numaranızı yazarsanız proje sorumlumuz hemen sizinle iletişime geçebilir.`,
+      text: `🏛️ **Alx MICE — Kongre, Sempozyum & Etkinlik Yönetimi**\n\nAlexander Troy olarak yurt içi ve yurt dışı tıp kongreleri, sempozyumlar, bilimsel zirveler ve kurumsal toplantıları uçtan uca yönetiyoruz.\n\n• **Ulaşım & Lojistik:** Uçak bileti/charter, VIP havalimanı transferleri ve 5 yıldızlı otel konaklamaları.\n• **Teknik Altyapı:** Sahne, truss, ses, ışık, dev LED ekranlar ve çok dilli simultane çeviri sistemleri.\n• **Sosyal Programlar:** Boğaz turları, gala geceleri ve özel kültürel geziler.\n\n"Enjoy Your Journey" yaklaşımımızla katılımcılarınıza kusursuz bir deneyim sunuyoruz.`,
       questions: [
-        'Telefon numaramı bırakmak istiyorum',
-        'Kanal kaplama teknik özellikleri nelerdir?',
-        'Daha önce yaptığınız projeler hangileri?'
+        'Uluslararası bir tıp kongresi için teklif alabilir miyim?',
+        'Kongrelerde simultane çeviri hizmeti sağlıyor musunuz?',
+        'Sosyal program ve gala organizasyonu yapıyor musunuz?'
       ]
     };
   }
 
-  // Montaj ve Süreç
-  if (msg.includes('montaj') || msg.includes('süre') || msg.includes('nasıl yapılıyor') || msg.includes('üretim')) {
+  // Preceptorship, Hekim Eğitimi, Kurs, Ameliyathane, VR Simülasyon
+  if (
+    msg.includes('preceptorship') || 
+    msg.includes('eğitim') || 
+    msg.includes('kurs') || 
+    msg.includes('hekim') || 
+    msg.includes('doktor') || 
+    msg.includes('klinik') || 
+    msg.includes('vaka') || 
+    msg.includes('ameliyathane') ||
+    msg.includes('simülasyon') ||
+    msg.includes('vr')
+  ) {
     return {
-      text: `⚡ **Sıfır Duruş (Zero-Downtime) Montaj**\n\nFabrikanızın üretimini durdurmadan çalışıyoruz. Özel kilitli modüler panellerimiz sayesinde tesis içinde toz veya inşaat ortamı oluşmaz.\n\n• **Hızlı Entegrasyon:** Mevcut hatlara doğrudan uygulanır.\n• **Validasyon Desteği:** Montaj sonrası sızdırmazlık testleri yapılır.`,
+      text: `🎓 **Alx 4 You — Preceptorship & Klinik Hekim Eğitimleri**\n\nUzman hekimlerin mesleki yetkinliklerini ve cerrahi deneyimlerini artırmak amacıyla özel tasarlanmış eğitim programları sunuyoruz:\n\n• **Klinik Vaka Gözlemleri:** Yurt içi ve yurt dışındaki akredite merkezlerde alanında öncü cerrahlarla birebir çalışma.\n• **Ameliyathane Pratikleri:** İleri cerrahi tekniklerin yerinde incelenmesi ve uygulamalı workshoplar.\n• **VR & AI Simülasyonları:** Sanal gerçeklik ve yapay zeka destekli medikal eğitim simülasyonları.\n• **VIP Delegasyon:** Hekimlerin seyahat, konaklama ve resmi izin süreçlerinin eksiksiz yönetimi.`,
       questions: [
-        'Ücretsiz keşif için randevu alabilir miyim?',
-        'Garanti süreniz ne kadar?',
-        'İletişim bilgilerinizi alabilir miyim?'
+        'Preceptorship programları hangi tıbbi branşları kapsıyor?',
+        'Yurt dışı klinik eğitimleri hangi ülkelerde düzenleniyor?',
+        'VR ve AI destekli simülasyonlarınız nasıl uygulanıyor?'
       ]
     };
   }
 
-  // Sektörler & Kullanım Alanları
-  if (msg.includes('sektör') || msg.includes('ilaç') || msg.includes('gıda') || msg.includes('kimya') || msg.includes('hastane')) {
+  // Dijital Sağlık, Digi, AI, Doktorum Yanımda, Beynex, Niceye, Canlı Cerrahi Yayın
+  if (
+    msg.includes('digi') || 
+    msg.includes('dijital') || 
+    msg.includes('doktorum yanımda') || 
+    msg.includes('beynex') || 
+    msg.includes('niceye') || 
+    msg.includes('yayın') || 
+    msg.includes('cerrahi yayın') || 
+    msg.includes('tele') || 
+    msg.includes('yapay zeka') ||
+    msg.includes('sağlık teknoloji')
+  ) {
     return {
-      text: `🏭 **Hizmet Verdiğimiz Sektörler & Tesisler**\n\nAlexander Troy olarak yüksek hijyen standartlarının zorunlu olduğu kritik sektörlerde çalışıyoruz:\n\n• **İlaç & Biyoteknoloji:** GMP Grade A/B/C/D temiz odaları, VHP gazlama alanları.\n• **Gıda & İçecek:** Bakteri, küf ve maya oluşumunu engelleyen yıkanabilir hatlar.\n• **Kimya & Laboratuvar:** Agresif kimyasallara ve asit buharlarına tam dayanım.\n• **Hastaneler & Medikal:** Ameliyathane ve yoğun bakım HVAC kanalları.`,
+      text: `💡 **Alx Digi — Dijital Sağlık & İnovasyon Çözümleri**\n\nSağlık sektörünün geleceğini yapay zeka ve dijital teknolojilerle şekillendiriyoruz:\n\n• **Doktorum Yanımda:** Hekimler ve danışanlar için güvenli online danışmanlık ve tele-sağlık platformu.\n• **Beynex:** Yapay zeka tabanlı bilişsel sağlık asistanı ve beyin egzersizleri.\n• **Niceye IT:** AI tabanlı medikal analizler, giyilebilir teknolojiler ve omnichannel marka çözümleri.\n• **Canlı Cerrahi Yayın Altyapısı:** Ameliyathaneden kongre salonlarına kesintisiz, sıfır gecikmeli 4K cerrahi yayın aktarımı.`,
       questions: [
-        'Sıfır duruşla montaj nasıl yapılıyor?',
-        'Kanal kaplama teknik özellikleri nelerdir?',
-        'Ücretsiz keşif için nasıl randevu alırım?'
+        'Canlı cerrahi yayın altyapınız nasıl çalışıyor?',
+        'Beynex bilişsel sağlık asistanı hakkında bilgi alabilir miyim?',
+        'Doktorum Yanımda platformu hekimlere ne sağlıyor?'
       ]
     };
   }
 
-  // Özel Gereksinimler & Teknik Özellikler
-  if (msg.includes('gereksinim') || msg.includes('özellik') || msg.includes('dayanım') || msg.includes('standart')) {
+  // Medikal İletişim, CRO, Need, Gama CRO, Medikal Çeviri, Biyo-İstatistik
+  if (
+    msg.includes('need') || 
+    msg.includes('cro') || 
+    msg.includes('gama') || 
+    msg.includes('çeviri') || 
+    msg.includes('tercüme') || 
+    msg.includes('istatistik') || 
+    msg.includes('makale') || 
+    msg.includes('yayın') || 
+    msg.includes('omnichannel')
+  ) {
     return {
-      text: `🔬 **Özel Gereksinimler & Teknik Standartlarımız**\n\nTesisinizin ortam koşullarına göre özel mühendislik çözümleri sunuyoruz:\n\n• **Hijyen & Temiz Oda:** GMP, ISO 14644 ve FDA gereksinimlerine %100 uyumluluk.\n• **Yüksek Dayanım:** VHP hidrojen peroksit gazlama, klor bazlı dezenfektanlar ve kimyasallara tam direnç.\n• **Sızdırmazlık & İzolasyon:** Yoğuşma ve ısı kaybını önleyen 10 yıl garantili sızdırmazlık.`,
+      text: `🔬 **Alx Need — Medikal İletişim, Gama CRO & Danışmanlık**\n\nİlaç ve sağlık kuruluşları için bilimsel ve stratejik danışmanlık sunuyoruz:\n\n• **Gama CRO:** Klinik araştırma süreçleri, Faz çalışmaları ve etik kurul danışmanlığı.\n• **Biyo-İstatistik:** Klinik verilerin biyo-istatistiksel analizi, modelleme ve raporlama.\n• **Tıbbi Çeviri & Yayın:** Çok dilli medikal literatür, klinik protokol, ruhsatlandırma ve makale çevirileri.\n• **Omnichannel İletişim:** Hekim ve eczacılara yönelik bütünleşik fiziksel ve dijital marka yönetimi.`,
       questions: [
-        'Kanal kaplama fiyat teklifi nasıl alınır?',
-        'Referans projelerinizi görebilir miyim?',
-        'İletişim bilgilerinizi alabilir miyim?'
+        'Gama CRO klinik araştırma desteğiniz neleri kapsıyor?',
+        'Medikal çeviri hizmetiniz hangi dillerde sunuluyor?',
+        'Omnichannel medikal marka yönetimi nasıl kurgulanıyor?'
       ]
     };
   }
 
-  // MICE ve Kongre
-  if (msg.includes('kongre') || msg.includes('mice') || msg.includes('etkinlik') || msg.includes('preceptorship')) {
+  // Referanslar & Çözüm Ortakları
+  if (msg.includes('referans') || msg.includes('ortak') || msg.includes('firma') || msg.includes('kimlerle')) {
     return {
-      text: `🏛️ **Alx MICE & Kongre Çözümleri**\n\nSağlık ve kurumsal sektöre yönelik ulusal ve uluslararası kongreler, preceptorship klinik hekim eğitimleri, sempozyumlar ve VIP seyahat operasyonları yönetiyoruz.\n\nUçtan uca organizasyon desteğimizle tüm lojistik, konaklama ve teknik altyapıyı sağlıyoruz.`,
+      text: `🤝 **Referanslarımız & Çözüm Ortaklarımız**\n\nAlexander Troy olarak dünyanın önde gelen ilaç ve sağlık firmalarıyla uzun yıllardır güvenle çalışıyoruz:\n\n• **Global İlaç Devleri:** GSK, Kyowa Kirin, Teva, Novo Nordisk, Janssen, Bristol-Myers Squibb, Eli Lilly, Johnson & Johnson.\n• **Uzmanlık:** 15+ yıllık tecrübemizle medikal kongrelerden Preceptorship programlarına kadar sağlık sektörünün en prestijli etkinliklerine imza atıyoruz.`,
       questions: [
-        'Preceptorship eğitimleri neleri kapsıyor?',
-        'Referans ilaç firmalarınız hangileri?',
-        'Etkinlik için teklif almak istiyorum'
+        'MICE kongre hizmetleriniz hakkında bilgi alabilir miyim?',
+        'Preceptorship eğitim programlarınız için teklif alabilir miyim?',
+        'Doğrudan arayabileceğim iletişim numaranız nedir?'
       ]
     };
   }
 
-  // Referanslar
-  if (msg.includes('referans') || msg.includes('ortak') || msg.includes('firma')) {
+  // Fiyat ve Teklif Talebi
+  if (msg.includes('fiyat') || msg.includes('teklif') || msg.includes('bütçe') || msg.includes('maliyet') || msg.includes('ne kadar') || msg.includes('ücret')) {
     return {
-      text: `🤝 **Çözüm Ortaklarımız & Referanslarımız**\n\nAlexander Troy olarak küresel ilaç devleriyle çalışıyoruz: **GSK, Kyowa Kirin, Teva, Novo Nordisk, Janssen, Bristol-Myers Squibb ve Eli Lilly**.\n\nYüksek hijyen ve mühendislik standartlarımızla 15+ yıldır sektör liderlerinin güvenilir çözüm ortağıyız.`,
+      text: `📋 **Kurumsal Teklif & Bütçelendirme Süreci**\n\nAlexander Troy'da tüm MICE kongreleri, Preceptorship programları ve dijital projeler kuruma özel planlanır:\n\n• **Kişiselleştirilmiş Bütçe:** Katılımcı sayısı, destinasyon, konaklama sınıfı, teknik ekipman ve içerik kapsamına göre en optimize maliyet tablosu hazırlanır.\n• **Hızlı Teklif:** Etkinlik detaylarınızı paylaştığınızda ekibimiz 24 saat içinde detaylı teklif sunumunu iletir.\n\nTelefon numaranızı yazarsanız proje sorumlumuz hemen sizinle iletişime geçebilir.`,
       questions: [
-        'Kanal kaplama çözümlerinizi incelemek istiyorum',
-        'Projem için fiyat teklifi nasıl alırım?',
-        'Sizi doğrudan arayabileceğim telefon numarası nedir?'
+        'Kongre organizasyonumuz için fiyat teklifi alabilir miyim?',
+        'Preceptorship eğitimi için bütçe planlaması nasıl yapılıyor?',
+        'Yetkilinizin beni doğrudan aramasını talep edebilir miyim?'
       ]
     };
   }
 
-  // İletişim
-  if (msg.includes('iletişim') || msg.includes('telefon') || msg.includes('adres') || msg.includes('nerede')) {
+  // İletişim & Lokasyon
+  if (msg.includes('iletişim') || msg.includes('telefon') || msg.includes('adres') || msg.includes('nerede') || msg.includes('ofis')) {
     return {
-      text: `📞 **Alexander Troy İletişim Bilgileri**\n\n• **Santral:** +90 212 211 44 48\n• **GSM / WhatsApp:** +90 533 500 48 48\n• **E-Posta:** info@alexandertroy.com\n• **Adres:** Yapı Kredi Plaza C Blok No:1B Beşiktaş / İstanbul\n\n*Numaranızı buraya yazarsanız mühendisimiz gün içinde sizi doğrudan arayabilir.*`,
+      text: `📞 **Alexander Troy İletişim Bilgileri**\n\n• **Santral:** +90 (212) 555 01 23 / +90 (212) 211 44 48\n• **GSM / WhatsApp:** +90 (533) 500 48 48\n• **E-Posta:** info@alexandertroy.com / info@alx.com.tr\n• **Adres:** Levent, Büyükdere Cd. No:195, Şişli / İstanbul (Yapı Kredi Plaza Beşiktaş)\n• **Çalışma Saatleri:** Hafta içi 09:00 - 18:00\n\n*Numaranızı buraya yazarsanız proje yöneticimiz gün içinde sizi doğrudan arayabilir.*`,
       questions: [
         'Yetkilinizin beni aramasını istiyorum',
-        'Kanal kaplama hakkında bilgi ver',
-        'Keşif randevusu oluşturmak istiyorum'
+        'MICE kongre çözümlerinizi incelemek istiyorum',
+        'Preceptorship eğitimleri hakkında detaylı bilgi alabilir miyim?'
       ]
     };
   }
 
-  // Genel Cevap
+  // Genel Karşılama
   return {
-    text: `Alexander Troy kurumsal asistanına hoş geldiniz. İlaç ve gıda tesisleri için **antibakteriyel kanal kaplama**, temiz oda çözümleri ve kurumsal **MICE kongre hizmetlerimizle** yanınızdayız.\n\nSize en hızlı şekilde yardımcı olabilmem için aşağıdaki konulardan birini seçebilir veya sorunuzu yazabilirsiniz:`,
+    text: `Alexander Troy kurumsal asistanına hoş geldiniz. **Alx MICE** tıp kongreleri, **Preceptorship** klinik hekim eğitimleri, **Alx Digi** dijital sağlık teknolojileri ve **Alx Need** medikal iletişim çözümlerimizle 'Enjoy Your Journey' anlayışıyla yanınızdayız.\n\nSize en hızlı şekilde yardımcı olabilmem için aşağıdaki konulardan birini seçebilir veya sorunuzu yazabilirsiniz:`,
     questions: [
-      '🛡️ Kanal Kaplama Sistemleri Nedir?',
-      '📐 Ücretsiz Keşif & Fiyat Teklifi Nasıl Alınır?',
-      '📞 Uzmanınızın Beni Aramasını İstiyorum'
+      '🏛️ Alx MICE Kongre ve Etkinlik Hizmetleriniz Nelerdir?',
+      '🎓 Preceptorship ve Klinik Eğitim Programlarınız Nasıl İşliyor?',
+      '💡 Dijital Sağlık & AI Çözümleriniz Hakkında Bilgi Alabilir miyim?'
     ]
   };
 };
